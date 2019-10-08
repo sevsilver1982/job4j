@@ -2,7 +2,7 @@ package ru.job4j.calculator;
 
 /**
  * Калькулятор
- * @autor Суворов Евгений
+ * @author Суворов Евгений
  * @version 1.0
  */
 public class Calculator {
