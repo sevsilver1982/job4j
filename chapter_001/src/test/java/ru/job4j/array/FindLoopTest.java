@@ -36,4 +36,35 @@ public class FindLoopTest {
         int expect = 3;
         assertThat(result, is(expect));
     }
+
+    @Test
+    public void findMinTest1() {
+        int result = FindLoop.findMin(new int[] {5, 2, 10, 2, 4}, 2, 4);
+        int expect = 2;
+        assertThat(result, is(expect));
+    }
+
+    @Test
+    public void findMinTest2() {
+        int result = FindLoop.findMin(new int[] {5, 2, 10, 1, 4, 1, 4, 3, 0, 1}, 0, 9);
+        int expect = 0;
+        assertThat(result, is(expect));
+    }
+
+    @Test
+    public void findMinTest3() {
+        int[] input = new int[] {5, 2, 10, 2, 4};
+        int result = FindLoop.findMin(input, 1, input.length - 1);
+        int expect = 2;
+        assertThat(result, is(expect));
+    }
+
+    @Test
+    public void whenSort() {
+        int[] input = new int[] {3, 4, 1, 2, 5};
+        int result[] = FindLoop.sort(input);
+        int[] expect = new int[] {1, 2, 3, 4, 5};
+        assertThat(result, is(expect));
+    }
+
 }
