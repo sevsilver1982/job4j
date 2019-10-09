@@ -12,8 +12,7 @@ public class Turn {
         int i = 0;
         int half = (array.length / 2);
 
-        if (half % 2 == 0) half--;
-        for (int index = 0; index <= half; index++) {
+        for (int index = 0; index != half; index++) {
             i = array.length - 1 - index;
             tmp = array[index];
             array[index] = array[i];
