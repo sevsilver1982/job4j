@@ -57,9 +57,9 @@ public class FindLoop {
     }
 
     /**
-     *
-     * @param data
-     * @return
+     * Сортировка массива data
+     * @param data Массив
+     * @return Отсортированный по возрастанию массив
      */
     public static int[] sort(int[] data) {
         int tmp = 0;
