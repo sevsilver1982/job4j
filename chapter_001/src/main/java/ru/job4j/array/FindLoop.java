@@ -62,9 +62,26 @@ public class FindLoop {
      * @param el Элемент
      * @return Индекс элемента, если элемент не найден, иначе -1.
      */
-    public static int indexOf(char[] data, char el, int start, int finish) {
+    public static int indexOf(char[] data, char el) {
         int rst = -1;
         for (int index = 0; index != data.length; index++) {
+            if (data[index] == el) {
+                rst = index;
+                break;
+            }
+        }
+        return rst;
+    }
+
+    /**
+     * Поиск char в диапазоне массива
+     * @param data Массив
+     * @param el Элемент
+     * @return Индекс элемента, если элемент не найден, иначе -1.
+     */
+    public static int indexOf(char[] data, char el, int start, int finish) {
+        int rst = -1;
+        for (int index = start; index <= finish; index++) {
             if (data[index] == el) {
                 rst = index;
                 break;

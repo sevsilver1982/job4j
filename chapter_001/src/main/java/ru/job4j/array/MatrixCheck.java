@@ -5,9 +5,9 @@ public class MatrixCheck {
     public static boolean checkVertical(char[][] board) {
         boolean result = true;
         int height = board.length - 1;
-        int reference_index = FindLoop.indexOf(board[0], 'X', 0, height);
+        int reference_index = FindLoop.indexOf(board[0], 'X');
         for (int i = 0; i <= height; i++) {
-            if (reference_index != FindLoop.indexOf(board[i], 'X', i, height)) {
+            if (reference_index != FindLoop.indexOf(board[i], 'X')) {
                 result = false;
                 break;
             }
@@ -62,7 +62,7 @@ public class MatrixCheck {
         System.out.println("A board has a winner : " + win);
         System.out.println();
 
-        char[][] hasWinHor = {
+        /*char[][] hasWinHor = {
                 {'_', '_', '_', '_', '_'},
                 {'X', 'X', 'X', 'X', 'X'},
                 {'_', '_', '_', '_', '_'},
@@ -81,7 +81,7 @@ public class MatrixCheck {
                 {'_', '_', 'X', '_', '_'},
         };
         boolean lose = isWin(notWin);
-        System.out.println("A board has a winner : " + lose);
+        System.out.println("A board has a winner : " + lose);*/
     }
 
 }
