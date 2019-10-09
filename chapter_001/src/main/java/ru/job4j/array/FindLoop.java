@@ -21,7 +21,7 @@ public class FindLoop {
     }
 
     /**
-     * Поиск элемента в массиве
+     * Поиск int в массиве
      * @param data Массив
      * @param el Элемент
      * @return Индекс элемента, если элемент не найден, иначе -1.
@@ -38,7 +38,7 @@ public class FindLoop {
     }
 
     /**
-     * Поиск элемента в диапазоне массива
+     * Поиск int в диапазоне массива
      * @param data Массив
      * @param el Элемент
      * @param start Начало диапазона
@@ -48,6 +48,23 @@ public class FindLoop {
     public static int indexOf(int[] data, int el, int start, int finish) {
         int rst = -1;
         for (int index = start; index <= finish; index++) {
+            if (data[index] == el) {
+                rst = index;
+                break;
+            }
+        }
+        return rst;
+    }
+
+    /**
+     * Поиск char в массиве
+     * @param data Массив
+     * @param el Элемент
+     * @return Индекс элемента, если элемент не найден, иначе -1.
+     */
+    public static int indexOf(char[] data, char el, int start, int finish) {
+        int rst = -1;
+        for (int index = 0; index != data.length; index++) {
             if (data[index] == el) {
                 rst = index;
                 break;
