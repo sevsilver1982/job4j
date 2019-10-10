@@ -10,7 +10,7 @@ public class Mortgage {
             credit = (credit + (credit * (percent / 100))) - salary;
             System.out.println(credit);
             year++;
-        };
+        }
 
         return year;
     }

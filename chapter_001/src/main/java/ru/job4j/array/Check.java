@@ -10,7 +10,7 @@ public class Check {
         boolean result = true;
 
         boolean reference = data[0];
-        for (int index = 0; index != data.length ; index++) {
+        for (int index = 0; index != data.length; index++) {
             if (data[index] != reference) {
                 result = false;
                 break;

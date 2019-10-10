@@ -6,11 +6,11 @@ public class Multiple {
         byte age; //возраст
         char sex; //пол
         byte growth; //рост
-        long count_bricks; //количество кирпичей для постройки дома
-        long count_bacts; //количество бактерий
-        long distance_to_objects; //расстояние до космических объектов
-        boolean work_permit; //разрешение на работу
-        long file_size; //размер файла
+        long countBricks; //количество кирпичей для постройки дома
+        long countBacts; //количество бактерий
+        long distanceToObjects; //расстояние до космических объектов
+        boolean workPermit; //разрешение на работу
+        long fileSize; //размер файла
     }
 
 }

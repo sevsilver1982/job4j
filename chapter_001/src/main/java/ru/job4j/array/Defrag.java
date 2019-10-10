@@ -16,7 +16,7 @@ public class Defrag {
                         break;
                     }
                     i++;
-                };
+                }
             }
             System.out.print(array[index] + " ");
         }

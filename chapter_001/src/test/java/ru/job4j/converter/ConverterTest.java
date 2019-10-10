@@ -6,34 +6,34 @@ import ru.job4j.сonverter.Converter;
 
 public class ConverterTest {
     @Test
-    public void RUB2EUR() {
+    public void rub2eur() {
         double in = 140;
         double expected = 2;
-        double actual = Converter.RUB2EUR(in);
+        double actual = Converter.rub2eur(in);
         Assert.assertEquals(expected, actual, 0);
     }
 
     @Test
-    public void EUR2RUB() {
+    public void eur2rub() {
         double in = 1;
         double expected = 70;
-        double actual = Converter.EUR2RUB(in);
+        double actual = Converter.eur2rub(in);
         Assert.assertEquals(expected, actual, 0);
     }
 
     @Test
-    public void RUB2USD() {
+    public void rub2usd() {
         double in = 120;
         double expected = 2;
-        double actual = Converter.RUB2USD(in);
+        double actual = Converter.rub2usd(in);
         Assert.assertEquals(expected, actual, 0);
     }
 
     @Test
-    public void USD2RUB() {
+    public void usd2rub() {
         double in = 130;
         double expected = 7800;
-        double actual = Converter.USD2RUB(in);
+        double actual = Converter.usd2rub(in);
         Assert.assertEquals(expected, actual, 0);
     }
 

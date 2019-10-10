@@ -97,15 +97,15 @@ public class FindLoop {
      */
     public static int[] sort(int[] data) {
         int tmp = 0;
-        int min_val = 0;
-        int min_index;
+        int minVal = 0;
+        int minIndex;
 
         for (int i = 0; i < data.length; i++) {
-            min_val = findMin(data, i, data.length - 1);
-            min_index = indexOf(data, min_val, i, data.length - 1);
+            minVal = findMin(data, i, data.length - 1);
+            minIndex = indexOf(data, minVal, i, data.length - 1);
             tmp = data[i]; /* if != */
-            data[i] = data[min_index];
-            data[min_index] = tmp;
+            data[i] = data[minIndex];
+            data[minIndex] = tmp;
         }
 
         return data;
