@@ -4,7 +4,6 @@ public class Defrag {
 
     public static String[] compress(String[] array) {
         int i = 0;
-
         for (int index = 0; index < array.length; index++) {
             String cell = array[index];
             if (cell == null) {

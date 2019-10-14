@@ -26,7 +26,6 @@ public class MatrixCheck {
                 break;
             }
         }
-
         if (reference_index == -1) {
             result = false;
         } else {
@@ -45,7 +44,6 @@ public class MatrixCheck {
         int x = 0;
         int count1 = 0;
         int count2 = 0;
-
         for (int row = 0; row < board.length; row++) {
             if (board[row][row] == 'X') {
                 for (int cell = 0; cell < board.length; cell++) {
@@ -75,7 +73,6 @@ public class MatrixCheck {
         boolean win = isWin(hasWinVertical);
         System.out.println("A board has a winner : " + win);
         System.out.println();
-
         char[][] hasWinHor = {
                 {'_', '_', '_', '_', '_'},
                 {'X', 'X', 'X', 'X', 'X'},
@@ -86,7 +83,6 @@ public class MatrixCheck {
         boolean winHor = isWin(hasWinHor);
         System.out.println("A board has a winner : " + winHor);
         System.out.println();
-
         char[][] notWin = {
                 {'_', '_', 'X', '_', '_'},
                 {'_', '_', 'X', '_', '_'},

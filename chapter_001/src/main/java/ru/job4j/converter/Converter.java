@@ -7,28 +7,24 @@ public class Converter {
         double expected;
         double out;
         boolean passed;
-
         in = 140;
         expected = 2;
         out = rub2eur(in);
         passed = expected == out;
         System.out.println(in + " RUB = 2 EUR; test result: " + passed);
         System.out.println();
-
         in = 1;
         expected = 70;
         out = eur2rub(in);
         passed = expected == out;
         System.out.println(in + " EUR = 70 RUB; test result : " + passed);
         System.out.println();
-
         in = 120;
         expected = 2;
         out = rub2usd(in);
         passed = expected == out;
         System.out.println(in + " RUB = 4 USD; test result : " + passed);
         System.out.println();
-
         in = 130;
         expected = 7800;
         out = usd2rub(in);

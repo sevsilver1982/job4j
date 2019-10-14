@@ -16,7 +16,6 @@ public class FindLoop {
                 rst = data[index];
             }
         }
-
         return rst;
     }
 
@@ -99,7 +98,6 @@ public class FindLoop {
         int tmp = 0;
         int minVal = 0;
         int minIndex;
-
         for (int i = 0; i < data.length; i++) {
             minVal = findMin(data, i, data.length - 1);
             minIndex = indexOf(data, minVal, i, data.length - 1);
@@ -107,7 +105,6 @@ public class FindLoop {
             data[i] = data[minIndex];
             data[minIndex] = tmp;
         }
-
         return data;
     }
 

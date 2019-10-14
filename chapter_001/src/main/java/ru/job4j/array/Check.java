@@ -8,7 +8,6 @@ public class Check {
      */
     public boolean mono(boolean[] data) {
         boolean result = true;
-
         boolean reference = data[0];
         for (int index = 0; index != data.length; index++) {
             if (data[index] != reference) {

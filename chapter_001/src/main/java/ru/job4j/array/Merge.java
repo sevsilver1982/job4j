@@ -7,7 +7,6 @@ public class Merge {
     public int[] merge(int[] left, int[] right) {
         int[] result = new int[left.length + right.length];
         int iLeft = 0, iRight = 0;
-
         for (int i = 0; i < result.length; i++) {
             if (iLeft == left.length) {
                 result[i] = right[iRight];
