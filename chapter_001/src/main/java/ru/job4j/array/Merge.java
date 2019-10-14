@@ -12,19 +12,19 @@ public class Merge {
             if (iLeft == left.length) {
                 result[i] = right[iRight];
                 iRight++;
-                continue;
-            }
-            if (iRight == right.length) {
-                result[i] = left[iLeft];
-                iLeft++;
-                continue;
-            }
-            if (left[iLeft] < right[iRight]) {
-                result[i] = left[iLeft];
-                iLeft++;
             } else {
-                result[i] = right[iRight];
-                iRight++;
+                if (iRight == right.length) {
+                    result[i] = left[iLeft];
+                    iLeft++;
+                } else {
+                    if (left[iLeft] < right[iRight]) {
+                        result[i] = left[iLeft];
+                        iLeft++;
+                    } else {
+                        result[i] = right[iRight];
+                        iRight++;
+                    }
+                }
             }
         }
         return result;
