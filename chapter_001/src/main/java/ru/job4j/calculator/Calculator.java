@@ -12,20 +12,30 @@ public class Calculator {
      * @param args аргументы
      */
     public static void main(String[] args) {
-        add(1, 1);
-        div(4, 2);
-        multiply(2, 1);
-        subtrack(10, 5);
+        System.out.println(1 + " + " + 1 + " = " + add(1, 1));
+        System.out.println(1 + " + " + 1 + " + " + 1 + " = " + add(1, 1, 1));
+        System.out.println(4 + " / " + 2 + " = " + div(4, 2));
+        System.out.println(2 + " * " + 1 + " = " + multiply(2, 1));
+        System.out.println(10 + " - " + 5 + " = " + subtrack(10, 5));
     }
 
     /**
-     * Сложение
+     * Сложение двух чисел
      * @param first первый параметр
      * @param second второй параметр
      */
-    public static void add(double first, double second) {
-        double result =  first + second;
-        System.out.println(first + " + " + second + " = " + result);
+    public static double add(double first, double second) {
+        return first + second;
+    }
+
+    /**
+     * Сложение трёх чисел
+     * @param first первый параметр
+     * @param second второй параметр
+     * @param third третий параметр
+     */
+    public static double add(double first, double second, double third) {
+        return add(first, add(second, third));
     }
 
     /**
@@ -33,9 +43,8 @@ public class Calculator {
      * @param first первый параметр
      * @param second второй параметр
      */
-    public static void div(double first, double second) {
-        double result =  first / second;
-        System.out.println(first + " / " + second + " = " + result);
+    public static double div(double first, double second) {
+        return first / second;
     }
 
     /**
@@ -43,9 +52,8 @@ public class Calculator {
      * @param first первый параметр
      * @param second второй параметр
      */
-    public static void multiply(double first, double second) {
-        double result =  first * second;
-        System.out.println(first + " * " + second + " = " + result);
+    public static double multiply(double first, double second) {
+        return first * second;
     }
 
     /**
@@ -53,9 +61,8 @@ public class Calculator {
      * @param first первый параметр
      * @param second второй параметр
      */
-    public static void subtrack(double first, double second) {
-        double result =  first - second;
-        System.out.println(first + " - " + second + " = " + result);
+    public static double subtrack(double first, double second) {
+        return first - second;
     }
 
 }

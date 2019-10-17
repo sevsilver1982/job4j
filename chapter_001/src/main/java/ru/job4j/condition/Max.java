@@ -6,4 +6,6 @@ public class Max {
         return left > right ? left : right;
     }
 
+
+
 }
