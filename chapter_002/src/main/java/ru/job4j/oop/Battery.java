@@ -13,24 +13,24 @@ public class Battery {
         System.out.println("Заряд " + this.name + ": " + load);
     }
 
-    public void exchange(Battery another, int value) {
-        this.load -= value;
-        another.load += value;
-        System.out.println("Списать с " + this.name + " " + value + " и добавить " + another.name);
+    public void exchange(Battery another) {
+        System.out.println("Списать с " + this.name + " " + this.load + " и добавить " + another.name);
         System.out.println();
+        another.load += this.load;
+        this.load -= this.load;
     }
 
     public static void main(String[] args) {
-        Battery duracell = new Battery("Duracell", 100);
-        duracell.show();
-        Battery energizer = new Battery("Energizer", 50);
-        energizer.show();
-
-        duracell.exchange(energizer, 10);
+        Battery duracell = new Battery("Duracell", 60);
+        Battery energizer = new Battery("Energizer", 40);
         duracell.show();
         energizer.show();
 
-        energizer.exchange(duracell, 20);
+        duracell.exchange(energizer);
+        duracell.show();
+        energizer.show();
+
+        energizer.exchange(duracell);
         duracell.show();
         energizer.show();
     }
