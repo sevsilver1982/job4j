@@ -8,14 +8,14 @@ public class Ball {
 
     public void onEat(Object eater) {
         System.out.println(
-            this.name + ": " + "Я колобок, колобок!\n" +
-            this.name + ": " + "По амбару метён,\n" +
-            this.name + ": " + "По сусекам скребён,\n" +
-            this.name + ": " + "На сметане мешан,\n" +
-            this.name + ": " + "В печку сажён,\n" +
-            this.name + ": " + "На окошке стужён,\n" +
-            this.name + ": " + "Я от дедушки ушёл,\n" +
-            this.name + ": " + "Я от бабушки ушёл:");
+            this.name + ": " + "Я колобок, колобок!\n"
+            + this.name + ": " + "По амбару метён,\n"
+            + this.name + ": " + "По сусекам скребён,\n"
+            + this.name + ": " + "На сметане мешан,\n"
+            + this.name + ": " + "В печку сажён,\n"
+            + this.name + ": " + "На окошке стужён,\n"
+            + this.name + ": " + "Я от дедушки ушёл,\n"
+            + this.name + ": " + "Я от бабушки ушёл:");
 
         if (eater instanceof Hare) {
             System.out.println(this.name + ": " + "И от тебя, зайца, не хитро уйти.\n");
