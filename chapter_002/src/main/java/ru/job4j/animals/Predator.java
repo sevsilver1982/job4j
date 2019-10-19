@@ -1,4 +1,4 @@
-package ru.job4j.oop.animals;
+package ru.job4j.animals;
 
 public class Predator extends Animal {
     public Predator(String name) {

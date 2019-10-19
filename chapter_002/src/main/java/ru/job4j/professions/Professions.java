@@ -1,4 +1,4 @@
-package ru.job4j.oop.professions;
+package ru.job4j.professions;
 
 import java.util.Date;
 
