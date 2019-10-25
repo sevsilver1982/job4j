@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class Tracker {
     /** Массив для хранение заявок */
-    private final Item[] items = new Item[100];
-    private static final Random RM = new Random();
+    private final Item[] items = new Item[5];
+    private final Random RM = new Random();
 
     /** Указатель ячейки для новой заявки */
     private int position = 0;
@@ -15,11 +15,11 @@ public class Tracker {
      * @return Уникальный ключ
      */
     private String generateId() {
-        return String.valueOf(RM.nextLong() + System.currentTimeMillis());
+        return String.valueOf(Math.abs(RM.nextLong() + System.currentTimeMillis()));
     }
 
     /**
-     * Метод реализаущий добавление заявки в хранилище
+     * Добавить
      * @param item Новая заявка
      */
     public Item add(Item item) {
@@ -29,41 +29,24 @@ public class Tracker {
     }
 
     /**
-     * Редактирование заявки
+     * Редактировать
      * @param id заменяемой заявки
      * @param item Заявка
      * @return
      */
-    public boolean replace(String id, Item item) {
-        boolean result = false;
-        int index = this.getIndexById(id);
-        if (index >= 0) {
-            this.items[index] = item;
-            result = true;
-        }
-        return result;
+    public void replace(String id, Item item) {
+        this.items[this.getIndexById(id)] = item;
     }
 
-    public boolean delete(String id) {
-        boolean result = false;
+    /**
+     * Удалить
+     * @param id
+     */
+    public void delete(String id) {
         int index = this.getIndexById(id);
-        if (index >= 0) {
-            this.items[index] = null;
-            for (int i = index; i < this.items.length; i++) {
-                if (this.items[i] == null) {
-                    for (int j = i + 1; j < this.items.length; j++) {
-                        if (this.items[j] != null) {
-                            Item item = this.items[j];
-                            this.items[j] = this.items[i];
-                            this.items[i] = item;
-                            result = true;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        return result;
+        System.arraycopy(this.items, index + 1, this.items, index, this.items.length - index - 1);
+        this.items[this.items.length - 1] = null;
+        this.position--;
     };
 
     /**
@@ -100,13 +83,13 @@ public class Tracker {
 
     /**
      * Получить заявку по имени key
-     * @param key
+     * @param name
      * @return
      */
-    public Item findByName(String key) {
+    public Item findByName(String name) {
         Item result = null;
         for (Item item: this.items) {
-            if (item != null && item.getName().equals(key)) {
+            if (item != null && item.getName().equals(name)) {
                 result = item;
                 break;
             }
@@ -119,11 +102,34 @@ public class Tracker {
      * @return Массив объектов Item
      */
     public Item[] findAll() {
-        Item[] result = new Item[this.position];
+        Item[] result = new Item[this.items.length];
         for (int i = 0; i < this.items.length; i++) {
             result[i] = this.items[i];
+            if (result[i] != null) {
+                System.out.println("id:" + result[i].getId() + "; name:" + result[i].getName());
+            } else {
+                System.out.println("null");
+            }
         }
+        System.out.println();
         return result;
+    }
+
+    public static void main(String[] args) {
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("item1"));
+        tracker.add(new Item("item2"));
+        tracker.add(new Item("item3"));
+        tracker.add(new Item("item4"));
+        tracker.add(new Item("item5"));
+        //tracker.findAll();
+
+        tracker.delete(tracker.findByName("item2").getId());
+        tracker.delete(tracker.findByName("item4").getId());
+        tracker.replace(tracker.findByName("item1").getId(), tracker.findByName("item5"));
+        tracker.add(new Item("item10"));
+        tracker.replace(tracker.findByName("item3").getId(), tracker.findByName("item10"));
+        tracker.findAll();
     }
 
 }

@@ -5,11 +5,10 @@ public class Item {
     private String name;
 
     public Item() {
-        System.out.println("load Item()");
     }
 
     public Item(String name) {
-        System.out.println("load Item(String name)");
+        this.name = name;
     }
 
     public String getId() {
