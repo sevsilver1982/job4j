@@ -2,6 +2,10 @@ package ru.job4j.tracker;
 
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.StringJoiner;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -44,5 +48,66 @@ public class TrackerTest {
         };
         new StartUI().init(consoleInput, tracker, actionsTracker);
         assertThat(action.isCall(), is(true));
+    }
+
+    @Test
+    public void testInit() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream def = System.out;
+        System.setOut(new PrintStream(out));
+        StubInput input = new StubInput(
+                new String[] {"0"}
+        );
+        new StartUI().init(input, new Tracker(), new ActionTracker[] {
+                new StubActionTracker()
+        });
+        String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator() + System.lineSeparator())
+                .add("Menu:")
+                .add("0. Stub action")
+                .toString();
+        assertThat(new String(out.toByteArray()), is(expect));
+        System.setOut(def);
+    }
+
+    @Test
+    public void testActionShowAll() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream def = System.out;
+        System.setOut(new PrintStream(out));
+        StubInput input = new StubInput(
+                new String[] {"item_1"}
+        );
+        Tracker tracker = new Tracker();
+        Item item = new Item(input.askString(""));
+        tracker.add(item);
+        new ActionShowAll().execute(input, tracker);
+
+        String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
+                .add("=== Show all items ====")
+                .add("id: " + item.getId() + "; name: " + item.getName())
+                .toString();
+        assertThat(new String(out.toByteArray()), is(expect));
+        System.setOut(def);
+    }
+
+    @Test
+    public void testFindByNameAction() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream def = System.out;
+        System.setOut(new PrintStream(out));
+        StubInput input = new StubInput(
+                new String[] {"item_1"}
+        );
+        Tracker tracker = new Tracker();
+        Item item = new Item(input.askString(""));
+        tracker.add(item);
+        new ActionFindItemByName().execute(input, tracker);
+
+        String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
+                .add("=== Find item by name ====")
+                .add("id: " + item.getId() + "; name: " + item.getName())
+                .toString();
+        assertThat(new String(out.toByteArray()), is(expect));
+        System.setOut(def);
     }
 }
