@@ -10,16 +10,20 @@ public class StubInput implements Input {
 
     @Override
     public int askInt(String question) {
-        return 0;
+        return Integer.parseInt(answers[position++]);
     }
 
     @Override
     public String askString(String question) {
-        return answers[position];
+        return answers[position++];
     }
 
     @Override
     public int askInt(String question, int max) {
-        return askInt(question);
+        int select = askInt(question);
+        if (select < 0 || select >= max) {
+            throw new IllegalStateException(String.format("Out of about %s > [0, %s]", select, max));
+        }
+        return select;
     }
 }
