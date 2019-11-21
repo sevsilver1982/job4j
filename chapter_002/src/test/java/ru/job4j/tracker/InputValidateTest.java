@@ -8,7 +8,7 @@ import java.io.PrintStream;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class ValidateInputTest {
+public class InputValidateTest {
 
     @Test
     public void whenInvalidInput() {
@@ -20,7 +20,7 @@ public class ValidateInputTest {
         );
         input.askInt("Enter", 1);
         assertThat(
-                mem,
+                mem.toString(),
                 is(String.format("Please enter validate data again%n"))
         );
         System.setOut(out);

@@ -96,7 +96,7 @@ public class TrackerTest {
         PrintStream def = System.out;
         System.setOut(new PrintStream(out));
         StubInput input = new StubInput(
-                new String[] {"item_1"}
+                new String[] {"item_1", "item_1"}
         );
         Tracker tracker = new Tracker();
         Item item = new Item(input.askString(""));
