@@ -21,7 +21,7 @@ public class InputValidate implements Input {
                 value = input.askInt(question);
                 invalid = false;
             } catch (NumberFormatException nfe) {
-                System.out.print("Please enter validate data again");
+                System.out.println("Please enter validate data again");
             }
         } while (invalid);
         return value;
