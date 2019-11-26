@@ -7,10 +7,10 @@ public class ActionDeleteItem extends ActionTracker {
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        System.out.println("=== " + super.getName() + " ====");
+        System.out.println(String.format("=== %s ====", super.getName()));
         Item item = tracker.findById(input.askString("Enter item id: "));
         if (tracker.delete(item.getId())) {
-            System.out.println("id: " + item.getId() + "; name: " + item.getName() + " deleted");
+            System.out.println(String.format("id: %s; name: %s deleted", item.getId(), item.getName()));
         } else {
             System.out.println("Item not found");
         }

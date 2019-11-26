@@ -7,7 +7,7 @@ public class ActionExitProgram extends ActionTracker {
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        System.out.println("=== " + super.getName() + " ====");
+        System.out.println(String.format("=== %s ====", super.getName()));
         return super.execute(input, tracker);
     }
 }

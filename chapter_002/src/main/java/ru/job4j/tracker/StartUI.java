@@ -27,7 +27,7 @@ public class StartUI {
                 new ActionTracker[] {
                         new ActionNewItem(),
                         new ActionShowAll(),
-                        new ActionEditItem(),
+                        new ActionRenameItem(),
                         new ActionDeleteItem(),
                         new ActionFindItemById(),
                         new ActionFindItemByName(),

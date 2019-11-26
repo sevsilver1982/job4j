@@ -7,11 +7,11 @@ public class ActionShowAll extends ActionTracker {
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        System.out.println("=== " + super.getName() + " ====");
+        System.out.println(String.format("=== %s ====", super.getName()));
         Item[] items = tracker.findAll();
         if (items.length > 0) {
             for (Item item : items) {
-                System.out.println("id: " + item.getId() + "; name: " + item.getName());
+                System.out.println(String.format("id: %s; name: %s", item.getId(), item.getName()));
             }
         } else {
             System.out.println("Items not found");

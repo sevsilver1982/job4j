@@ -7,11 +7,11 @@ public class ActionFindItemById extends ActionTracker {
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        System.out.println("=== " + super.getName() + " ====");
+        System.out.println(String.format("=== %s ====", super.getName()));
         String id = input.askString("Enter item id: ");
         Item item = tracker.findById(id);
         if (item.getId() != null) {
-            System.out.println("id: " + item.getId() + "; name: " + item.getName());
+            System.out.println(String.format("id: %s; name: %s", item.getId(), item.getName()));
         } else {
             System.out.println("Item not found");
         }
