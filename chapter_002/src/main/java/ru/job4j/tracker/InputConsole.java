@@ -12,6 +12,10 @@ public class InputConsole implements Input {
     @Override
     public int askInt(String question) {
         System.out.println(question);
+        if (!scanner.hasNextInt()) {
+            scanner.nextLine();
+            throw new IllegalStateException();
+        }
         return scanner.nextInt();
     }
 

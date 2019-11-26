@@ -16,23 +16,24 @@ public class StartUI {
     private void showMenu(Action[] actions) {
         System.out.println("Menu:");
         for (int i = 0; i < actions.length; i++) {
-            System.out.println(i + ". " + actions[i].getName());
+            System.out.println(String.format("%s. %s", i, actions[i].getName()));
         }
     }
 
     public static void main(String[] args) {
-        Input consoleInput = new InputValidate(new InputConsole());
-        Tracker tracker = new Tracker();
-        Action[] actionsTracker = new ActionTracker[] {
-            new ActionNewItem(),
-            new ActionShowAll(),
-            new ActionEditItem(),
-            new ActionDeleteItem(),
-            new ActionFindItemById(),
-            new ActionFindItemByName(),
-            new ActionExitProgram()
-        };
-        new StartUI().init(consoleInput, tracker, actionsTracker);
+        new StartUI().init(
+                new InputValidate(new InputConsole()),
+                new Tracker(),
+                new ActionTracker[] {
+                        new ActionNewItem(),
+                        new ActionShowAll(),
+                        new ActionEditItem(),
+                        new ActionDeleteItem(),
+                        new ActionFindItemById(),
+                        new ActionFindItemByName(),
+                        new ActionExitProgram()
+                }
+        );
     }
 
 }
