@@ -12,7 +12,7 @@ public class ActionRenameItem extends ActionTracker {
         if (item.getId() != null && item.getName() != null) {
             Item itemNew = new Item(input.askString("Enter new item name: "));
             itemNew.setId(item.getId());
-            if (tracker.replace(item.getId(), itemNew)) {
+            if (tracker.rename(item.getId(), itemNew)) {
                 System.out.println(String.format("id: %s; name: %s renamed to id: %s; name: %s", item.getId(), item.getName(), itemNew.getId(), itemNew.getName()));
             }
         } else {

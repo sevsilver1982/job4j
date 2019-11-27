@@ -36,7 +36,7 @@ public class InputValidate implements Input {
                 value = input.askInt(question, max);
                 invalid = false;
             } catch (IllegalStateException moe) {
-                System.out.println(String.format("Please select key from menu [0..s%]", max));
+                System.out.println(String.format("Please select key from menu [0..%s]", max));
             } catch (NumberFormatException nfe) {
                 System.out.println("Please enter validate data again");
             }

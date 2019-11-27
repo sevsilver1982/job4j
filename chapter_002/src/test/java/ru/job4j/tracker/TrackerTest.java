@@ -1,11 +1,9 @@
 package ru.job4j.tracker;
 
 import org.junit.Test;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.StringJoiner;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -15,8 +13,7 @@ public class TrackerTest {
     public void whenAddNewItemThenTrackerHasSameItem() {
         Tracker tracker = new Tracker();
         Item item = new Item("test1");
-        tracker.add(item);
-        Item result = tracker.findById(item.getId());
+        Item result = tracker.addItem(item).findById(item.getId());
         assertThat(result.getName(), is(item.getName()));
     }
 
@@ -24,15 +21,10 @@ public class TrackerTest {
     public void whenReplaceNameThenReturnNewName() {
         Tracker tracker = new Tracker();
         Item previous = new Item("test1");
-        // Добавляем заявку в трекер. Теперь в объект проинициализирован id.
-        tracker.add(previous);
-        // Создаем новую заявку.
+        tracker.addItem(previous);
         Item next = new Item("test2");
-        // Проставляем старый id из previous, который был сгенерирован выше.
         next.setId(previous.getId());
-        // Обновляем заявку в трекере.
-        tracker.replace(previous.getId(), next);
-        // Проверяем, что заявка с таким id имеет новые имя test2.
+        tracker.rename(previous.getId(), next);
         assertThat(tracker.findById(previous.getId()).getName(), is("test2"));
     }
 
@@ -43,10 +35,8 @@ public class TrackerTest {
         );
         Tracker tracker = new Tracker();
         StubActionTracker action = new StubActionTracker();
-        StubActionTracker[] actionsTracker = new StubActionTracker[] {
-                action
-        };
-        new StartUI().init(consoleInput, tracker, actionsTracker);
+        tracker.addAction(action);
+        new StartUI().init(consoleInput, tracker);
         assertThat(action.isCall(), is(true));
     }
 
@@ -58,9 +48,9 @@ public class TrackerTest {
         StubInput input = new StubInput(
                 new String[] {"0"}
         );
-        new StartUI().init(input, new Tracker(), new ActionTracker[] {
-                new StubActionTracker()
-        });
+        Tracker tracker = new Tracker();
+        tracker.addAction(new StubActionTracker());
+        new StartUI().init(input, tracker);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator() + System.lineSeparator())
                 .add("Menu:")
                 .add("0. Stub action")
@@ -79,7 +69,7 @@ public class TrackerTest {
         );
         Tracker tracker = new Tracker();
         Item item = new Item(input.askString(""));
-        tracker.add(item);
+        tracker.addItem(item);
         new ActionShowAll().execute(input, tracker);
 
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
@@ -100,7 +90,7 @@ public class TrackerTest {
         );
         Tracker tracker = new Tracker();
         Item item = new Item(input.askString(""));
-        tracker.add(item);
+        tracker.addItem(item);
         new ActionFindItemByName().execute(input, tracker);
 
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
