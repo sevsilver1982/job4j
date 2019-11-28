@@ -1,27 +1,21 @@
 package ru.job4j.tracker;
 
-public class ActionTracker implements Action {
+public abstract class ActionTracker implements Action {
     private String name;
-    private boolean processNext;
 
-    public ActionTracker(String name, boolean processNext) {
+    public ActionTracker(String name) {
         this.name = name;
-        this.processNext = processNext;
     }
 
-    @Override
     public String getName() {
         return this.name;
     }
 
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
+    public abstract boolean action(Input input, Tracker tracker);
 
-    @Override
     public boolean execute(Input input, Tracker tracker) {
-        return this.processNext;
+        System.out.println(String.format("==== %s ====", getName()));
+        return action(input, tracker);
     }
 
 }
