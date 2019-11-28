@@ -1,13 +1,13 @@
 package ru.job4j.tracker;
 
 public class ActionShowAll extends ActionTracker {
+
     public ActionShowAll() {
-        super("Show all items", true);
+        super("Show all items");
     }
 
     @Override
-    public boolean execute(Input input, Tracker tracker) {
-        System.out.println(String.format("=== %s ====", super.getName()));
+    public boolean action(Input input, Tracker tracker) {
         Item[] items = tracker.findAll();
         if (items.length > 0) {
             for (Item item : items) {
@@ -16,6 +16,7 @@ public class ActionShowAll extends ActionTracker {
         } else {
             System.out.println("Items not found");
         }
-        return super.execute(input, tracker);
+        return true;
     }
+
 }

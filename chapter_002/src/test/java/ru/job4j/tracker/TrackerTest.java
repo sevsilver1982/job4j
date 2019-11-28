@@ -54,6 +54,7 @@ public class TrackerTest {
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator() + System.lineSeparator())
                 .add("Menu:")
                 .add("0. Stub action")
+                .add("==== Stub action ====")
                 .toString();
         assertThat(new String(out.toByteArray()), is(expect));
         System.setOut(def);
@@ -73,7 +74,7 @@ public class TrackerTest {
         new ActionShowAll().execute(input, tracker);
 
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
-                .add("=== Show all items ====")
+                .add("==== Show all items ====")
                 .add("id: " + item.getId() + "; name: " + item.getName())
                 .toString();
         assertThat(new String(out.toByteArray()), is(expect));
@@ -94,10 +95,11 @@ public class TrackerTest {
         new ActionFindItemByName().execute(input, tracker);
 
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
-                .add("=== Find item by name ====")
+                .add("==== Find item by name ====")
                 .add("id: " + item.getId() + "; name: " + item.getName())
                 .toString();
         assertThat(new String(out.toByteArray()), is(expect));
         System.setOut(def);
     }
+
 }

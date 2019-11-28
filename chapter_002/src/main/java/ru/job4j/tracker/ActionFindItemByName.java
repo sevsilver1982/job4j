@@ -1,13 +1,13 @@
 package ru.job4j.tracker;
 
-public class ActionFindItemByName extends ActionTracker  {
+public class ActionFindItemByName extends ActionTracker {
+
     public ActionFindItemByName() {
-        super("Find item by name", true);
+        super("Find item by name");
     }
 
     @Override
-    public boolean execute(Input input, Tracker tracker) {
-        System.out.println(String.format("=== %s ====", super.getName()));
+    public boolean action(Input input, Tracker tracker) {
         String name = input.askString("Enter item name: ");
         Item[] items = tracker.findByName(name);
         if (items.length > 0) {
@@ -17,6 +17,7 @@ public class ActionFindItemByName extends ActionTracker  {
         } else {
             System.out.println("Item not found");
         }
-        return super.execute(input, tracker);
+        return true;
     }
+
 }

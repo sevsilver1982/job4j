@@ -1,13 +1,13 @@
 package ru.job4j.tracker;
 
 public class ActionRenameItem extends ActionTracker {
+
     public ActionRenameItem() {
-        super("Rename item", true);
+        super("Rename item");
     }
 
     @Override
-    public boolean execute(Input input, Tracker tracker) {
-        System.out.println(String.format("=== %s ====", super.getName()));
+    public boolean action(Input input, Tracker tracker) {
         Item item = tracker.findById(input.askString("Enter item id: "));
         if (item.getId() != null && item.getName() != null) {
             Item itemNew = new Item(input.askString("Enter new item name: "));
@@ -18,6 +18,7 @@ public class ActionRenameItem extends ActionTracker {
         } else {
             System.out.println("Item not found");
         }
-        return super.execute(input, tracker);
+        return true;
     }
+
 }

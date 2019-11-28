@@ -4,11 +4,11 @@ public class StubActionTracker extends ActionTracker implements Action  {
     private boolean call = true;
 
     public StubActionTracker() {
-        super("Stub action", false);
+        super("Stub action");
     }
 
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean action(Input input, Tracker tracker) {
         this.call = true;
         return false;
     }
@@ -16,4 +16,5 @@ public class StubActionTracker extends ActionTracker implements Action  {
     public boolean isCall() {
         return this.call;
     }
+
 }

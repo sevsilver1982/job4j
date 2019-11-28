@@ -1,13 +1,14 @@
 package ru.job4j.tracker;
 
 public class ActionExitProgram extends ActionTracker {
+
     public ActionExitProgram() {
-        super("Exit program", false);
+        super("Exit program");
     }
 
     @Override
-    public boolean execute(Input input, Tracker tracker) {
-        System.out.println(String.format("=== %s ====", super.getName()));
-        return super.execute(input, tracker);
+    public boolean action(Input input, Tracker tracker) {
+        return false;
     }
+
 }
