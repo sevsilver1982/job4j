@@ -15,9 +15,12 @@ public class PriorityQueueTest {
         queue.put(new Task("2", 2));
         queue.put(new Task("4", 4));
         queue.put(new Task("1", 1));
+        assertThat(queue.size(), is(7));
         queue.take();
         queue.take();
         queue.take();
-        assertThat(queue.take().getDesc(), is("3"));
+        Task task = queue.take();
+        assertThat(queue.size(), is(3));
+        assertThat(task.getDesc(), is("3"));
     }
 }
