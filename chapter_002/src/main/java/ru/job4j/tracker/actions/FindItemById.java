@@ -1,8 +1,12 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.actions;
 
-public class ActionFindItemById extends ActionTracker {
+import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.items.Item;
+import ru.job4j.tracker.Tracker;
 
-    public ActionFindItemById() {
+public class FindItemById extends ActionTracker {
+
+    public FindItemById() {
         super("Find item by id");
     }
 
@@ -11,7 +15,7 @@ public class ActionFindItemById extends ActionTracker {
         String id = input.askString("Enter item id: ");
         Item item = tracker.findById(id);
         if (item.getId() != null) {
-            System.out.println(String.format("id: %s; name: %s", item.getId(), item.getName()));
+            System.out.println(String.format("%s found by id", item.toString()));
         } else {
             System.out.println("Item not found");
         }

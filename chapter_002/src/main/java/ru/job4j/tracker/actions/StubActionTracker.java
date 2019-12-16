@@ -1,6 +1,9 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.actions;
 
-public class StubActionTracker extends ActionTracker implements Action  {
+import ru.job4j.tracker.Tracker;
+import ru.job4j.tracker.input.Input;
+
+public class StubActionTracker extends ActionTracker implements Action {
     private boolean call = true;
 
     public StubActionTracker() {

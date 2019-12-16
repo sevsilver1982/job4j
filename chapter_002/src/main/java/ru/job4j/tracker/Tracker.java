@@ -1,152 +1,74 @@
 package ru.job4j.tracker;
 
-import java.util.Arrays;
+import ru.job4j.tracker.actions.Action;
+import ru.job4j.tracker.items.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Tracker {
-    /** События */
-    private Action[] actions = new Action[0];
-
-    /** Указатель ячейки для новой заявки */
-    private int actionsCount = 0;
-
-    /** Массив для хранение заявок */
-    private Item[] items = new Item[100];
-
-    /** Указатель ячейки для новой заявки */
-    private int itemsCount = 0;
-
-    /** Генератор случайных чисел */
+    private List<Action> actions = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
     private final Random rm = new Random();
 
-    public int getActionsCount() {
-        return actionsCount;
+    public List<Action> findAllActions() {
+        List<Action> action = this.actions;
+        return action;
     }
 
-    public Action getActionByIndex(int actionIndex) {
-        return this.actions[actionIndex];
-    }
-
-    /**
-     * Генерировать уникальный ключ
-     * @return Уникальный ключ
-     */
     private String generateId() {
         return String.valueOf(Math.abs(rm.nextLong() + System.currentTimeMillis()));
     }
 
-    /**
-     * Добавить событие
-     * @return
-     */
-    public Tracker addAction(Action action) {
-        if (this.actions != null) {
-            if (this.actionsCount == this.actions.length) {
-                Action[] tmp = this.findActionAll();
-                this.actions = new Action[tmp.length + 1];
-                System.arraycopy(tmp, 0, this.actions, 0, tmp.length);
-            }
-            this.actions[this.actionsCount++] = action;
-        }
-        return this;
+    public boolean addAction(Action action) {
+        action.setId(this.actions.size() + 1);
+        return this.actions.add(action);
     }
 
-    public Action[] findActionAll() {
-        Action[] result = Arrays.copyOf(this.actions, this.actionsCount);
-        return result;
+    public boolean add(Item item) {
+        item.setId(generateId());
+        return this.items.add(item);
     }
 
-    /**
-     * Добавить
-     * @param item Новая заявка
-     */
-    public Tracker addItem(Item item) {
-        if (this.items != null) {
-            item.setId(this.generateId());
-            if (this.itemsCount == this.items.length) {
-                Item[] tmp = this.findAll();
-                this.items = new Item[tmp.length + 1];
-                System.arraycopy(tmp, 0, this.items, 0, tmp.length);
-            }
-            this.items[this.itemsCount++] = item;
-        }
-        return this;
-    }
-
-    /**
-     * Редактировать
-     * @param idItem заменяемой заявки
-     * @param newItem Заявка
-     * @return
-     */
-    public boolean rename(String idItem, Item newItem) {
+    public boolean rename(String id, String newName) {
         boolean result = false;
-        for (int i = 0; i < this.itemsCount; i++) {
-            if (this.items[i].getId().equals(idItem)) {
-                this.items[i] = newItem;
-                result = true;
-            }
+        Item item = this.findById(id);
+        if (item.getId() != null && item.getName() != null) {
+            item.setName(newName);
+            result = true;
         }
         return result;
     }
 
-    /**
-     * Удалить
-     * @param id
-     */
-    public boolean delete(String id) {
-        boolean result = false;
-        for (int i = 0; i < this.itemsCount; i++) {
-            if (this.items[i].getId().equals(id)) {
-                result = true;
-                System.arraycopy(this.items, i + 1, this.items, i, this.itemsCount - i - 1);
-                this.itemsCount--;
-                break;
-            }
-        }
-        return result;
+    public boolean delete(Item item) {
+        return this.items.remove(item);
     };
 
-    /**
-     * Получить заявку по идентификатору id
-     * @param id заявки
-     * @return Объект заявки Item
-     */
     public Item findById(String id) {
         Item result = new Item();
-        for (int i = 0; i < this.itemsCount; i++) {
-            if (this.items[i].getId().equals(id)) {
-                result = this.items[i];
+        for (Item item : this.items) {
+            if (item.getId().equals(id)) {
+                result = item;
                 break;
             }
         }
         return result;
     }
 
-    /**
-     * Получить заявку по имени key
-     * @param key
-     * @return Массив найденных заявок
-     */
-    public Item[] findByName(String key) {
-        Item[] result = new Item[this.itemsCount];
-        int pos = 0;
-        for (int i = 0; i < this.itemsCount; i++) {
-            if (this.items[i].getName().equals(key)) {
-                result[pos++] = this.items[i];
+    public List<Item> findByName(String name) {
+        List<Item> items = new ArrayList<>();
+        for (Item item : this.items) {
+            if (item.getName().equals(name)) {
+                items.add(item);
             }
         }
-        result = Arrays.copyOf(result, pos);
-        return result;
+        return items;
     }
 
-    /**
-     * Получить все заявки
-     * @return Массив объектов Item
-     */
-    public Item[] findAll() {
-        Item[] result = Arrays.copyOf(this.items, this.itemsCount);
-        return result;
+    public List<Item> findAllItems() {
+        List<Item> list = this.items;
+        return list;
     }
 
 }

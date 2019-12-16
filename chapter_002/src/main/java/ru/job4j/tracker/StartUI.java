@@ -1,11 +1,19 @@
 package ru.job4j.tracker;
 
+import ru.job4j.tracker.actions.*;
+import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.input.InputConsole;
+import ru.job4j.tracker.input.InputValidate;
+
+import java.util.List;
+
 public class StartUI {
 
     private void showMenu(Tracker tracker) {
         System.out.println("Menu:");
-        for (int i = 0; i < tracker.getActionsCount(); i++) {
-            System.out.println(String.format("%s. %s", i, tracker.getActionByIndex(i).getName()));
+        List<Action> actions = tracker.findAllActions();
+        for (Action action : actions) {
+            System.out.println(String.format("%s. %s", action.getId(), action.getName()));
         }
     }
 
@@ -13,23 +21,26 @@ public class StartUI {
         boolean run = true;
         while (run) {
             this.showMenu(tracker);
-            Action action = tracker.getActionByIndex(
-                    input.askInt("Select: ", tracker.getActionsCount())
-            );
-            run = action.execute(input, tracker);
+            List<Action> actions = tracker.findAllActions();
+            int select = input.askInt("Select: ", actions.size() + 1);
+            for (Action action : actions) {
+                if (action.getId() == select) {
+                    run = action.execute(input, tracker);
+                }
+            }
             System.out.println();
         }
     }
 
     public static void main(String[] args) {
-        Tracker tracker = new Tracker()
-                .addAction(new ActionNewItem())
-                .addAction(new ActionShowAll())
-                .addAction(new ActionRenameItem())
-                .addAction(new ActionDeleteItem())
-                .addAction(new ActionFindItemById())
-                .addAction(new ActionFindItemByName())
-                .addAction(new ActionExitProgram());
+        Tracker tracker = new Tracker();
+        tracker.addAction(new NewItem());
+        tracker.addAction(new ShowAll());
+        tracker.addAction(new RenameItem());
+        tracker.addAction(new DeleteItem());
+        tracker.addAction(new FindItemById());
+        tracker.addAction(new FindItemByName());
+        tracker.addAction(new ExitProgram());
         new StartUI().init(new InputValidate(new InputConsole()), tracker);
     }
 

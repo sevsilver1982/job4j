@@ -1,10 +1,22 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.actions;
+
+import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.Tracker;
 
 public abstract class ActionTracker implements Action {
     private String name;
+    private int id;
 
     public ActionTracker(String name) {
         this.name = name;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

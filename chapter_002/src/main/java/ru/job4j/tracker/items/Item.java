@@ -1,4 +1,4 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.items;
 
 public class Item {
     private String id;
@@ -25,5 +25,10 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("id: %s; name: %s", this.getId(), this.getName());
     }
 }
