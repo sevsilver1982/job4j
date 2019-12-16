@@ -20,12 +20,16 @@ public class UserConvert {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             User user = (User) o;
-            return id == user.id &&
-                    Objects.equals(name, user.name) &&
-                    Objects.equals(city, user.city);
+            return id == user.id
+                    && Objects.equals(name, user.name)
+                    && Objects.equals(city, user.city);
         }
 
         @Override
@@ -45,10 +49,10 @@ public class UserConvert {
     public static void main(String[] args) {
         UserConvert userConvert = new UserConvert();
         List<User> list = Arrays.asList(
-                new User(1,"user1", "city1"),
-                new User(2,"user2", "city2"),
-                new User(3,"user3", "city3"),
-                new User(4,"user4", "city4")
+                new User(1, "user1", "city1"),
+                new User(2, "user2", "city2"),
+                new User(3, "user3", "city3"),
+                new User(4, "user4", "city4")
         );
         HashMap<Integer, User> userMap = userConvert.process(list);
         for (User user : userMap.values()) {
