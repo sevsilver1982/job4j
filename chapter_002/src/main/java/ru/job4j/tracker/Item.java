@@ -1,4 +1,6 @@
-package ru.job4j.tracker.items;
+package ru.job4j.tracker;
+
+import java.util.Objects;
 
 public class Item {
     private String id;
@@ -15,7 +17,7 @@ public class Item {
         return id;
     }
 
-    public void setId(String id) {
+    void setId(String id) {
         this.id = id;
     }
 
@@ -31,4 +33,19 @@ public class Item {
     public String toString() {
         return String.format("id: %s; name: %s", this.getId(), this.getName());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Objects.equals(id, item.id) &&
+                Objects.equals(name, item.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+
 }

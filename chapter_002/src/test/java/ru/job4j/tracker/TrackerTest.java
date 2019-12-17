@@ -5,7 +5,6 @@ import ru.job4j.tracker.actions.FindItemByName;
 import ru.job4j.tracker.actions.ShowAll;
 import ru.job4j.tracker.actions.StubActionTracker;
 import ru.job4j.tracker.input.StubInput;
-import ru.job4j.tracker.items.Item;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

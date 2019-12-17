@@ -1,7 +1,7 @@
 package ru.job4j.tracker.actions;
 
 import ru.job4j.tracker.input.Input;
-import ru.job4j.tracker.items.Item;
+import ru.job4j.tracker.Item;
 import ru.job4j.tracker.Tracker;
 
 public class FindItemById extends ActionTracker {
