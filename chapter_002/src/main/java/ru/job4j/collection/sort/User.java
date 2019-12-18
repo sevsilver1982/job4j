@@ -1,7 +1,5 @@
 package ru.job4j.collection.sort;
 
-import com.sun.istack.internal.NotNull;
-
 import java.util.Objects;
 
 public class User implements Comparable<User> {
@@ -13,13 +11,25 @@ public class User implements Comparable<User> {
         this.age = age;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
-        return age == user.age &&
-                Objects.equals(name, user.name);
+        return age == user.age
+                && Objects.equals(name, user.name);
     }
 
     @Override
@@ -28,9 +38,9 @@ public class User implements Comparable<User> {
     }
 
     @Override
-    public int compareTo(@NotNull User o) {
+    public int compareTo(User o) {
         int result = this.name.compareTo(o.name);
-        return result == 0 ? Integer.compare(this.age, o.age) : result;
+        return result == 0 ? Integer.compare(this.age, o.getAge()) : result;
     }
 
 }
