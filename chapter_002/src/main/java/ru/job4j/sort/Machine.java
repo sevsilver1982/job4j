@@ -9,24 +9,16 @@ public class Machine {
         int[] result = new int[100];
         int size = 0;
         int exchange = money - price;
-        try {
-            if (exchange < 0) {
-                throw new RuntimeException("Недостаточно средств");
-            }
-            while (exchange > 0) {
-                for (int coin : coins) {
-                    if (exchange - coin >= 0) {
-                        exchange = exchange - coin;
-                        result[size++] = coin;
-                        break;
-                    }
+        while (exchange > 0) {
+            for (int coin : coins) {
+                if (exchange - coin >= 0) {
+                    exchange = exchange - coin;
+                    result[size++] = coin;
+                    break;
                 }
             }
-            result = Arrays.copyOf(result, size);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
-        return result;
+        return Arrays.copyOf(result, size);
     }
 
 }
