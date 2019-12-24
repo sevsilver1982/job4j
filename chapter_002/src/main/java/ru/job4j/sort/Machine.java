@@ -8,14 +8,14 @@ public class Machine {
     public int[] change(int money, int price) {
         int[] result = new int[100];
         int size = 0;
+        int pos = 0;
         int exchange = money - price;
         while (exchange > 0) {
-            for (int coin : coins) {
-                if (exchange - coin >= 0) {
-                    exchange = exchange - coin;
-                    result[size++] = coin;
-                    break;
-                }
+            if (exchange - coins[pos] >= 0) {
+                exchange = exchange - coins[pos];
+                result[size++] = coins[pos];
+            } else {
+                pos++;
             }
         }
         return Arrays.copyOf(result, size);
