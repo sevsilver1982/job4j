@@ -1,34 +1,63 @@
 package ru.job4j.bank;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Bank {
-    private Map<User, List<Account>> users = new HashMap<>();;
+    private Map<User, List<Account>> users = new HashMap<>();
 
     /*public static void main(String[] args) {
         Bank bank = new Bank();
         bank.addUser(new User("User1", "4500 000001"));
         bank.addAccountToUser("4500 000001", new Account(1000,"00000000000000000001"));
-        bank.addAccountToUser("4500 000001", new Account(2000,"00000000000000000002"));
+        Account acc = new Account(2000,"00000000000000000002");
+        bank.addAccountToUser("4500 000001", acc);
+        bank.deleteAccountFromUser("4500 000001", acc);
+
         bank.addUser(new User("User2", "4500 000002"));
-        bank.addAccountToUser("4500 000002", new Account(1000,"00000000000000000003"));
+        bank.addAccountToUser("4500 000002", new Account(0,"00000000000000000003"));
         bank.addAccountToUser("4500 000002", new Account(2000,"00000000000000000004"));
+        List<Account> accounts = bank.getUserAccounts("4500 0000020");
+
         bank.addUser(new User("User3", "4500 000003"));
         bank.addUser(new User("User4", "4500 000004"));
         bank.addUser(new User("User5", "4500 000005"));
 
-        List<Account> accounts = bank.getUserAccounts("4500 000002");
         boolean qwe = bank.transferMoney(
                 "4500 000001",
-                "00000000000000000002",
-                "4500 000001",
                 "00000000000000000001",
+                "4500 000002",
+                "00000000000000000003",
                 50);
         System.out.println(qwe);
     }*/
+
+    public User getUserByPassport(String passport) {
+        for (Map.Entry<User, List<Account>> item : this.users.entrySet()) {
+            if (item.getKey().getPassport().equals(passport)) {
+                return item.getKey();
+            }
+        }
+        return new User();
+    }
+
+    public List<Account> getAccountList(User user) {
+        for (Map.Entry<User, List<Account>> item : this.users.entrySet()) {
+            if (item.getKey().equals(user)) {
+                return item.getValue();
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    public Account getAccount(User user, String req) {
+        List<Account> accounts = getAccountList(user);
+        for (Account account : accounts) {
+            if (account.getRequisites().equals(req)) {
+                return account;
+            }
+        }
+        return new Account();
+    }
 
     /**
      * Добавление пользователя.
@@ -52,14 +81,9 @@ public class Bank {
      * @param account
      */
     public void addAccountToUser(String passport, Account account) {
-        for (Map.Entry<User, List<Account>> item : this.users.entrySet()) {
-            if (item.getKey().getPassport().equals(passport)) {
-                List<Account> accounts = item.getValue();
-                if (!accounts.contains(account)) {
-                    accounts.add(account);
-                    break;
-                }
-            }
+        List<Account> accounts = getAccountList(getUserByPassport(passport));
+        if (!accounts.contains(account)) {
+            accounts.add(account);
         }
     }
 
@@ -69,12 +93,7 @@ public class Bank {
      * @param account
      */
     public void deleteAccountFromUser(String passport, Account account) {
-        for (Map.Entry<User, List<Account>> item : this.users.entrySet()) {
-            if (item.getKey().getPassport().equals(passport)) {
-                item.getValue().remove(account);
-                break;
-            }
-        }
+        getAccountList(getUserByPassport(passport)).remove(account);
     }
 
     /**
@@ -83,13 +102,7 @@ public class Bank {
      * @return
      */
     public List<Account> getUserAccounts(String passport) {
-        List<Account> accounts = new ArrayList<>();
-        for (Map.Entry<User, List<Account>> item : this.users.entrySet()) {
-            if (item.getKey().getPassport().equals(passport)) {
-                return new ArrayList<>(item.getValue());
-            }
-        }
-        return accounts;
+        return new ArrayList<>(getAccountList(getUserByPassport(passport)));
     }
 
     /**
@@ -97,35 +110,18 @@ public class Bank {
      * Если счёт не найден или не хватает денег на счёте srcAccount (с которого переводят) вернёт false.
      * @param srcPassport
      * @param srcRequisite
-     * @param destPassport
+     * @param dstPassport
      * @param dstRequisite
      * @param amount
      * @return
      */
-    public boolean transferMoney(String srcPassport, String srcRequisite, String destPassport, String dstRequisite, double amount) {
-        Account srcAccount = null;
-        Account dstAccount = null;
-        for (Map.Entry<User, List<Account>> item : this.users.entrySet()) {
-            if (item.getKey().getPassport().equals(srcPassport) || item.getKey().getPassport().equals(destPassport)) {
-                for (Account account : item.getValue()) {
-                    if (account.getRequisites().equals(srcRequisite)) {
-                        srcAccount = account;
-                    }
-                    if (account.getRequisites().equals(dstRequisite)) {
-                        dstAccount = account;
-                    }
-                }
-            }
-            if (srcAccount != null && dstAccount != null) {
-                break;
-            }
-        }
-        if (srcAccount == null || dstAccount == null || srcAccount.getValue() < amount) {
+    public boolean transferMoney(String srcPassport, String srcRequisite, String dstPassport, String dstRequisite, double amount) {
+        Account srcAccount = getAccount(getUserByPassport(srcPassport), srcRequisite);
+        Account dstAccount = getAccount(getUserByPassport(dstPassport), dstRequisite);
+        if (srcAccount.getRequisites() == null || dstAccount.getRequisites() == null) {
             return false;
         }
-        srcAccount.setValue(srcAccount.getValue() - amount);
-        dstAccount.setValue(dstAccount.getValue() + amount);
-        return true;
+        return srcAccount.transfer(dstAccount, amount);
     }
 
 }

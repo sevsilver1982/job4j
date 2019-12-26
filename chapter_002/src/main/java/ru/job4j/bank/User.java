@@ -6,6 +6,9 @@ public class User {
     private String name;
     private String passport;
 
+    public User() {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

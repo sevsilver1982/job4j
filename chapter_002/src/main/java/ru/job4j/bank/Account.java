@@ -6,6 +6,9 @@ public class Account {
     private double value;
     private String requisites;
 
+    public Account() {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -27,6 +30,15 @@ public class Account {
     public Account(double value, String requisites) {
         this.value = value;
         this.requisites = requisites;
+    }
+
+    public boolean transfer(Account account, double amount) {
+        if (account.getRequisites() == null || this.value < amount) {
+            return false;
+        }
+        this.value = this.value - amount;
+        account.setValue(account.getValue() + amount);
+        return true;
     }
 
     public double getValue() {
