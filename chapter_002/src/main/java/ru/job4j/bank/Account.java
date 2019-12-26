@@ -33,7 +33,7 @@ public class Account {
     }
 
     public boolean transfer(Account account, double amount) {
-        if (account.getRequisites() == null || this.value < amount) {
+        if (account == null || this.value < amount) {
             return false;
         }
         this.value = this.value - amount;
