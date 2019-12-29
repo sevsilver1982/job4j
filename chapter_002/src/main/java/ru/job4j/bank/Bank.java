@@ -5,7 +5,7 @@ import java.util.*;
 public class Bank {
     private Map<User, List<Account>> users = new HashMap<>();
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Bank bank = new Bank();
         bank.addUser(new User("User1", "4500 000001"));
         bank.addAccountToUser("4500 000001", new Account(1000,"00000000000000000001"));
@@ -29,7 +29,7 @@ public class Bank {
                 "00000000000000000003",
                 50);
         System.out.println(qwe);
-    }
+    }*/
 
     public User getUserByPassport(String passport) {
         for (Map.Entry<User, List<Account>> item : this.users.entrySet()) {
@@ -37,7 +37,7 @@ public class Bank {
                 return item.getKey();
             }
         }
-        return null;
+        return new User();
     }
 
     public List<Account> getAccountList(User user) {
@@ -46,19 +46,17 @@ public class Bank {
                 return item.getValue();
             }
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public Account getAccount(User user, String req) {
         List<Account> accounts = getAccountList(user);
-        if (accounts != null) {
-            for (Account account : accounts) {
-                if (account.getRequisites().equals(req)) {
-                    return account;
-                }
+        for (Account account : accounts) {
+            if (account.getRequisites().equals(req)) {
+                return account;
             }
         }
-        return null;
+        return new Account();
     }
 
     /**
@@ -104,14 +102,7 @@ public class Bank {
      * @return
      */
     public List<Account> getUserAccounts(String passport) {
-        User user = getUserByPassport(passport);
-        if (user != null) {
-            List<Account> accounts = getAccountList(user);
-            if (accounts != null) {
-                return new ArrayList<>(accounts);
-            }
-        }
-        return null;
+        return new ArrayList<>(getAccountList(getUserByPassport(passport)));
     }
 
     /**
@@ -127,7 +118,7 @@ public class Bank {
     public boolean transferMoney(String srcPassport, String srcRequisite, String dstPassport, String dstRequisite, double amount) {
         Account srcAccount = getAccount(getUserByPassport(srcPassport), srcRequisite);
         Account dstAccount = getAccount(getUserByPassport(dstPassport), dstRequisite);
-        if (srcAccount == null || dstAccount == null) {
+        if (srcAccount.getRequisites() == null || dstAccount.getRequisites() == null) {
             return false;
         }
         return srcAccount.transfer(dstAccount, amount);
