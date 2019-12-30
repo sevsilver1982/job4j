@@ -1,8 +1,6 @@
 package pseudo;
 
 import org.junit.Test;
-import ru.job4j.pseudo.Square;
-import ru.job4j.pseudo.Triangle;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;

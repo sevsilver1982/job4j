@@ -1,13 +1,10 @@
 package tracker;
 
 import org.junit.Test;
-import ru.job4j.tracker.Item;
-import ru.job4j.tracker.StartUI;
-import ru.job4j.tracker.Tracker;
-import ru.job4j.tracker.actions.FindItemByName;
-import ru.job4j.tracker.actions.ShowAll;
-import ru.job4j.tracker.actions.StubActionTracker;
-import ru.job4j.tracker.input.StubInput;
+import tracker.actions.FindItemByName;
+import tracker.actions.ShowAll;
+import tracker.actions.StubActionTracker;
+import tracker.input.StubInput;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

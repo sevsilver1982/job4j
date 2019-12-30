@@ -1,9 +1,8 @@
 package tracker;
 
 import org.junit.Test;
-import ru.job4j.tracker.Item;
-import ru.job4j.tracker.items.ItemSortByNameASC;
-import ru.job4j.tracker.items.ItemSortByNameDESC;
+import tracker.items.ItemSortByNameASC;
+import tracker.items.ItemSortByNameDESC;
 
 import java.util.Arrays;
 import java.util.List;
