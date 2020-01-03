@@ -31,32 +31,30 @@ public class Bank {
         System.out.println(qwe);
     }*/
 
-    public User getUserByPassport(String passport) {
+    private Optional<User> getUserByPassport(String passport) {
         for (Map.Entry<User, List<Account>> item : this.users.entrySet()) {
             if (item.getKey().getPassport().equals(passport)) {
-                return item.getKey();
+                return Optional.of(item.getKey());
             }
         }
-        return new User();
+        return Optional.empty();
     }
 
-    public List<Account> getAccountList(User user) {
-        for (Map.Entry<User, List<Account>> item : this.users.entrySet()) {
-            if (item.getKey().equals(user)) {
-                return item.getValue();
-            }
+    private List<Account> getAccountList(User user) {
+        if (this.users.containsKey(user)) {
+            return users.get(user);
         }
-        return new ArrayList<>();
+        return Collections.EMPTY_LIST;
     }
 
-    public Account getAccount(User user, String req) {
+    private Optional<Account> getAccount(User user, String req) {
         List<Account> accounts = getAccountList(user);
         for (Account account : accounts) {
             if (account.getRequisites().equals(req)) {
-                return account;
+                return Optional.of(account);
             }
         }
-        return new Account();
+        return Optional.empty();
     }
 
     /**
@@ -81,9 +79,12 @@ public class Bank {
      * @param account
      */
     public void addAccountToUser(String passport, Account account) {
-        List<Account> accounts = getAccountList(getUserByPassport(passport));
-        if (!accounts.contains(account)) {
-            accounts.add(account);
+        Optional<User> user = getUserByPassport(passport);
+        if (user.isPresent()) {
+            List<Account> accounts = getAccountList(user.get());
+            if (!accounts.contains(account)) {
+                accounts.add(account);
+            }
         }
     }
 
@@ -93,7 +94,11 @@ public class Bank {
      * @param account
      */
     public void deleteAccountFromUser(String passport, Account account) {
-        getAccountList(getUserByPassport(passport)).remove(account);
+        Optional<User> user = getUserByPassport(passport);
+        if (user.isPresent()) {
+            List<Account> accounts = getAccountList(user.get());
+            accounts.remove(account);
+        }
     }
 
     /**
@@ -102,7 +107,11 @@ public class Bank {
      * @return
      */
     public List<Account> getUserAccounts(String passport) {
-        return new ArrayList<>(getAccountList(getUserByPassport(passport)));
+        Optional<User> user = getUserByPassport(passport);
+        if (user.isPresent()) {
+            return getAccountList(user.get());
+        }
+        return Collections.EMPTY_LIST;
     }
 
     /**
@@ -116,12 +125,16 @@ public class Bank {
      * @return
      */
     public boolean transferMoney(String srcPassport, String srcRequisite, String dstPassport, String dstRequisite, double amount) {
-        Account srcAccount = getAccount(getUserByPassport(srcPassport), srcRequisite);
-        Account dstAccount = getAccount(getUserByPassport(dstPassport), dstRequisite);
-        if (srcAccount.getRequisites() == null || dstAccount.getRequisites() == null) {
-            return false;
+        Optional<User> userS = getUserByPassport(srcPassport);
+        Optional<User> userT = getUserByPassport(dstPassport);
+        if (userS.isPresent() && userT.isPresent()) {
+            Optional<Account> srcAccount = getAccount(userS.get(), srcRequisite);
+            Optional<Account> dstAccount = getAccount(userT.get(), dstRequisite);
+            if (srcAccount.isPresent() && dstAccount.isPresent()) {
+                return srcAccount.get().transfer(dstAccount.get(), amount);
+            }
         }
-        return srcAccount.transfer(dstAccount, amount);
+        return false;
     }
 
 }
