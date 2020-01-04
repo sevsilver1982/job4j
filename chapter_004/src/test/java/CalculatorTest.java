@@ -15,8 +15,8 @@ public class CalculatorTest {
         List<Double> buffer = new ArrayList<>();
         calc.multiple(
                 0, 3, 1,
-                (value, index) -> (double) value + index,
-                result -> buffer.add(result)
+                MathUtil::add,
+                buffer::add
         );
         assertThat(buffer, is(Arrays.asList(1D, 2D, 3D)));
     }
