@@ -44,7 +44,7 @@ public class Bank {
         if (this.users.containsKey(user)) {
             return users.get(user);
         }
-        return Collections.emptyList();
+        return new ArrayList<>();
     }
 
     private Optional<Account> getAccount(User user, String req) {
@@ -111,7 +111,7 @@ public class Bank {
         if (user.isPresent()) {
             return getAccountList(user.get());
         }
-        return Collections.emptyList();
+        return new ArrayList<>();
     }
 
     /**
