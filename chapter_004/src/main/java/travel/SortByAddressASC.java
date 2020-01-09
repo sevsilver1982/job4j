@@ -2,7 +2,7 @@ package travel;
 
 import java.util.Comparator;
 
-public class sortByAddressASC implements Comparator<Address> {
+public class SortByAddressASC implements Comparator<Address> {
 
     @Override
     public int compare(Address o1, Address o2) {
