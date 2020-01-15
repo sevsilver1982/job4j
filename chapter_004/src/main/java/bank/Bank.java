@@ -8,15 +8,15 @@ public class Bank {
     /*public static void main(String[] args) {
         Bank bank = new Bank();
         bank.addUser(new User("User1", "4500 000001"));
-        bank.addAccountToUser("4500 000001", new Account(1000,"00000000000000000001"));
-        Account acc = new Account(2000,"00000000000000000002");
+        bank.addAccountToUser("4500 000001", new Account(1000, "00000000000000000001"));
+        Account acc = new Account(2000, "00000000000000000002");
         bank.addAccountToUser("4500 000001", acc);
         bank.deleteAccountFromUser("4500 000001", acc);
 
         bank.addUser(new User("User2", "4500 000002"));
-        bank.addAccountToUser("4500 000002", new Account(0,"00000000000000000003"));
-        bank.addAccountToUser("4500 000002", new Account(2000,"00000000000000000004"));
-        List<Account> accounts = bank.getUserAccounts("4500 0000020");
+        bank.addAccountToUser("4500 000002", new Account(0, "00000000000000000003"));
+        bank.addAccountToUser("4500 000002", new Account(2000, "00000000000000000004"));
+        Optional<List<Account>> accounts = bank.getUserAccounts("4500 000002");
 
         bank.addUser(new User("User3", "4500 000003"));
         bank.addUser(new User("User4", "4500 000004"));
@@ -28,33 +28,25 @@ public class Bank {
                 "4500 000002",
                 "00000000000000000003",
                 50);
+
         System.out.println(qwe);
     }*/
 
     private Optional<User> getUserByPassport(String passport) {
-        for (Map.Entry<User, List<Account>> item : this.users.entrySet()) {
-            if (item.getKey().getPassport().equals(passport)) {
-                return Optional.of(item.getKey());
-            }
-        }
-        return Optional.empty();
+        return this.users.keySet()
+                .stream()
+                .filter(user -> user.getPassport().equals(passport))
+                .findFirst();
     }
 
     private List<Account> getAccountList(User user) {
-        if (this.users.containsKey(user)) {
-            return users.get(user);
-        }
-        return new ArrayList<>();
+        return this.users.get(user);
     }
 
     private Optional<Account> getAccount(User user, String req) {
-        List<Account> accounts = getAccountList(user);
-        for (Account account : accounts) {
-            if (account.getRequisites().equals(req)) {
-                return Optional.of(account);
-            }
-        }
-        return Optional.empty();
+        return getAccountList(user).stream()
+                .filter(account -> account.getRequisites().equals(req))
+                .findFirst();
     }
 
     /**
@@ -95,10 +87,7 @@ public class Bank {
      */
     public void deleteAccountFromUser(String passport, Account account) {
         Optional<User> user = getUserByPassport(passport);
-        if (user.isPresent()) {
-            List<Account> accounts = getAccountList(user.get());
-            accounts.remove(account);
-        }
+        user.ifPresent(value -> getAccountList(value).remove(account));
     }
 
     /**
@@ -106,12 +95,12 @@ public class Bank {
      * @param passport
      * @return
      */
-    public List<Account> getUserAccounts(String passport) {
+    public Optional<List<Account>> getUserAccounts(String passport) {
         Optional<User> user = getUserByPassport(passport);
-        if (user.isPresent()) {
-            return getAccountList(user.get());
-        }
-        return new ArrayList<>();
+        return this.users.entrySet().stream()
+                .filter(entry -> entry.getKey().getPassport().equals(passport))
+                .map(Map.Entry::getValue)
+                .findFirst();
     }
 
     /**
