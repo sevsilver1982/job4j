@@ -8,14 +8,14 @@ public class Bank {
     /*public static void main(String[] args) {
         Bank bank = new Bank();
         bank.addUser(new User("User1", "4500 000001"));
-        bank.addAccountToUser("4500 000001", new Account(1000,"00000000000000000001"));
-        Account acc = new Account(2000,"00000000000000000002");
+        bank.addAccountToUser("4500 000001", new Account(1000, "00000000000000000001"));
+        Account acc = new Account(2000, "00000000000000000002");
         bank.addAccountToUser("4500 000001", acc);
         bank.deleteAccountFromUser("4500 000001", acc);
 
         bank.addUser(new User("User2", "4500 000002"));
-        bank.addAccountToUser("4500 000002", new Account(0,"00000000000000000003"));
-        bank.addAccountToUser("4500 000002", new Account(2000,"00000000000000000004"));
+        bank.addAccountToUser("4500 000002", new Account(0, "00000000000000000003"));
+        bank.addAccountToUser("4500 000002", new Account(2000, "00000000000000000004"));
         List<Account> accounts = bank.getUserAccounts("4500 0000020");
 
         bank.addUser(new User("User3", "4500 000003"));
