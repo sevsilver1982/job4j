@@ -42,10 +42,10 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         StubActionTracker action = new StubActionTracker();
         tracker.addAction(action);
-        StubInput consoleInput = new StubInput(
+        StubInput input = new StubInput(
                 new String[] {"1"}
         );
-        new StartUI().init(consoleInput, tracker);
+        new StartUI(input, tracker, System.out::println).init();
         assertThat(action.isCall(), is(true));
     }
 
@@ -59,7 +59,7 @@ public class TrackerTest {
         );
         Tracker tracker = new Tracker();
         tracker.addAction(new StubActionTracker());
-        new StartUI().init(input, tracker);
+        new StartUI(input, tracker, System.out::println).init();
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator() + System.lineSeparator())
                 .add("Menu:")
                 .add("1. Stub action")
