@@ -9,6 +9,11 @@ public class Account {
     public Account() {
     }
 
+    public Account(double value, String requisites) {
+        this.value = value;
+        this.requisites = requisites;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -25,11 +30,6 @@ public class Account {
     @Override
     public int hashCode() {
         return Objects.hash(value, requisites);
-    }
-
-    public Account(double value, String requisites) {
-        this.value = value;
-        this.requisites = requisites;
     }
 
     public boolean transfer(Account account, double amount) {

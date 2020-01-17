@@ -6,26 +6,36 @@ import tracker.input.InputConsole;
 import tracker.input.InputValidate;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class StartUI {
+    private final Input input;
+    private final Tracker tracker;
+    private final Consumer<String> output;
 
-    private void showMenu(Tracker tracker) {
+    private void showMenu(Tracker tracker, Consumer<String> output) {
         System.out.println("Menu:");
-        List<Action> actions = tracker.findAllActions();
-        for (Action action : actions) {
-            System.out.println(String.format("%s. %s", action.getId(), action.getName()));
-        }
+        tracker.findAllActions()
+                .stream()
+                .map(action -> String.format("%s. %s", action.getId(), action.getName()))
+                .forEach(action -> output.accept(action));
     }
 
-    public void init(Input input, Tracker tracker) {
+    public StartUI(Input input, Tracker tracker, Consumer<String> output) {
+        this.input = input;
+        this.tracker = tracker;
+        this.output = output;
+    }
+
+    public void init() {
         boolean run = true;
         while (run) {
-            this.showMenu(tracker);
-            List<Action> actions = tracker.findAllActions();
-            int select = input.askInt("Select: ", actions.size() + 1);
+            this.showMenu(this.tracker, this.output);
+            List<Action> actions = this.tracker.findAllActions();
+            int select = this.input.askInt("Select: ", actions.size() + 1);
             for (Action action : actions) {
                 if (action.getId() == select) {
-                    run = action.execute(input, tracker);
+                    run = action.execute(this.input, this.tracker);
                 }
             }
             System.out.println();
@@ -41,7 +51,11 @@ public class StartUI {
         tracker.addAction(new FindItemById());
         tracker.addAction(new FindItemByName());
         tracker.addAction(new ExitProgram());
-        new StartUI().init(new InputValidate(new InputConsole()), tracker);
+        new StartUI(new InputValidate(
+                new InputConsole()),
+                tracker,
+                System.out::println
+        ).init();
     }
 
 }

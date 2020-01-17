@@ -4,18 +4,9 @@ import java.util.Objects;
 
 public class User {
     private String name;
-    private int age;
     private String passport;
 
     public User() {
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     @Override

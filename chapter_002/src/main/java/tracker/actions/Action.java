@@ -1,7 +1,7 @@
 package tracker.actions;
 
-import tracker.input.Input;
 import tracker.Tracker;
+import tracker.input.Input;
 
 public interface Action {
     String getName();

@@ -1,8 +1,8 @@
 package tracker.actions;
 
-import tracker.input.Input;
 import tracker.Item;
 import tracker.Tracker;
+import tracker.input.Input;
 
 public class NewItem extends ActionTracker {
 

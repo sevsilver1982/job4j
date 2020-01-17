@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -27,10 +26,9 @@ public class UserConvert {
     }
 
     public static void main(String[] args) {
-        List<String> names = Arrays.asList("Petr", "Nick", "Ban");
-        UserConvert users = new UserConvert();
-        List<User> data = users.convert(names, User::new);
-        data.forEach(System.out::println);
+        new UserConvert()
+                .convert(List.of("Petr", "Nick", "Ban"), User::new)
+                .forEach(System.out::println);
     }
 
 }
