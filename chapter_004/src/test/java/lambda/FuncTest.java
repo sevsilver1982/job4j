@@ -1,7 +1,7 @@
 package lambda;
 
 import org.junit.Test;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -21,22 +21,23 @@ public class FuncTest {
 
     @Test
     public void linear() {
-        List<Double> result = diapason(5, 8, x -> 2 * x + 1);
-        List<Double> expected = Arrays.asList(11D, 13D, 15D);
-        assertThat(result, is(expected));
+        assertThat(
+                diapason(5, 8, x -> 2 * x + 1),
+                is(List.of(11D, 13D, 15D))
+        );
     }
 
     @Test
     public void quadratic() {
-        List<Double> result = diapason(5, 8, x -> x * x);
-        List<Double> expected = Arrays.asList(25D, 36D, 49D);
-        assertThat(result, is(expected));
+        assertThat(
+                diapason(5, 8, x -> x * x),
+                is(List.of(25D, 36D, 49D)));
     }
 
     @Test
     public void logarithmic() {
         List<Double> result = diapason(5, 8, x -> Math.log(x + 1));
-        List<Double> expected = Arrays.asList(1.791759469228055, 1.9459101490553132, 2.0794415416798357);
+        List<Double> expected = List.of(1.791759469228055, 1.9459101490553132, 2.0794415416798357);
         assertThat(result, is(expected));
     }
 

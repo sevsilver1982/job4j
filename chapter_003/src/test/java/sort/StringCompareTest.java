@@ -10,52 +10,42 @@ public class StringCompareTest {
 
     @Test
     public void whenStringsAreEqualThenZero() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
-                "Ivanov",
-                "Ivanov"
+        assertThat(
+                new StringCompare().compare("Ivanov", "Ivanov"),
+                is(0)
         );
-        assertThat(rst, is(0));
     }
 
     @Test
     public void whenLeftLessThanRightResultShouldBeNegative() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
-                "Ivanov",
-                "Ivanova"
+        assertThat(
+                new StringCompare().compare("Ivanov", "Ivanova"),
+                lessThan(0)
         );
-        assertThat(rst, lessThan(0));
     }
 
     @Test
     public void whenLeftGreaterThanRightResultShouldBePositive() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
-                "Petrov",
-                "Ivanova"
+        assertThat(
+                new StringCompare().compare("Petrov", "Ivanova"),
+                greaterThan(0)
         );
-        assertThat(rst, greaterThan(0));
     }
 
     @Test
     public void secondCharOfLeftGreaterThanRightShouldBePositive() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
-                "Petrov",
-                "Patrov"
+        assertThat(
+                new StringCompare().compare("Petrov", "Patrov"),
+                greaterThan(0)
         );
-        assertThat(rst, greaterThan(0));
     }
 
     @Test
     public void secondCharOfLeftLessThanRightShouldBeNegative() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
-                "Patrova",
-                "Petrov"
+        assertThat(
+                new StringCompare().compare("Patrova", "Petrov"),
+                lessThan(0)
         );
-        assertThat(rst, lessThan(0));
     }
 
 }

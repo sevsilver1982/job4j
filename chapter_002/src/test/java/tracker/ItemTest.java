@@ -4,8 +4,8 @@ import org.junit.Test;
 import tracker.items.ItemSortByNameASC;
 import tracker.items.ItemSortByNameDESC;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -14,42 +14,44 @@ public class ItemTest {
 
     @Test
     public void comparatorItemSortByNameASC() {
-        List<Item> result = Arrays.asList(
-                new Item("Task1"),
-                new Item("Task3"),
-                new Item("Task5"),
-                new Item("Task2"),
-                new Item("Task4")
+        assertThat(
+                List.of(
+                        new Item("Task1"),
+                        new Item("Task3"),
+                        new Item("Task5"),
+                        new Item("Task2"),
+                        new Item("Task4")
+                ).stream().sorted(new ItemSortByNameASC()).collect(Collectors.toList()),
+                is(List.of(
+                        new Item("Task1"),
+                        new Item("Task2"),
+                        new Item("Task3"),
+                        new Item("Task4"),
+                        new Item("Task5")
+                        )
+                )
         );
-        result.sort(new ItemSortByNameASC());
-        List<Item> expect = Arrays.asList(
-                new Item("Task1"),
-                new Item("Task2"),
-                new Item("Task3"),
-                new Item("Task4"),
-                new Item("Task5")
-        );
-        assertThat(result, is(expect));
     }
 
     @Test
     public void comparatorItemSortByNameDESC() {
-        List<Item> result = Arrays.asList(
-                new Item("Task1"),
-                new Item("Task3"),
-                new Item("Task5"),
-                new Item("Task2"),
-                new Item("Task4")
+        assertThat(
+                List.of(
+                        new Item("Task1"),
+                        new Item("Task3"),
+                        new Item("Task5"),
+                        new Item("Task2"),
+                        new Item("Task4")
+                ).stream().sorted(new ItemSortByNameDESC()).collect(Collectors.toList()),
+                is(List.of(
+                        new Item("Task5"),
+                        new Item("Task4"),
+                        new Item("Task3"),
+                        new Item("Task2"),
+                        new Item("Task1")
+                        )
+                )
         );
-        result.sort(new ItemSortByNameDESC());
-        List<Item> expect = Arrays.asList(
-                new Item("Task5"),
-                new Item("Task4"),
-                new Item("Task3"),
-                new Item("Task2"),
-                new Item("Task1")
-        );
-        assertThat(result, is(expect));
     }
 
 }
