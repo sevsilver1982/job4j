@@ -1,7 +1,4 @@
-# job4j
-# Привет, job4j!!!
-# Привет, job4j!!! Я начал курс в сентябре 2019 Ж:)
-# В курсе производилась работа с ветками git
-# task_124176
+[![Build Status](https://travis-ci.org/sevsilver1982/job4j.svg?branch=master)](https://travis-ci.org/sevsilver1982/job4j)
+[![codecov](https://codecov.io/gh/sevsilver1982/job4j/branch/master/graph/badge.svg)](https://codecov.io/gh/sevsilver1982/job4j)
 
-Объединение зафиксированных изменений
+# job4j
