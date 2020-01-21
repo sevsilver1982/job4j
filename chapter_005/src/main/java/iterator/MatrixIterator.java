@@ -14,19 +14,13 @@ public class MatrixIterator implements Iterator {
 
     @Override
     public boolean hasNext() {
-        boolean result = true;
-        if (this.ypos > this.ints.length - 1 || this.xpos > this.ints[this.ypos].length - 1) {
-            result = false;
-        }
-        return result;
+        return this.ypos <= this.ints.length - 1 && this.xpos <= this.ints[this.ypos].length - 1;
     }
 
     @Override
     public Object next() {
-        int i = this.ints[this.ypos][this.xpos];
-        if (this.xpos < this.ints[this.ypos].length - 1) {
-            this.xpos++;
-        } else {
+        int i = this.ints[this.ypos][this.xpos++];
+        if (this.xpos > this.ints[this.ypos].length - 1) {
             this.xpos = 0;
             this.ypos++;
         }
