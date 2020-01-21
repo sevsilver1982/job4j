@@ -8,9 +8,9 @@ import java.util.stream.Stream;
 
 public class School {
 
-    public List<Student> collect(List<Student> students, Predicate<Student> predicat) {
+    public List<Student> collect(List<Student> students, Predicate<Student> predicate) {
         return students.stream()
-                .filter(predicat)
+                .filter(predicate)
                 .collect(Collectors.toList());
     }
 

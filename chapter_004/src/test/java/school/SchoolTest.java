@@ -23,10 +23,6 @@ public class SchoolTest {
             new Student(10)
     );
 
-    private static void accept(Student student) {
-        System.out.println();
-    }
-
     @Test
     public void getStudentListA() {
         assertThat(
