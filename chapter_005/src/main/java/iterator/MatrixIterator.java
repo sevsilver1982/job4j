@@ -1,5 +1,6 @@
 package iterator;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class MatrixIterator implements Iterator {
@@ -8,13 +9,13 @@ public class MatrixIterator implements Iterator {
     private int ypos = 0;
 
     public MatrixIterator(int[][] ints) {
-        this.ints = ints;
+        this.ints = Arrays.copyOf(ints, ints.length);
     }
 
     @Override
     public boolean hasNext() {
         boolean result = true;
-        if (ypos > this.ints.length - 1 || xpos > this.ints[ypos].length - 1) {
+        if (this.ypos > this.ints.length - 1 || this.xpos > this.ints[this.ypos].length - 1) {
             result = false;
         }
         return result;
@@ -22,12 +23,12 @@ public class MatrixIterator implements Iterator {
 
     @Override
     public Object next() {
-        int i = this.ints[ypos][xpos];
-        if (xpos < this.ints[ypos].length - 1) {
-            xpos++;
+        int i = this.ints[this.ypos][this.xpos];
+        if (this.xpos < this.ints[this.ypos].length - 1) {
+            this.xpos++;
         } else {
-            xpos = 0;
-            ypos++;
+            this.xpos = 0;
+            this.ypos++;
         }
         return i;
     }

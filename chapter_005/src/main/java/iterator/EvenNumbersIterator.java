@@ -1,5 +1,6 @@
 package iterator;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
@@ -9,7 +10,7 @@ public class EvenNumbersIterator implements Iterator {
     private int position = 0;
 
     public EvenNumbersIterator(int[] ints) {
-        this.ints = ints;
+        this.ints = Arrays.copyOf(ints, ints.length);
     }
 
     @Override
