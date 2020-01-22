@@ -1,47 +1,43 @@
 package iterator;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.function.Consumer;
 
 public class EvenNumbersIterator implements Iterator {
     private int[] ints;
     private int position = 0;
 
     public EvenNumbersIterator(int[] ints) {
-        this.ints = Arrays.copyOf(ints, ints.length);
+        this.ints = ints;
     }
 
     @Override
     public boolean hasNext() {
-        for (int i = this.position; i < this.ints.length; i++) {
-            if (this.ints[i] % 2 == 0) {
-                return true;
+        boolean result = false;
+        for (int i = position; i < ints.length; i++) {
+            if (ints[i] % 2 == 0) {
+                result = true;
+                break;
             }
         }
-        return false;
+        return result;
     }
 
     @Override
     public Object next() {
-        for (int i = this.position; i < this.ints.length; i++) {
-            this.position++;
-            if (this.ints[i] % 2 == 0) {
-                return this.ints[i];
+        int result = 0;
+        for (int i = position; i < ints.length; i++) {
+            position++;
+            if (ints[i] % 2 == 0) {
+                result = ints[i];
+                break;
+            }
+            if (position == ints.length) {
+                throw new NoSuchElementException();
             }
         }
-        throw new NoSuchElementException();
-    }
+        return result;
 
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void forEachRemaining(Consumer action) {
-        throw new UnsupportedOperationException();
     }
 
 }
