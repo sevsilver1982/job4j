@@ -1,16 +1,30 @@
 package iterator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-public class Converter {
+public class Converter implements Iterator<Integer> {
+    private Iterator<Iterator<Integer>> iterator;
+    private Iterator<Integer> ptrNextIterator = null;
 
-    public Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
-        List<Integer> list = new ArrayList<>();
-        it.forEachRemaining(x ->
-                x.forEachRemaining(list::add));
-        return list.iterator();
+    public Converter(Iterator<Iterator<Integer>> iterator) {
+        this.iterator = iterator;
+    }
+
+    public Iterator<Integer> convert() {
+        return this;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return iterator.hasNext() || ptrNextIterator.hasNext();
+    }
+
+    @Override
+    public Integer next() {
+        while (ptrNextIterator == null || !ptrNextIterator.hasNext()) {
+            ptrNextIterator = iterator.next();
+        }
+        return ptrNextIterator.next();
     }
 
 }

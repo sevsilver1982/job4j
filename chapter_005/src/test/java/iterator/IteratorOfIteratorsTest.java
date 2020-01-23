@@ -13,14 +13,14 @@ public class IteratorOfIteratorsTest {
 
     @Before
     public void setUp() {
-        Converter converter = new Converter();
-        it = converter.convert(
+        Converter converter = new Converter(
                 List.of(
                         Arrays.asList(1, 2, 3).iterator(),
                         Arrays.asList(4, 5, 6).iterator(),
                         Arrays.asList(7, 8, 9).iterator()
-                        ).iterator()
+                ).iterator()
         );
+        it = converter.convert();
     }
 
     @Test
@@ -75,26 +75,45 @@ public class IteratorOfIteratorsTest {
     }
 
     @Test
+    public void nextShouldReturn123456InCaseOfEmptyIterators() {
+        Converter converter = new Converter(
+                List.of(
+                        new ArrayList<Integer>().iterator(),
+                        Arrays.asList(1, 2, 3).iterator(),
+                        new ArrayList<Integer>().iterator(),
+                        Arrays.asList(4, 5, 6).iterator()
+                ).iterator()
+        );
+        it = converter.convert();
+        assertThat(it.next(), is(1));
+        assertThat(it.next(), is(2));
+        assertThat(it.next(), is(3));
+        assertThat(it.next(), is(4));
+        assertThat(it.next(), is(5));
+        assertThat(it.next(), is(6));
+    }
+
+    @Test
     public void hasNextShouldReturnFalseInCaseOfEmptyIterators() {
-        Converter converter = new Converter();
-        it = converter.convert(
+        Converter converter = new Converter(
                 List.of(
                         new ArrayList<Integer>().iterator(),
                         new ArrayList<Integer>().iterator(),
                         new ArrayList<Integer>().iterator()
                 ).iterator()
         );
+        it = converter.convert();
         assertThat(it.hasNext(), is(false));
     }
 
     @Test(expected = NoSuchElementException.class)
     public void invocationOfNextMethodShouldThrowNoSuchElementException() {
-        Converter converter = new Converter();
-        it = converter.convert(
+        Converter converter = new Converter(
                 List.of(
                         List.of(1, 2, 3).iterator()
                 ).iterator()
         );
+        it = converter.convert();
         assertThat(it.next(), is(1));
         assertThat(it.next(), is(2));
         assertThat(it.next(), is(3));
