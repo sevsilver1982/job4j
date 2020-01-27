@@ -3,11 +3,11 @@ package iterator;
 import java.util.*;
 
 public class Converter implements Iterator<Integer> {
-    private Iterator<Iterator<Integer>> iterator;
-    private Iterator<Integer> ptrNextIterator = null;
+    private Iterator<Iterator<Integer>> it;
+    private Iterator<Integer> iterator = new ArrayList().iterator();
 
-    public Converter(Iterator<Iterator<Integer>> iterator) {
-        this.iterator = iterator;
+    public Converter(Iterator<Iterator<Integer>> it) {
+        this.it = it;
     }
 
     public Iterator<Integer> convert() {
@@ -16,15 +16,18 @@ public class Converter implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        return iterator.hasNext() || ptrNextIterator.hasNext();
+        while (it.hasNext() && !iterator.hasNext()) {
+            iterator = it.next();
+        }
+        return iterator.hasNext();
     }
 
     @Override
     public Integer next() {
-        while (ptrNextIterator == null || !ptrNextIterator.hasNext()) {
-            ptrNextIterator = iterator.next();
+        if (!hasNext()) {
+            throw new NoSuchElementException();
         }
-        return ptrNextIterator.next();
+        return iterator.next();
     }
 
 }
