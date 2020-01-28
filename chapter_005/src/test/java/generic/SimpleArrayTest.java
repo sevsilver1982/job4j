@@ -3,6 +3,7 @@ package generic;
 import org.junit.Test;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -35,7 +36,10 @@ public class SimpleArrayTest {
         objects.add(4);
         objects.add(5);
         objects.remove(1);
-        assertThat(objects.get(1), is(3));
+        objects.remove(1);
+        objects.remove(1);
+        objects.add(9);
+        assertThat(List.of(1, 5, 9).equals(objects.toList()), is(true));
     }
 
     @Test

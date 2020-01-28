@@ -1,7 +1,10 @@
 package generic;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SimpleArray<T> implements Iterable<T> {
     private T[] objects;
@@ -41,9 +44,12 @@ public class SimpleArray<T> implements Iterable<T> {
      * @param index
      */
     public void remove(int index) {
-        System.arraycopy(objects, index + 1, objects, index, objects.length - index - 1);
-        position = objects.length - 1;
-        objects[position] = null;
+        System.arraycopy(objects, index + 1, objects, index, position - index - 1);
+        position--;
+    }
+
+    public List<T> toList() {
+        return Stream.of(objects).limit(position).collect(Collectors.toList());
     }
 
     /**
@@ -57,7 +63,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return pos <= objects.length - 1 && objects[pos] != null;
+                return pos <= objects.length - 1;
             }
 
             @Override
