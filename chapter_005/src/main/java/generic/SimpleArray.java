@@ -18,6 +18,19 @@ public class SimpleArray<T> implements Iterable<T> {
      * Добавляет указанный элемент (model) в первую свободную ячейку
      * @param model
      */
+    public int getIndex(T model) {
+        for (int i = 0; i <= position; i++) {
+            if (objects[i].equals(model)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Добавляет указанный элемент (model) в первую свободную ячейку
+     * @param model
+     */
     public void add(T model) {
         objects[position++] = model;
     }
