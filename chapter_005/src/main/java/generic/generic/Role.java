@@ -1,4 +1,4 @@
-package generic.store;
+package generic.generic;
 
 public class Role extends Base {
 

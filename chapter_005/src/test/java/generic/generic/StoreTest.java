@@ -1,4 +1,4 @@
-package generic.store;
+package generic.generic;
 
 import org.junit.Test;
 
