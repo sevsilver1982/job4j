@@ -76,12 +76,12 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return pos <= objects.length - 1;
+                return pos <= position - 1;
             }
 
             @Override
             public T next() {
-                if (pos > objects.length - 1) {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
                 return objects[pos++];

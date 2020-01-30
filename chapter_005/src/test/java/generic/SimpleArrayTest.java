@@ -79,8 +79,6 @@ public class SimpleArrayTest {
         objects.add(1);
         objects.add(2);
         objects.add(3);
-        objects.add(4);
-        objects.add(5);
         Iterator<Integer> it = objects.iterator();
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(1));
@@ -88,10 +86,6 @@ public class SimpleArrayTest {
         assertThat(it.next(), is(2));
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(3));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(4));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(5));
         assertThat(it.hasNext(), is(false));
         it.next();
     }
