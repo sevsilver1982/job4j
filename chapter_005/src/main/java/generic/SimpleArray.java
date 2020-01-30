@@ -1,10 +1,7 @@
 package generic;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class SimpleArray<T> implements Iterable<T> {
     private T[] objects;
@@ -15,11 +12,11 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     /**
-     * Добавляет указанный элемент (model) в первую свободную ячейку
+     * Поиск объекта (model)
      * @param model
      */
-    public int getIndex(T model) {
-        for (int i = 0; i <= position; i++) {
+    public int getIndexByObject(T model) {
+        for (int i = 0; i < position; i++) {
             if (objects[i].equals(model)) {
                 return i;
             }
@@ -40,6 +37,9 @@ public class SimpleArray<T> implements Iterable<T> {
      * @param index
      */
     public T get(int index) {
+        if (index >= position) {
+            throw new IndexOutOfBoundsException();
+        }
         return objects[index];
     }
 
@@ -59,10 +59,6 @@ public class SimpleArray<T> implements Iterable<T> {
     public void remove(int index) {
         System.arraycopy(objects, index + 1, objects, index, position - index - 1);
         position--;
-    }
-
-    public List<T> toList() {
-        return Stream.of(objects).limit(position).collect(Collectors.toList());
     }
 
     /**

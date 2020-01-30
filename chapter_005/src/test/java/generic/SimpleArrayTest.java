@@ -27,19 +27,23 @@ public class SimpleArrayTest {
         assertThat(objects.get(0), is(2));
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     public void remove() {
         SimpleArray<Integer> objects = new SimpleArray<>(5);
+        objects.add(0);
         objects.add(1);
         objects.add(2);
         objects.add(3);
         objects.add(4);
-        objects.add(5);
         objects.remove(1);
         objects.remove(1);
         objects.remove(1);
         objects.add(9);
-        assertThat(List.of(1, 5, 9).equals(objects.toList()), is(true));
+        assertThat(objects.get(0), is(0));
+        assertThat(objects.get(1), is(4));
+        assertThat(objects.get(2), is(9));
+        assertThat(objects.get(3), is(-1));
+        //assertThat(List.of(1, 5, 9).equals(objects.toList()), is(true));
     }
 
     @Test
@@ -90,4 +94,11 @@ public class SimpleArrayTest {
         it.next();
     }
 
+    @Test
+    public void getIndexByObject() {
+    }
+
+    @Test
+    public void getIndexById() {
+    }
 }

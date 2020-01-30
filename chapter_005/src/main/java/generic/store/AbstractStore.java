@@ -2,40 +2,49 @@ package generic.store;
 
 import generic.SimpleArray;
 
-public abstract class AbstractStore<T extends Base> extends SimpleArray<T> implements Store<T> {
+import java.util.Iterator;
+
+public abstract class AbstractStore<T extends Base> implements Store<T> {
+    private SimpleArray<T> simpleArray;
 
     public AbstractStore(int size) {
-        super(size);
+        simpleArray = new SimpleArray<T>(size);
     }
 
     @Override
     public void add(T model) {
-        super.add(model);
+        simpleArray.add(model);
     }
 
     @Override
     public boolean replace(String id, T model) {
-        int index = super.getIndex(findById(id));
-        if (index >= 0) {
-            super.set(index, model);
-            return true;
+        Iterator<T> iterator = simpleArray.iterator();
+        for (int i = 0; iterator.hasNext(); i++) {
+            if (iterator.next().getId().equals(id)) {
+                simpleArray.set(i, model);
+                return true;
+            }
         }
         return false;
     }
 
     @Override
     public boolean delete(String id) {
-        int index = super.getIndex(findById(id));
-        if (index >= 0) {
-            super.remove(index);
-            return true;
+        Iterator<T> iterator = simpleArray.iterator();
+        for (int i = 0; iterator.hasNext(); i++) {
+            if (iterator.next().getId().equals(id)) {
+                simpleArray.remove(i);
+                return true;
+            }
         }
         return false;
     }
 
     @Override
     public T findById(String id) {
-        for (T model : toList()) {
+        Iterator<T> iterator = simpleArray.iterator();
+        for (int i = 0; iterator.hasNext(); i++) {
+            T model = iterator.next();
             if (model.getId().equals(id)) {
                 return model;
             }
