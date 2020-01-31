@@ -1,4 +1,6 @@
-package generic.generic;
+package generic.store;
+
+import java.util.Optional;
 
 public interface Store<T extends Base> {
 
@@ -8,6 +10,6 @@ public interface Store<T extends Base> {
 
     boolean delete(String id);
 
-    T findById(String id);
+    Optional<T> findById(String id);
 
 }

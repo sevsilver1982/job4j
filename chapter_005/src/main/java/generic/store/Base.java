@@ -1,4 +1,4 @@
-package generic.generic;
+package generic.store;
 
 import java.util.Objects;
 

@@ -1,5 +1,6 @@
 package generic;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -12,24 +13,15 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     /**
-     * Поиск объекта (model)
-     * @param model
-     */
-    public int getIndexByObject(T model) {
-        for (int i = 0; i < position; i++) {
-            if (objects[i].equals(model)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    /**
      * Добавляет указанный элемент (model) в первую свободную ячейку
      * @param model
      */
     public void add(T model) {
         objects[position++] = model;
+    }
+
+    public T[] getObjects() {
+        return Arrays.copyOf(objects, position);
     }
 
     /**

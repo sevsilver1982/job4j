@@ -1,14 +1,19 @@
-package generic.generic;
+package generic.store;
 
 import generic.SimpleArray;
 
 import java.util.Iterator;
+import java.util.Optional;
 
 public abstract class AbstractStore<T extends Base> implements Store<T> {
     private SimpleArray<T> simpleArray;
 
     public AbstractStore(int size) {
         simpleArray = new SimpleArray<T>(size);
+    }
+
+    public SimpleArray<T> getItems() {
+        return simpleArray;
     }
 
     @Override
@@ -41,15 +46,15 @@ public abstract class AbstractStore<T extends Base> implements Store<T> {
     }
 
     @Override
-    public T findById(String id) {
+    public Optional<T> findById(String id) {
         Iterator<T> iterator = simpleArray.iterator();
         for (int i = 0; iterator.hasNext(); i++) {
             T model = iterator.next();
             if (model.getId().equals(id)) {
-                return model;
+                return Optional.of(model);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
 }
