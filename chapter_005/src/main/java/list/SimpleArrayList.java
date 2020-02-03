@@ -3,33 +3,42 @@ package list;
 public class SimpleArrayList<E> {
 
     private int size;
-    private Node<E> first;
+    private Node<E> first = null;
+    private Node<E> last = null;
 
     /**
      * Метод вставляет в начало списка данные.
      */
     public void add(E data) {
+        Node<E> tmp = last;
         Node<E> newLink = new Node<>(data);
-        newLink.next = this.first;
-        this.first = newLink;
+        last = newLink;
+        if (tmp == null)
+            first = newLink;
+        else
+            tmp.next = newLink;
         this.size++;
     }
 
     /**
-     * Реализовать метод удаления первого элемента в списке.
+     * Реализовать метод удаления элемента в списке.
      */
     public E delete(int index) {
-        Node<E> prv = null;
-        Node<E> next = this.first;
-        for (int i = 0; i < index; i++) {
-
-            next = next.next;
-            prv = next.next;
+        Node<E> result = this.first;
+        Node<E> prv = this.first;
+        Node<E> nxt = this.first;
+        if (index == 0) {
+            this.first = first.next;
+        } else {
+            for (int i = 0; i < index; i++) {
+                prv = result;
+                result = result.next;
+                nxt = result.next;
+            }
+            prv.next = nxt;
         }
-        this.first = prv;
-        prv = null;
         this.size--;
-        return null;
+        return result.data;
     }
 
     /**
