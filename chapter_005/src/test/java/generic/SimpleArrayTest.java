@@ -17,13 +17,14 @@ public class SimpleArrayTest {
         assertThat(objects.get(0), is(1));
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     public void set() {
         SimpleArray<Integer> objects = new SimpleArray<>(5);
         objects.add(1);
         assertThat(objects.get(0), is(1));
         objects.set(0, 2);
         assertThat(objects.get(0), is(2));
+        objects.set(1, 2);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -41,16 +42,19 @@ public class SimpleArrayTest {
         assertThat(objects.get(0), is(0));
         assertThat(objects.get(1), is(4));
         assertThat(objects.get(2), is(9));
-        assertThat(objects.get(3), is(-1));
+        objects.get(3);
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     public void get() {
         SimpleArray<Integer> objects = new SimpleArray<>(5);
         objects.add(1);
         objects.add(2);
         objects.add(3);
+        assertThat(objects.get(0), is(1));
         assertThat(objects.get(1), is(2));
+        assertThat(objects.get(2), is(3));
+        objects.get(3);
     }
 
     @Test
