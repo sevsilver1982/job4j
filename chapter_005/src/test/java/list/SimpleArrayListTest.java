@@ -1,6 +1,5 @@
-package generic.list;
+package list;
 
-import list.SimpleArrayList;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,7 +31,7 @@ public class SimpleArrayListTest {
         assertThat(list.getSize(), is(3));
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     public void delete() {
         SimpleArrayList<Integer> list = new SimpleArrayList<>();
         list.add(1);
@@ -58,6 +57,7 @@ public class SimpleArrayListTest {
         assertThat(list.getSize(), is(2));
         assertThat(list.get(0), is(2));
         assertThat(list.get(1), is(4));
+        list.delete(2);
     }
 
     @Test

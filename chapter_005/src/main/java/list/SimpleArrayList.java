@@ -24,6 +24,9 @@ public class SimpleArrayList<E> {
      * Реализовать метод удаления элемента в списке.
      */
     public E delete(int index) {
+        if (index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
         Node<E> result = this.first;
         Node<E> prv = this.first;
         Node<E> nxt = this.first;
@@ -45,6 +48,9 @@ public class SimpleArrayList<E> {
      * Метод получения элемента по индексу.
      */
     public E get(int index) {
+        if (index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
         Node<E> result = this.first;
         for (int i = 0; i < index; i++) {
             result = result.next;
