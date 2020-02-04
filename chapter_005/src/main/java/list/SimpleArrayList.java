@@ -13,10 +13,11 @@ public class SimpleArrayList<E> {
         Node<E> tmp = last;
         Node<E> newLink = new Node<>(data);
         last = newLink;
-        if (tmp == null)
+        if (tmp == null) {
             first = newLink;
-        else
+        } else {
             tmp.next = newLink;
+        }
         this.size++;
     }
 
@@ -24,7 +25,7 @@ public class SimpleArrayList<E> {
      * Реализовать метод удаления элемента в списке.
      */
     public E delete(int index) {
-        if (index >= size) {
+        if (size == 0 || index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
         Node<E> result = this.first;
@@ -48,7 +49,7 @@ public class SimpleArrayList<E> {
      * Метод получения элемента по индексу.
      */
     public E get(int index) {
-        if (index >= size) {
+        if (size == 0 || index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
         Node<E> result = this.first;

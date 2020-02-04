@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 public class SimpleArray<T> implements Iterable<T> {
     private T[] objects;
-    private int position = 0;
+    private int size = 0;
 
     public SimpleArray(int size) {
         this.objects = (T[]) new Object[size];
@@ -17,11 +17,11 @@ public class SimpleArray<T> implements Iterable<T> {
      * @param model
      */
     public void add(T model) {
-        objects[position++] = model;
+        objects[size++] = model;
     }
 
     public T[] getObjects() {
-        return Arrays.copyOf(objects, position);
+        return Arrays.copyOf(objects, size);
     }
 
     /**
@@ -29,7 +29,7 @@ public class SimpleArray<T> implements Iterable<T> {
      * @param index
      */
     public T get(int index) {
-        if (index >= position) {
+        if (size == 0 || index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
         return objects[index];
@@ -41,7 +41,7 @@ public class SimpleArray<T> implements Iterable<T> {
      * @param model
      */
     public void set(int index, T model) {
-        if (index >= position) {
+        if (size == 0 || index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
         objects[index] = model;
@@ -52,11 +52,11 @@ public class SimpleArray<T> implements Iterable<T> {
      * @param index
      */
     public void remove(int index) {
-        if (index >= position) {
+        if (size == 0 || index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        System.arraycopy(objects, index + 1, objects, index, position - index - 1);
-        position--;
+        System.arraycopy(objects, index + 1, objects, index, size - index - 1);
+        size--;
     }
 
     /**
@@ -70,7 +70,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return pos < position;
+                return pos < size;
             }
 
             @Override
