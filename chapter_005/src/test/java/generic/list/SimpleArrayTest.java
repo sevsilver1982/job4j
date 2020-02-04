@@ -1,4 +1,4 @@
-package generic;
+package generic.list;
 
 import org.junit.Test;
 
