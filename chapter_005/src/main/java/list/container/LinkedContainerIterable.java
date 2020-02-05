@@ -4,7 +4,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class NodeContainerIterable<E> implements ContainerIterable<E> {
+public class LinkedContainerIterable<E> implements ContainerIterable<E> {
     private SimpleContainer<E> simpleContainer = new SimpleContainer<>();
     private int modCount = 0;
 
