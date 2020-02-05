@@ -1,10 +1,13 @@
 package list;
 
 public class SimpleNodeList<E> {
-
     private int size;
     private Node<E> first = null;
     private Node<E> last = null;
+
+    public int size() {
+        return size;
+    }
 
     /**
      * Метод вставляет в начало списка данные.
@@ -69,7 +72,7 @@ public class SimpleNodeList<E> {
     /**
      * Класс предназначен для хранения данных.
      */
-    private static class Node<E> {
+    static class Node<E> {
         E data;
         Node<E> next;
 

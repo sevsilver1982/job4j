@@ -8,6 +8,17 @@ import static org.hamcrest.Matchers.is;
 public class SimpleNodeListTest {
 
     @Test
+    public void add() {
+        SimpleNodeList<Integer> list = new SimpleNodeList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        assertThat(list.get(0), is(1));
+        assertThat(list.get(1), is(2));
+        assertThat(list.get(2), is(3));
+    }
+
+    @Test
     public void whenAddThreeElementsThenUseGetOneResultTwo() {
         SimpleNodeList<Integer> list = new SimpleNodeList<>();
         list.add(1);
