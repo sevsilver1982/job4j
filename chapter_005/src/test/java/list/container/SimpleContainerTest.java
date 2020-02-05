@@ -1,15 +1,15 @@
-package list;
+package list.container;
 
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class SimpleNodeListTest {
+public class SimpleContainerTest {
 
     @Test
     public void add() {
-        SimpleNodeList<Integer> list = new SimpleNodeList<>();
+        SimpleContainer<Integer> list = new SimpleContainer<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -20,7 +20,7 @@ public class SimpleNodeListTest {
 
     @Test
     public void whenAddThreeElementsThenUseGetOneResultTwo() {
-        SimpleNodeList<Integer> list = new SimpleNodeList<>();
+        SimpleContainer<Integer> list = new SimpleContainer<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -35,7 +35,7 @@ public class SimpleNodeListTest {
 
     @Test
     public void whenAddThreeElementsThenUseGetSizeResultThree() {
-        SimpleNodeList<Integer> list = new SimpleNodeList<>();
+        SimpleContainer<Integer> list = new SimpleContainer<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -44,7 +44,7 @@ public class SimpleNodeListTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void delete() {
-        SimpleNodeList<Integer> list = new SimpleNodeList<>();
+        SimpleContainer<Integer> list = new SimpleContainer<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -73,7 +73,7 @@ public class SimpleNodeListTest {
 
     @Test
     public void get() {
-        SimpleNodeList<Integer> list = new SimpleNodeList<>();
+        SimpleContainer<Integer> list = new SimpleContainer<>();
         list.add(1);
         list.add(2);
         list.add(3);

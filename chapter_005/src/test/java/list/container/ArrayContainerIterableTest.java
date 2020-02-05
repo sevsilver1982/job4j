@@ -1,4 +1,4 @@
-package list;
+package list.container;
 
 import org.junit.Test;
 
@@ -9,11 +9,11 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class ArrayContainerTest {
+public class ArrayContainerIterableTest {
 
     @Test
     public void add() {
-        ArrayContainer<Integer> list = new ArrayContainer<>();
+        ArrayContainerIterable<Integer> list = new ArrayContainerIterable<>();
         for (int i = 0; i < 250; i++) {
             list.add(i);
         }
@@ -22,7 +22,7 @@ public class ArrayContainerTest {
 
     @Test
     public void get() {
-        ArrayContainer<Integer> list = new ArrayContainer<>();
+        ArrayContainerIterable<Integer> list = new ArrayContainerIterable<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -35,7 +35,7 @@ public class ArrayContainerTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void getIndexOutOfBoundsException() {
-        ArrayContainer<Integer> list = new ArrayContainer<>();
+        ArrayContainerIterable<Integer> list = new ArrayContainerIterable<>();
         list.get(0);
         list.add(1);
         assertThat(list.get(0), is(1));
@@ -44,7 +44,7 @@ public class ArrayContainerTest {
 
     @Test
     public void iterator() {
-        ArrayContainer<Integer> list = new ArrayContainer<>();
+        ArrayContainerIterable<Integer> list = new ArrayContainerIterable<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -62,7 +62,7 @@ public class ArrayContainerTest {
 
     @Test(expected = NoSuchElementException.class)
     public void iteratorNoSuchElementException() {
-        ArrayContainer<Integer> list = new ArrayContainer<>();
+        ArrayContainerIterable<Integer> list = new ArrayContainerIterable<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -75,7 +75,7 @@ public class ArrayContainerTest {
 
     @Test(expected = ConcurrentModificationException.class)
     public void iteratorConcurrentModificationException() {
-        ArrayContainer<Integer> list = new ArrayContainer<>();
+        ArrayContainerIterable<Integer> list = new ArrayContainerIterable<>();
         list.add(1);
         list.add(2);
         list.add(3);

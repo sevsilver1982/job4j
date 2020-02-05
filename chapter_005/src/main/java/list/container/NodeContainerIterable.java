@@ -1,38 +1,21 @@
-package list;
+package list.container;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayContainer<E> implements SimpleContainer<E> {
-    final int growElements = 100;
-    private Object[] container = new Object[growElements];
-    private int size = 0;
+public class NodeContainerIterable<E> implements ContainerIterable<E> {
+    private SimpleContainer<E> simpleContainer = new SimpleContainer<>();
     private int modCount = 0;
 
-    public ArrayContainer() {
-    }
-
-    public int getSize() {
-        return size;
-    }
-
     public void add(E value) {
-        if (size == container.length - 1) {
-            Object[] tmp = new Object[container.length + growElements];
-            System.arraycopy(container, 0, tmp, 0, size);
-            container = tmp;
-        }
-        container[size++] = value;
+        simpleContainer.add(value);
         modCount++;
-    };
+    }
 
     public E get(int index) {
-        if (size == 0 || index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
-        }
-        return (E) container[index];
-    };
+        return simpleContainer.get(index);
+    }
 
     @Override
     public Iterator<E> iterator() {
@@ -42,7 +25,7 @@ public class ArrayContainer<E> implements SimpleContainer<E> {
 
             @Override
             public boolean hasNext() {
-                return pos < size;
+                return pos < simpleContainer.getSize();
             }
 
             @Override
@@ -50,11 +33,10 @@ public class ArrayContainer<E> implements SimpleContainer<E> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (E) container[pos++];
+                return (E) simpleContainer.get(pos++);
             }
         };
     }

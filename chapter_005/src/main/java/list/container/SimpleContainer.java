@@ -1,6 +1,6 @@
-package list;
+package list.container;
 
-public class SimpleNodeList<E> {
+public class SimpleContainer<E> {
     private int size;
     private Node<E> first = null;
     private Node<E> last = null;
