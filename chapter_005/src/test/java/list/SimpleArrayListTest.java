@@ -9,7 +9,7 @@ public class SimpleArrayListTest {
 
     @Test
     public void whenAddThreeElementsThenUseGetOneResultTwo() {
-        SimpleArrayList<Integer> list = new SimpleArrayList<>();
+        SimpleNodeList<Integer> list = new SimpleNodeList<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -24,7 +24,7 @@ public class SimpleArrayListTest {
 
     @Test
     public void whenAddThreeElementsThenUseGetSizeResultThree() {
-        SimpleArrayList<Integer> list = new SimpleArrayList<>();
+        SimpleNodeList<Integer> list = new SimpleNodeList<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -33,7 +33,7 @@ public class SimpleArrayListTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void delete() {
-        SimpleArrayList<Integer> list = new SimpleArrayList<>();
+        SimpleNodeList<Integer> list = new SimpleNodeList<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -62,7 +62,7 @@ public class SimpleArrayListTest {
 
     @Test
     public void get() {
-        SimpleArrayList<Integer> list = new SimpleArrayList<>();
+        SimpleNodeList<Integer> list = new SimpleNodeList<>();
         list.add(1);
         list.add(2);
         list.add(3);

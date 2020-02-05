@@ -1,6 +1,6 @@
 package list;
 
-public class SimpleArrayList<E> {
+public class SimpleNodeList<E> {
 
     private int size;
     private Node<E> first = null;
