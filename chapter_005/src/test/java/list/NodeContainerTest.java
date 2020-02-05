@@ -9,11 +9,11 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class ListNodeContainerTest {
+public class NodeContainerTest {
 
     @Test
     public void add() {
-        ListNodeContainer<Integer> list = new ListNodeContainer<>();
+        NodeContainer<Integer> list = new NodeContainer<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -24,7 +24,7 @@ public class ListNodeContainerTest {
 
     @Test
     public void get() {
-        ListNodeContainer<Integer> list = new ListNodeContainer<>();
+        NodeContainer<Integer> list = new NodeContainer<>();
         list.add(1);
         assertThat(list.get(0), is(1));
         list.add(2);
@@ -35,7 +35,7 @@ public class ListNodeContainerTest {
 
     @Test
     public void iterator() {
-        ListNodeContainer<Integer> list = new ListNodeContainer<>();
+        NodeContainer<Integer> list = new NodeContainer<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -53,7 +53,7 @@ public class ListNodeContainerTest {
 
     @Test(expected = NoSuchElementException.class)
     public void iteratorNoSuchElementException() {
-        ListNodeContainer<Integer> list = new ListNodeContainer<>();
+        NodeContainer<Integer> list = new NodeContainer<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -66,7 +66,7 @@ public class ListNodeContainerTest {
 
     @Test(expected = ConcurrentModificationException.class)
     public void iteratorConcurrentModificationException() {
-        ListArrayContainer<Integer> list = new ListArrayContainer<>();
+        ArrayContainer<Integer> list = new ArrayContainer<>();
         list.add(1);
         list.add(2);
         list.add(3);

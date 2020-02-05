@@ -3,7 +3,7 @@ package list;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ListNodeContainer<E> implements Iterable<E> {
+public class NodeContainer<E> implements SimpleContainer<E> {
     private SimpleNodeList<E> simpleNodeList = new SimpleNodeList<>();
 
     public void add(E value) {

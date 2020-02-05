@@ -4,13 +4,13 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ListArrayContainer<E> implements Iterable<E> {
+public class ArrayContainer<E> implements SimpleContainer<E> {
     final int growElements = 100;
     private Object[] container = new Object[growElements];
     private int size = 0;
     private int modCount = 0;
 
-    public ListArrayContainer() {
+    public ArrayContainer() {
     }
 
     public int getSize() {
