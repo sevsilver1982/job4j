@@ -1,4 +1,4 @@
-package list.container;
+package list;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;

@@ -1,6 +1,6 @@
-package list.stack;
+package list;
 
-import list.container.SimpleContainer;
+import list.SimpleContainer;
 
 public class SimpleStack<E> {
     private SimpleContainer<E> simpleContainer = new SimpleContainer<>();

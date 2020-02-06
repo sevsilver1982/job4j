@@ -1,5 +1,6 @@
-package list.container;
+package list;
 
+import list.SimpleContainer;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

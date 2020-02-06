@@ -1,4 +1,4 @@
-package list.stack;
+package list;
 
 import org.junit.Test;
 

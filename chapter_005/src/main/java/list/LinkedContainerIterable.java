@@ -1,4 +1,4 @@
-package list.container;
+package list;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -22,7 +22,7 @@ public class LinkedContainerIterable<E> implements ContainerIterable<E> {
         return new Iterator<E>() {
             private int expectedModCount = modCount;
             private SimpleContainer.Node<E> position = simpleContainer.getFirst();
-            SimpleContainer.Node<E> tmp = position;
+            private SimpleContainer.Node<E> tmp = position;
 
             @Override
             public boolean hasNext() {
@@ -39,7 +39,7 @@ public class LinkedContainerIterable<E> implements ContainerIterable<E> {
                 }
                 tmp = position;
                 position = position.next;
-                return (E) tmp.data;
+                return tmp.data;
             }
         };
     }
