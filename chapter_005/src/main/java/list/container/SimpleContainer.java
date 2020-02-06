@@ -1,9 +1,25 @@
 package list.container;
 
+import java.util.NoSuchElementException;
+
 public class SimpleContainer<E> {
-    private int size;
     private Node<E> first = null;
     private Node<E> last = null;
+    private int size;
+
+    public Node<E> getFirst() {
+        if (first == null) {
+            throw new NoSuchElementException();
+        }
+        return first;
+    }
+
+    public Node<E> getLast() {
+        if (last == null) {
+            throw new NoSuchElementException();
+        }
+        return last;
+    }
 
     public int size() {
         return size;

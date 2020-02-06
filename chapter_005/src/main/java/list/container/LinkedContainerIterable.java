@@ -20,12 +20,13 @@ public class LinkedContainerIterable<E> implements ContainerIterable<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            int expectedModCount = modCount;
-            private int pos = 0;
+            private int expectedModCount = modCount;
+            private SimpleContainer.Node<E> position = simpleContainer.getFirst();
+            SimpleContainer.Node<E> tmp = position;
 
             @Override
             public boolean hasNext() {
-                return pos < simpleContainer.getSize();
+                return tmp.next != null;
             }
 
             @Override
@@ -36,7 +37,9 @@ public class LinkedContainerIterable<E> implements ContainerIterable<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (E) simpleContainer.get(pos++);
+                tmp = position;
+                position = position.next;
+                return (E) tmp.data;
             }
         };
     }
