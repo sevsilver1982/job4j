@@ -1,7 +1,6 @@
-package list;
+package simple;
 
 import org.junit.Test;
-import simple.SimpleStack;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
