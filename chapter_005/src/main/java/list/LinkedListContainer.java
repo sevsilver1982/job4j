@@ -22,13 +22,13 @@ public class LinkedListContainer<E> implements ContainerIterable<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
+            private int index = 0;
             private int expectedModCount = modCount;
             private SimpleList.Node<E> position = simpleList.getFirst();
-            private SimpleList.Node<E> tmp = position;
 
             @Override
             public boolean hasNext() {
-                return tmp.getNext() != null;
+                return index < simpleList.getSize();
             }
 
             @Override
@@ -39,7 +39,8 @@ public class LinkedListContainer<E> implements ContainerIterable<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                tmp = position;
+                index++;
+                SimpleList.Node<E> tmp = position;
                 position = position.getNext();
                 return tmp.getData();
             }
