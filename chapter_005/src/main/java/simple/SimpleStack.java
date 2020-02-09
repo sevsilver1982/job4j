@@ -8,7 +8,7 @@ public class SimpleStack<E> {
     }
 
     public E poll() {
-        return simpleList.delete(simpleList.getSize() - 1);
+        return simpleList.deleteLast();
     }
 
     public void push(E value) {

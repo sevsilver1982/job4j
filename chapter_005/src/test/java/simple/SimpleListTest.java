@@ -1,12 +1,20 @@
-package list;
+package simple;
 
-import simple.SimpleList;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class SimpleContainerTest {
+public class SimpleListTest {
+
+    @Test
+    public void getSize() {
+        SimpleList<Integer> list = new SimpleList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        assertThat(list.getSize(), is(3));
+    }
 
     @Test
     public void add() {
@@ -20,7 +28,29 @@ public class SimpleContainerTest {
     }
 
     @Test
-    public void whenAddThreeElementsThenUseGetOneResultTwo() {
+    public void getFirst() {
+        SimpleList<Integer> list = new SimpleList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        assertThat(list.getFirst().getData(), is(1));
+    }
+
+    @Test
+    public void getLast() {
+        SimpleList<Integer> list = new SimpleList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        assertThat(list.getLast().getData(), is(5));
+    }
+
+    @Test
+    public void get() {
         SimpleList<Integer> list = new SimpleList<>();
         list.add(1);
         list.add(2);
@@ -32,15 +62,6 @@ public class SimpleContainerTest {
         assertThat(list.get(2), is(3));
         assertThat(list.get(3), is(4));
         assertThat(list.get(4), is(5));
-    }
-
-    @Test
-    public void whenAddThreeElementsThenUseGetSizeResultThree() {
-        SimpleList<Integer> list = new SimpleList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        assertThat(list.getSize(), is(3));
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -73,12 +94,27 @@ public class SimpleContainerTest {
     }
 
     @Test
-    public void get() {
+    public void deleteLast() {
         SimpleList<Integer> list = new SimpleList<>();
         list.add(1);
+        assertThat(list.getLast().getData(), is(1));
         list.add(2);
+        assertThat(list.getLast().getData(), is(2));
         list.add(3);
-        assertThat(list.get(1), is(2));
-    }
+        assertThat(list.getLast().getData(), is(3));
 
+        assertThat(list.getSize(), is(3));
+        assertThat(list.getLast().getData(), is(3));
+        assertThat(list.deleteLast(), is(3));
+
+        assertThat(list.getSize(), is(2));
+        assertThat(list.getLast().getData(), is(2));
+        assertThat(list.deleteLast(), is(2));
+
+        assertThat(list.getSize(), is(1));
+        assertThat(list.getLast().getData(), is(1));
+        assertThat(list.deleteLast(), is(1));
+
+        assertThat(list.getSize(), is(0));
+    }
 }

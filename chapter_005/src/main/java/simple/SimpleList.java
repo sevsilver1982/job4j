@@ -21,27 +21,30 @@ public class SimpleList<E> {
         return last;
     }
 
-    public int size() {
-        return size;
+    public int getSize() {
+        return this.size;
     }
 
     /**
-     * Метод вставляет в начало списка данные.
+     * Add element
+     * @param data
      */
     public void add(E data) {
-        Node<E> tmp = last;
         Node<E> newLink = new Node<>(data);
-        last = newLink;
-        if (tmp == null) {
+        if (last == null) {
             first = newLink;
         } else {
-            tmp.next = newLink;
+            last.next = newLink;
+            newLink.prev = last;
         }
+        last = newLink;
         this.size++;
     }
 
     /**
-     * Реализовать метод удаления элемента в списке.
+     * Delete element by index
+     * @param index
+     * @return
      */
     public E delete(int index) {
         if (size == 0 || index < 0 || index >= size) {
@@ -64,14 +67,32 @@ public class SimpleList<E> {
         return result.data;
     }
 
+    public E deleteLast() {
+        if (size == 0 || last == null) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node<E> tmp = last;
+        if (last.prev == null) {
+            first = null;
+            last = null;
+        } else {
+            last.prev.next = null;
+            last = last.prev;
+        }
+        this.size--;
+        return tmp.data;
+    }
+
     /**
-     * Метод получения элемента по индексу.
+     * Get element by index
+     * @param index
+     * @return
      */
     public E get(int index) {
         if (size == 0 || index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        Node<E> result = this.first;
+        Node<E> result = first;
         for (int i = 0; i < index; i++) {
             result = result.next;
         }
@@ -79,21 +100,20 @@ public class SimpleList<E> {
     }
 
     /**
-     * Метод получения размера коллекции.
-     */
-    public int getSize() {
-        return this.size;
-    }
-
-    /**
-     * Класс предназначен для хранения данных.
+     * Node class
+     * @param <E>
      */
     public static class Node<E> {
         private E data;
+        private Node<E> prev;
         private Node<E> next;
 
         public E getData() {
             return data;
+        }
+
+        public Node<E> getPrev() {
+            return prev;
         }
 
         public Node<E> getNext() {
