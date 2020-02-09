@@ -1,32 +1,34 @@
 package list;
 
+import simple.SimpleList;
+
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedContainerIterable<E> implements ContainerIterable<E> {
-    private SimpleContainer<E> simpleContainer = new SimpleContainer<>();
+public class LinkedListContainer<E> implements ContainerIterable<E> {
+    private SimpleList<E> simpleList = new SimpleList<>();
     private int modCount = 0;
 
     public void add(E value) {
-        simpleContainer.add(value);
+        simpleList.add(value);
         modCount++;
     }
 
     public E get(int index) {
-        return simpleContainer.get(index);
+        return simpleList.get(index);
     }
 
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
             private int expectedModCount = modCount;
-            private SimpleContainer.Node<E> position = simpleContainer.getFirst();
-            private SimpleContainer.Node<E> tmp = position;
+            private SimpleList.Node<E> position = simpleList.getFirst();
+            private SimpleList.Node<E> tmp = position;
 
             @Override
             public boolean hasNext() {
-                return tmp.next != null;
+                return tmp.getNext() != null;
             }
 
             @Override
@@ -38,8 +40,8 @@ public class LinkedContainerIterable<E> implements ContainerIterable<E> {
                     throw new NoSuchElementException();
                 }
                 tmp = position;
-                position = position.next;
-                return tmp.data;
+                position = position.getNext();
+                return tmp.getData();
             }
         };
     }

@@ -1,6 +1,7 @@
-package generic.list;
+package generic;
 
 import org.junit.Test;
+import simple.SimpleArray;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

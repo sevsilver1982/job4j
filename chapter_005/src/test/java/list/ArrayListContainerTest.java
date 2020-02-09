@@ -1,6 +1,5 @@
 package list;
 
-import list.LinkedContainerIterable;
 import org.junit.Test;
 
 import java.util.ConcurrentModificationException;
@@ -10,39 +9,46 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class LinkedContainerIterableTest {
+public class ArrayListContainerTest {
 
     @Test
     public void add() {
-        LinkedContainerIterable<Integer> list = new LinkedContainerIterable<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        assertThat(list.get(0), is(1));
-        assertThat(list.get(1), is(2));
-        assertThat(list.get(2), is(3));
+        ArrayListContainer<Integer> list = new ArrayListContainer<>();
+        for (int i = 0; i < 250; i++) {
+            list.add(i);
+        }
+        assertThat(list.getSize(), is(250));
     }
 
     @Test
     public void get() {
-        LinkedContainerIterable<Integer> list = new LinkedContainerIterable<>();
+        ArrayListContainer<Integer> list = new ArrayListContainer<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        assertThat(list.get(0), is(1));
+        assertThat(list.get(1), is(2));
+        assertThat(list.get(2), is(3));
+        assertThat(list.get(3), is(4));
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void getIndexOutOfBoundsException() {
+        ArrayListContainer<Integer> list = new ArrayListContainer<>();
+        list.get(0);
         list.add(1);
         assertThat(list.get(0), is(1));
-        list.add(2);
-        assertThat(list.get(1), is(2));
-        list.add(3);
-        assertThat(list.get(2), is(3));
+        list.get(0);
     }
 
     @Test
     public void iterator() {
-        LinkedContainerIterable<Integer> list = new LinkedContainerIterable<>();
+        ArrayListContainer<Integer> list = new ArrayListContainer<>();
         list.add(1);
         list.add(2);
         list.add(3);
-        Iterator it = list.iterator();
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.hasNext(), is(true));
+        Iterator<Integer> it = list.iterator();
         assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(1));
@@ -56,7 +62,7 @@ public class LinkedContainerIterableTest {
 
     @Test(expected = NoSuchElementException.class)
     public void iteratorNoSuchElementException() {
-        LinkedContainerIterable<Integer> list = new LinkedContainerIterable<>();
+        ArrayListContainer<Integer> list = new ArrayListContainer<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -69,7 +75,7 @@ public class LinkedContainerIterableTest {
 
     @Test(expected = ConcurrentModificationException.class)
     public void iteratorConcurrentModificationException() {
-        LinkedContainerIterable<Integer> list = new LinkedContainerIterable<>();
+        ArrayListContainer<Integer> list = new ArrayListContainer<>();
         list.add(1);
         list.add(2);
         list.add(3);

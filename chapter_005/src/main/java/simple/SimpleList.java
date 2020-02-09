@@ -1,8 +1,8 @@
-package list;
+package simple;
 
 import java.util.NoSuchElementException;
 
-public class SimpleContainer<E> {
+public class SimpleList<E> {
     private Node<E> first = null;
     private Node<E> last = null;
     private int size;
@@ -88,9 +88,17 @@ public class SimpleContainer<E> {
     /**
      * Класс предназначен для хранения данных.
      */
-    static class Node<E> {
-        E data;
-        Node<E> next;
+    public static class Node<E> {
+        private E data;
+        private Node<E> next;
+
+        public E getData() {
+            return data;
+        }
+
+        public Node<E> getNext() {
+            return next;
+        }
 
         Node(E data) {
             this.data = data;

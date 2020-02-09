@@ -1,6 +1,6 @@
-package generic.store;
+package generic;
 
-import generic.list.SimpleArray;
+import simple.SimpleArray;
 
 import java.util.Iterator;
 import java.util.Optional;

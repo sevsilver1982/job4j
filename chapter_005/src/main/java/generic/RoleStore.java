@@ -1,4 +1,4 @@
-package generic.store;
+package generic;
 
 public class RoleStore extends AbstractStore<Role> {
 
