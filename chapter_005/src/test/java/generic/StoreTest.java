@@ -1,7 +1,5 @@
 package generic;
 
-import generic.User;
-import generic.UserStore;
 import org.junit.Test;
 
 import java.util.List;

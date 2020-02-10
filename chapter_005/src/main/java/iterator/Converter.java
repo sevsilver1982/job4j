@@ -1,6 +1,8 @@
 package iterator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Converter implements Iterator<Integer> {
     private Iterator<Iterator<Integer>> it;
