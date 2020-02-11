@@ -3,8 +3,7 @@ package oop;
 public class DummyDic {
 
     public String engToRus(String eng) {
-        String answer = "Неизвестное слово: " + eng;
-        return answer;
+        return "Неизвестное слово: " + eng;
     }
 
     public static void main(String[] args) {

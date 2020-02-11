@@ -1,8 +1,8 @@
 package oop;
 
 public class Battery {
+    private final String name;
     private int load;
-    private String name;
 
     public Battery(String name, int load) {
         this.name = name;

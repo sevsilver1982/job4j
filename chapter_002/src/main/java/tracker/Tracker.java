@@ -12,8 +12,7 @@ public class Tracker {
     private final Random rm = new Random();
 
     public List<Action> findAllActions() {
-        List<Action> action = this.actions;
-        return action;
+        return this.actions;
     }
 
     private String generateId() {
@@ -66,8 +65,7 @@ public class Tracker {
     }
 
     public List<Item> findAllItems() {
-        List<Item> list = this.items;
-        return list;
+        return this.items;
     }
 
 }

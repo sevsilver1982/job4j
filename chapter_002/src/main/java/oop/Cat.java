@@ -21,8 +21,7 @@ public class Cat {
     }
 
     public String sound() {
-        String voice = "may-may";
-        return voice;
+        return "may-may";
     }
 
     public static void main(String[] args) {

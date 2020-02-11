@@ -4,7 +4,7 @@ import tracker.Tracker;
 import tracker.input.Input;
 
 public abstract class ActionTracker implements Action {
-    private String name;
+    private final String name;
     private int id;
 
     public ActionTracker(String name) {

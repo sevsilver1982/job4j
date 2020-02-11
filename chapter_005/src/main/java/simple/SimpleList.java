@@ -34,11 +34,11 @@ public class SimpleList<E> {
         if (last == null) {
             first = newLink;
         } else {
-            last.next = newLink;
-            newLink.prev = last;
+            last.setNext(newLink);
+            newLink.setPrev(last);
         }
         last = newLink;
-        this.size++;
+        size++;
     }
 
     /**
@@ -50,21 +50,21 @@ public class SimpleList<E> {
         if (size == 0 || index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        Node<E> result = this.first;
-        Node<E> prv = this.first;
-        Node<E> nxt = this.first;
+        Node<E> res = first;
+        Node<E> prv = first;
+        Node<E> nxt = first;
         if (index == 0) {
-            this.first = first.next;
+            first = first.getNext();
         } else {
             for (int i = 0; i < index; i++) {
-                prv = result;
-                result = result.next;
-                nxt = result.next;
+                prv = res;
+                res = res.getNext();
+                nxt = res.getNext();
             }
-            prv.next = nxt;
+            prv.setNext(nxt);
         }
         this.size--;
-        return result.data;
+        return res.getData();
     }
 
     public E deleteLast() {
@@ -72,15 +72,15 @@ public class SimpleList<E> {
             throw new IndexOutOfBoundsException();
         }
         Node<E> tmp = last;
-        if (last.prev == null) {
+        if (last.getPrev() == null) {
             first = null;
             last = null;
         } else {
-            last.prev.next = null;
-            last = last.prev;
+            last.getPrev().setNext(null);
+            last = last.getPrev();
         }
         this.size--;
-        return tmp.data;
+        return tmp.getData();
     }
 
     /**
@@ -92,37 +92,11 @@ public class SimpleList<E> {
         if (size == 0 || index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        Node<E> result = first;
+        Node<E> res = first;
         for (int i = 0; i < index; i++) {
-            result = result.next;
+            res = res.getNext();
         }
-        return result.data;
-    }
-
-    /**
-     * Node class
-     * @param <E>
-     */
-    public static class Node<E> {
-        private E data;
-        private Node<E> prev;
-        private Node<E> next;
-
-        public E getData() {
-            return data;
-        }
-
-        public Node<E> getPrev() {
-            return prev;
-        }
-
-        public Node<E> getNext() {
-            return next;
-        }
-
-        Node(E data) {
-            this.data = data;
-        }
+        return res.getData();
     }
 
 }

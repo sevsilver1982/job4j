@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class Converter implements Iterator<Integer> {
-    private Iterator<Iterator<Integer>> it;
+    private final Iterator<Iterator<Integer>> it;
     private Iterator<Integer> iterator = new ArrayList().iterator();
 
     public Converter(Iterator<Iterator<Integer>> it) {

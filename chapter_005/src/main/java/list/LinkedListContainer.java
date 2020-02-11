@@ -1,5 +1,6 @@
 package list;
 
+import simple.Node;
 import simple.SimpleList;
 
 import java.util.ConcurrentModificationException;
@@ -24,7 +25,7 @@ public class LinkedListContainer<E> implements ContainerIterable<E> {
         return new Iterator<E>() {
             private int index = 0;
             private int expectedModCount = modCount;
-            private SimpleList.Node<E> position = simpleList.getFirst();
+            private Node<E> position = simpleList.getFirst();
 
             @Override
             public boolean hasNext() {
@@ -40,7 +41,7 @@ public class LinkedListContainer<E> implements ContainerIterable<E> {
                     throw new NoSuchElementException();
                 }
                 index++;
-                SimpleList.Node<E> tmp = position;
+                Node<E> tmp = position;
                 position = position.getNext();
                 return tmp.getData();
             }

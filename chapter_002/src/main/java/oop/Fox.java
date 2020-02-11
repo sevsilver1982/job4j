@@ -4,7 +4,7 @@ package oop;
  * Лиса
  */
 public class Fox {
-    public String name = "Лиса";
+    public final String name = "Лиса";
 
     public void tryEat(Ball ball) {
         System.out.println(this.name + ": " + "Колобок, колобок! Я тебя съем");

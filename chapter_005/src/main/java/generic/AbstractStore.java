@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Optional;
 
 public abstract class AbstractStore<T extends Base> implements Store<T> {
-    private SimpleArray<T> simpleArray;
+    private final SimpleArray<T> simpleArray;
 
     public AbstractStore(int size) {
         simpleArray = new SimpleArray<T>(size);

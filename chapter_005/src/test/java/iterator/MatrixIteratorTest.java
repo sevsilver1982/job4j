@@ -22,7 +22,7 @@ public class MatrixIteratorTest {
     }
 
     @Test
-    public void testsThatNextMethodDoesntDependsOnPriorHasNextInvocation() {
+    public void testsThatNextMethodDoesNotDependsOnPriorHasNextInvocation() {
         assertThat(it.next(), is(1));
         assertThat(it.next(), is(2));
         assertThat(it.next(), is(3));

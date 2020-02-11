@@ -37,7 +37,7 @@ public class ArrayListContainer<E> implements ContainerIterable<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            private int expectedModCount = modCount;
+            private final int expectedModCount = modCount;
             private int pos = 0;
 
             @Override

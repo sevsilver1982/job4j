@@ -3,7 +3,7 @@ package bank;
 import java.util.*;
 
 public class Bank {
-    private Map<User, List<Account>> users = new HashMap<>();
+    private final Map<User, List<Account>> users = new HashMap<>();
 
     /*public static void main(String[] args) {
 
