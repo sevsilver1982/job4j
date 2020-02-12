@@ -12,6 +12,10 @@ public class SimpleArray<T> implements Iterable<T> {
         this.objects = (T[]) new Object[size];
     }
 
+    public int getSize() {
+        return size;
+    }
+
     /**
      * Добавляет указанный элемент (model) в первую свободную ячейку
      * @param model
