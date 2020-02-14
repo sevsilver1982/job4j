@@ -1,18 +1,13 @@
 package school;
 
 import java.util.Objects;
+import java.util.Set;
 
 public class Student implements Comparable<Student> {
     private String name;
     private String surname;
+    private Set<String> units;
     private int score;
-
-    public Student() {
-    }
-
-    public Student(int score) {
-        this.score = score;
-    }
 
     public Student(String name, String surname) {
         this.name = name;
@@ -25,24 +20,30 @@ public class Student implements Comparable<Student> {
         this.score = score;
     }
 
-    public String getName() {
-        return name;
+    public Student(String name, String surname, Set<String> units) {
+        this.name = name;
+        this.surname = surname;
+        this.units = units;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getName() {
+        return name;
     }
 
     public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     public int getScore() {
         return score;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public void setScore(int score) {
@@ -58,19 +59,23 @@ public class Student implements Comparable<Student> {
             return false;
         }
         Student student = (Student) o;
-        return score == student.score;
+        return Objects.equals(name, student.name)
+                && Objects.equals(surname, student.surname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, score);
+        return Objects.hash(name, surname);
     }
 
     @Override
     public String toString() {
-        return  "name='" + name + '\''
+        return "Student{"
+                + "name='" + name + '\''
                 + ", surname='" + surname + '\''
-                + ", score=" + score;
+                + ", units=" + units
+                + ", score=" + score
+                + '}';
     }
 
     @Override

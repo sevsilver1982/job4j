@@ -11,16 +11,16 @@ import static org.hamcrest.core.Is.is;
 public class SchoolTest {
 
     List<Student> students = Arrays.asList(
-            new Student(100),
-            new Student(90),
-            new Student(80),
-            new Student(70),
-            new Student(60),
-            new Student(50),
-            new Student(40),
-            new Student(30),
-            new Student(20),
-            new Student(10)
+            new Student("name1", "surname1", 100),
+            new Student("name2", "surname2", 90),
+            new Student("name3", "surname3", 80),
+            new Student("name4", "surname4", 70),
+            new Student("name5", "surname5", 60),
+            new Student("name6", "surname6", 50),
+            new Student("name7", "surname7", 40),
+            new Student("name8", "surname8", 30),
+            new Student("name9", "surname9", 20),
+            new Student("name10", "surname10", 10)
     );
 
     @Test
@@ -30,10 +30,10 @@ public class SchoolTest {
                         student.getScore() >= 70 && student.getScore() <= 100)
                 ),
                 is(Arrays.asList(
-                        new Student(100),
-                        new Student(90),
-                        new Student(80),
-                        new Student(70)))
+                        new Student("name1", "surname1", 100),
+                        new Student("name2", "surname2", 90),
+                        new Student("name3", "surname3", 80),
+                        new Student("name4", "surname4", 70)))
         );
     }
 
@@ -44,8 +44,8 @@ public class SchoolTest {
                         student.getScore() >= 50 && student.getScore() < 70)
                 ),
                 is(Arrays.asList(
-                        new Student(60),
-                        new Student(50)))
+                        new Student("name5", "surname5", 60),
+                        new Student("name6", "surname6", 50)))
         );
     }
 
@@ -56,10 +56,10 @@ public class SchoolTest {
                         student.getScore() >= 0 && student.getScore() < 50)
                 ),
                 is(Arrays.asList(
-                        new Student(40),
-                        new Student(30),
-                        new Student(20),
-                        new Student(10)))
+                        new Student("name7", "surname7", 40),
+                        new Student("name8", "surname8", 30),
+                        new Student("name9", "surname9", 20),
+                        new Student("name10", "surname10", 10)))
         );
     }
 
@@ -83,9 +83,9 @@ public class SchoolTest {
                 ),
                 is(List.of(
                         new Student("name1", "surname1", 100),
-                        new Student("name2", "surname2", 90),
+                        new Student("name10", "surname10", 90),
                         new Student("name3", "surname3", 80),
-                        new Student("name5", "surname5", 70)
+                        new Student("name2", "surname2", 70)
                 ))
         );
     }
