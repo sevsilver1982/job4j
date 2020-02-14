@@ -1,4 +1,4 @@
-package math;
+package lambda;
 
 import org.junit.Test;
 

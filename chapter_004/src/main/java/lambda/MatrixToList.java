@@ -1,4 +1,4 @@
-package math;
+package lambda;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

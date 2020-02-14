@@ -1,4 +1,4 @@
-package math;
+package lambda;
 
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
