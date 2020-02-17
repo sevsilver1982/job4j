@@ -56,8 +56,6 @@ public class Config {
 
     public static void main(String[] args) {
         System.out.println(new Config(".\\chapter_006\\app.properties"));
-        //String[] tmp = "hibernate.connection.username=postgres".split("=");
-        //System.out.println();
     }
 
 }
