@@ -7,7 +7,11 @@ import java.util.stream.Collectors;
 public class Profiles {
 
     public List<Address> collect(List<Profile> profiles) {
-        return profiles.stream().map(Profile::getAddress).distinct().sorted(new SortByAddressASC()).collect(Collectors.toList());
+        return profiles.stream()
+                .map(Profile::getAddress)
+                .distinct()
+                .sorted(new SortByAddressASC())
+                .collect(Collectors.toList());
     }
 
     public static void main(String[] args) {

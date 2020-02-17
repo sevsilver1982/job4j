@@ -38,16 +38,8 @@ public class Student implements Comparable<Student> {
         return score;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
+    public Set<String> getUnits() {
+        return units;
     }
 
     @Override
