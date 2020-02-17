@@ -11,7 +11,7 @@ public class Analysis {
                 BufferedReader reader = new BufferedReader(source);
                 PrintWriter writer = new PrintWriter(target)
         ) {
-            reader.lines(). forEach(line -> {
+            reader.lines().forEach(line -> {
                 String[] tmp = line.split(" ");
                 String status = tmp[0];
                 String time = tmp[1];
