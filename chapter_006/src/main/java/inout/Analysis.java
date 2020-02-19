@@ -5,6 +5,10 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Analysis {
 
+    public void writeTarget(PrintWriter writer, String str) {
+        writer.println(str);
+    }
+
     public void unavailable(Reader source, PrintStream target) {
         AtomicReference<String> beginTime = new AtomicReference<>("");
         try (
@@ -19,7 +23,7 @@ public class Analysis {
                     beginTime.set(time);
                 }
                 if (!beginTime.get().equals("") && (status.equals("200") || status.equals("300"))) {
-                    writer.println(String.format("%s;%s", beginTime.get(), time));
+                    writeTarget(writer, String.format("%s;%s", beginTime.get(), time));
                     beginTime.set("");
                 }
             });
