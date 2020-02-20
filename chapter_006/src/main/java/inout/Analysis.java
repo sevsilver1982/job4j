@@ -1,18 +1,16 @@
 package inout;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Analysis {
 
-    public void writeTarget(PrintWriter writer, String str) {
-        writer.println(str);
-    }
-
-    public void unavailable(Reader source, PrintStream target) {
+    public void unavailable(String source, String target) {
         AtomicReference<String> beginTime = new AtomicReference<>("");
         try (
-                BufferedReader reader = new BufferedReader(source);
+                BufferedReader reader = new BufferedReader(new FileReader(source));
                 PrintWriter writer = new PrintWriter(target)
         ) {
             reader.lines().forEach(line -> {
@@ -23,22 +21,10 @@ public class Analysis {
                     beginTime.set(time);
                 }
                 if (!beginTime.get().equals("") && (status.equals("200") || status.equals("300"))) {
-                    writeTarget(writer, String.format("%s;%s", beginTime.get(), time));
+                    writer.println(String.format("%s;%s", beginTime.get(), time));
                     beginTime.set("");
                 }
             });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) {
-        Analysis analise = new Analysis();
-        try {
-            analise.unavailable(
-                    new InputStreamReader(new FileInputStream(".\\chapter_006\\server.log")),
-                    new PrintStream(".\\chapter_006\\unavailable.csv")
-            );
         } catch (Exception e) {
             e.printStackTrace();
         }
