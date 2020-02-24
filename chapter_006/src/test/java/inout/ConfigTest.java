@@ -32,7 +32,7 @@ public class ConfigTest {
             out.println("hibernate.connection.password=password");
             out.println("name= Petr Arsentev #comment");
         }
-        config = new Config(source.getAbsolutePath());
+        config = new Config(source.getPath());
         config.load();
     }
 

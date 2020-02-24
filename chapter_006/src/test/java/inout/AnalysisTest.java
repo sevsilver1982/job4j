@@ -28,9 +28,9 @@ public class AnalysisTest {
             out.println("200 11:02:02");
         }
         File target = folder.newFile("unavailable.csv");
-        analise.unavailable(tmp.getAbsolutePath(), target.getAbsolutePath());
+        analise.unavailable(tmp.getPath(), target.getPath());
         StringJoiner actual = new StringJoiner(System.lineSeparator(), "", System.lineSeparator());
-        try (BufferedReader reader = new BufferedReader(new FileReader(target.getAbsolutePath()))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(target.getPath()))) {
             reader.lines().forEach(actual::add);
         }
         StringJoiner expected = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
