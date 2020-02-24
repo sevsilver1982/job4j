@@ -37,13 +37,18 @@ public class SearchTest {
     @Test
     public void files() {
         String root = folder.getRoot().toString();
+
         List<String> actual =
-                new Search().files(root, List.of("exe", "txt")).stream()
-                        .map(File::getAbsolutePath)
+                new Search().files(root, List.of("txt", "doc")).stream()
+                        .map(File::getPath)
                         .collect(Collectors.toList());
+
         List<String> expected = List.of(
+                String.format("%s%s", root, "\\dir1\\file1.txt"),
                 String.format("%s%s", root, "\\dir1\\file2.doc"),
+                String.format("%s%s", root, "\\dir1\\dir2\\file4.txt"),
                 String.format("%s%s", root, "\\dir1\\dir2\\file5.doc"),
+                String.format("%s%s", root, "\\dir1\\dir2\\dir3\\file7.txt"),
                 String.format("%s%s", root, "\\dir1\\dir2\\dir3\\file8.doc")
         );
         assertThat(actual.toString(), is(expected.toString()));

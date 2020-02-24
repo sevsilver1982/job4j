@@ -22,7 +22,7 @@ public class AbuseTest {
         try (PrintWriter out = new PrintWriter(source)) {
             out.println("hello foolish dude ");
         }
-        Abuse.drop(source.getAbsolutePath(), target.getAbsolutePath(), List.of("foolish"));
+        Abuse.drop(source.getPath(), target.getPath(), List.of("foolish"));
         StringBuilder rsl = new StringBuilder();
         try (BufferedReader in = new BufferedReader(new FileReader(target))) {
             in.lines().forEach(rsl::append);
