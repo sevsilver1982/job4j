@@ -22,7 +22,7 @@ public class Config {
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             read.lines().forEach(line -> {
                 if (!line.trim().isEmpty()) {
-                    int indexComment = line.indexOf("##");
+                    int indexComment = line.indexOf("#");
                     String[] tmp = line
                             .substring(0, indexComment > 0 ? indexComment : line.length())
                             .trim()

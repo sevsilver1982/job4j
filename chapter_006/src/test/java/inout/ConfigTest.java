@@ -30,7 +30,7 @@ public class ConfigTest {
             out.println("hibernate.connection.driver_class=org.postgresql.Driver");
             out.println("hibernate.connection.username=postgres");
             out.println("hibernate.connection.password=password");
-            out.println("name= Petr Arsentev ##comment");
+            out.println("name= Petr Arsentev #comment");
         }
         config = new Config(source.getAbsolutePath());
         config.load();
