@@ -29,10 +29,4 @@ public class Search {
         return result;
     }
 
-    public static void main(String[] args) {
-        new Search()
-                .files("C:\\soft\\docs", List.of("exe", "txt"))
-                .forEach(file -> System.out.println(file.getAbsolutePath()));
-    }
-
 }
