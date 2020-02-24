@@ -1,8 +1,13 @@
 package inout;
 
+import java.io.*;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
 public class Zip {
 
-   /* public List<File> seekBy(String root, List<String> ext) {
+    public List<File> seekBy(String root, List<String> ext) {
         return null;
     }
 
@@ -23,6 +28,6 @@ public class Zip {
 
     public static void main(String[] args) {
         new Zip().pack("C:\\soft\\workspace\\job4j\\chapter_006\\", "c:\\soft\\1.zip", List.of("exe", "txt"));
-    }*/
+    }
 
 }

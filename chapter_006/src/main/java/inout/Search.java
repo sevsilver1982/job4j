@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Search {
 
-    public List<File> files(String parent, List<String> exts) {
+    public List<File> files(String parent, List<String> ext) {
         File rootDir = new File(parent);
         List<File> result = new ArrayList<>();
         Deque<File> fileTree = new ArrayDeque<>(
@@ -18,7 +18,8 @@ public class Search {
                         List.of(Objects.requireNonNull(currentFile.listFiles()))
                 );
             } else {
-                if (!exts.contains(currentFile.getPath()
+                if (ext.contains(
+                        currentFile.getPath()
                         .substring(currentFile.getPath().lastIndexOf(".") + 1)
                 )) {
                     result.add(currentFile);
@@ -26,12 +27,6 @@ public class Search {
             }
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        new Search()
-                .files("C:\\soft\\docs", List.of("exe", "txt"))
-                .forEach(file -> System.out.println(file.getAbsolutePath()));
     }
 
 }
