@@ -9,20 +9,17 @@ public class Search {
         File rootDir = new File(parent);
         List<File> result = new ArrayList<>();
         Deque<File> fileTree = new ArrayDeque<>(
-                Arrays.asList(rootDir.listFiles())
+                List.of(Objects.requireNonNull(rootDir.listFiles()))
         );
         while (!fileTree.isEmpty()) {
             File currentFile = fileTree.poll();
             if (currentFile.isDirectory()) {
                 fileTree.addAll(
-                        Arrays.asList(Objects.requireNonNull(currentFile.listFiles()))
+                        List.of(Objects.requireNonNull(currentFile.listFiles()))
                 );
             } else {
-                if (!exts.contains(
-                        currentFile.getAbsolutePath()
-                        .substring(
-                                currentFile.getAbsolutePath().lastIndexOf(".") + 1
-                        )
+                if (!exts.contains(currentFile.getPath()
+                        .substring(currentFile.getPath().lastIndexOf(".") + 1)
                 )) {
                     result.add(currentFile);
                 }
