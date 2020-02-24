@@ -8,7 +8,7 @@ public class Search {
     public List<File> files(String parent, List<String> ext) {
         File rootDir = new File(parent);
         List<File> result = new ArrayList<>();
-        Deque<File> fileTree = new ArrayDeque<>(
+        Queue<File> fileTree = new PriorityQueue<>(
                 List.of(Objects.requireNonNull(rootDir.listFiles()))
         );
         while (!fileTree.isEmpty()) {

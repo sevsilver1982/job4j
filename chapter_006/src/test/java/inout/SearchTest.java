@@ -44,12 +44,12 @@ public class SearchTest {
                         .collect(Collectors.toList());
 
         List<String> expected = List.of(
-                String.format("%s%s", root, "\\dir1\\file1.txt"),
-                String.format("%s%s", root, "\\dir1\\file2.doc"),
+                String.format("%s%s", root, "\\dir1\\dir2\\dir3\\file7.txt"),
+                String.format("%s%s", root, "\\dir1\\dir2\\dir3\\file8.doc"),
                 String.format("%s%s", root, "\\dir1\\dir2\\file4.txt"),
                 String.format("%s%s", root, "\\dir1\\dir2\\file5.doc"),
-                String.format("%s%s", root, "\\dir1\\dir2\\dir3\\file7.txt"),
-                String.format("%s%s", root, "\\dir1\\dir2\\dir3\\file8.doc")
+                String.format("%s%s", root, "\\dir1\\file1.txt"),
+                String.format("%s%s", root, "\\dir1\\file2.doc")
         );
         assertThat(actual.toString(), is(expected.toString()));
     }
