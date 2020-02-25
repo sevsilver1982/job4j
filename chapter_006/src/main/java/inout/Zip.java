@@ -8,54 +8,64 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zip {
-    private List<String> ext;
+    private static List<String> exclude;
+    private static String directory;
+    private static String output;
 
-    public void addDirectory(ZipOutputStream zos, File dir) throws IOException {
+    public void zipDirectory(ZipOutputStream zos, File dir) throws IOException {
         for (File file : dir.listFiles()) {
             if (file.isDirectory()) {
-                addDirectory(zos, file);
+                System.out.println(file.getPath());
+                zipDirectory(zos, file);
             } else {
-                if (!ext.contains(
-                        file.getPath()
-                                .substring(file.getPath().lastIndexOf(".") + 1))) {
-                    zos.putNextEntry(new ZipEntry(file.getPath()));
-                    zos.write(new BufferedInputStream(new FileInputStream(file)).readAllBytes());
+                if (!exclude.contains(
+                        file.getPath().substring(file.getPath().lastIndexOf(".") + 1))
+                ) {
+                    System.out.println(file.getPath());
+                    String entryName = file.getPath()
+                            .replaceAll("\\\\", "/")
+                            .replaceAll(directory, "");
+                    zos.putNextEntry(
+                            new ZipEntry(entryName.startsWith("/") ? entryName.substring(1) : entryName)
+                    );
+                    zos.write(
+                            new BufferedInputStream(new FileInputStream(file)).readAllBytes()
+                    );
                     zos.closeEntry();
                 }
             }
         }
     }
 
-    public void pack(String root, String target, List<String> ext) {
-        this.ext = ext;
+    public void pack() throws Exception {
+        File root = new File(directory);
+        if (!root.isDirectory() || !root.exists() || output.isEmpty()) {
+            throw new Exception("Incorrect parameters");
+        }
         try (
-                ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)));
+                ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(output)))
         ) {
-            File file = new File(root);
-            addDirectory(zos, file);
+            zipDirectory(zos, root);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void main(String[] args) {
-        String directory = "";
-        String exclude = "";
-        String output = "";
-
+    public static void main(String[] args) throws Exception {
         for (int i = 0; i < args.length; i++) {
             if (i + 1 > args.length) {
                 break;
             }
-
             switch (args[i]) {
                 case ("-d"):
                     i++;
-                    directory = args[i];
+                    directory = args[i].replaceAll("\\\\", "/");
                     break;
                 case ("-e"):
                     i++;
-                    exclude = args[i];
+                    exclude = Arrays.stream(args[i].split(";"))
+                            .map(String::trim)
+                            .collect(Collectors.toList());
                     break;
                 case ("-o"):
                     i++;
@@ -65,19 +75,7 @@ public class Zip {
                     break;
             }
         }
-
-        if (directory.isEmpty() || output.isEmpty()) {
-            return;
-        }
-
-        Zip zip = new Zip();
-        zip.pack(
-                directory,
-                output,
-                Arrays.stream(exclude.split(","))
-                        .map(String::trim)
-                        .collect(Collectors.toList())
-        );
+        new Zip().pack();
     }
 
 }
