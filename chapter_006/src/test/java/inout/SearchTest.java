@@ -21,17 +21,17 @@ public class SearchTest {
     @Before
     public void prepare() throws IOException {
         folder.newFolder("dir1");
-        folder.newFile("dir1\\file1.txt");
-        folder.newFile("dir1\\file2.doc");
-        folder.newFile("dir1\\file3.exe");
-        folder.newFolder("dir1\\dir2");
-        folder.newFile("dir1\\dir2\\file4.txt");
-        folder.newFile("dir1\\dir2\\file5.doc");
-        folder.newFile("dir1\\dir2\\file6.exe");
-        folder.newFolder("dir1\\dir2\\dir3");
-        folder.newFile("dir1\\dir2\\dir3\\file7.txt");
-        folder.newFile("dir1\\dir2\\dir3\\file8.doc");
-        folder.newFile("dir1\\dir2\\dir3\\file9.exe");
+        folder.newFile("dir1/file1.txt");
+        folder.newFile("dir1/file2.doc");
+        folder.newFile("dir1/file3.exe");
+        folder.newFolder("dir1/dir2");
+        folder.newFile("dir1/dir2/file4.txt");
+        folder.newFile("dir1/dir2/file5.doc");
+        folder.newFile("dir1/dir2/file6.exe");
+        folder.newFolder("dir1/dir2/dir3");
+        folder.newFile("dir1/dir2/dir3/file7.txt");
+        folder.newFile("dir1/dir2/dir3/file8.doc");
+        folder.newFile("dir1/dir2/dir3/file9.exe");
     }
 
     @Test
