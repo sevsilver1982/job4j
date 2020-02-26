@@ -43,13 +43,14 @@ public class SearchTest {
                         .map(File::getPath)
                         .collect(Collectors.toList());
 
+        String separator = System.getProperty("file.separator");
         List<String> expected = List.of(
-                String.format("%s%s", root, "\\dir1\\dir2\\dir3\\file7.txt"),
-                String.format("%s%s", root, "\\dir1\\dir2\\dir3\\file8.doc"),
-                String.format("%s%s", root, "\\dir1\\dir2\\file4.txt"),
-                String.format("%s%s", root, "\\dir1\\dir2\\file5.doc"),
-                String.format("%s%s", root, "\\dir1\\file1.txt"),
-                String.format("%s%s", root, "\\dir1\\file2.doc")
+                String.format("%s%s", root, File.separator + "dir1" + File.separator + "dir2" + File.separator + "dir3" + File.separator + "file7.txt"),
+                String.format("%s%s", root, File.separator + "dir1" + File.separator + "dir2" + File.separator + "dir3" + File.separator + "file8.doc"),
+                String.format("%s%s", root, File.separator + "dir1" + File.separator + "dir2" + File.separator + "file4.txt"),
+                String.format("%s%s", root, File.separator + "dir1" + File.separator + "dir2" + File.separator + "file5.doc"),
+                String.format("%s%s", root, File.separator + "dir1" + File.separator + "file1.txt"),
+                String.format("%s%s", root, File.separator + "dir1" + File.separator + "file2.doc")
         );
         assertThat(actual.toString(), is(expected.toString()));
     }
