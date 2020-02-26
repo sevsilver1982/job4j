@@ -43,7 +43,6 @@ public class SearchTest {
                         .map(File::getPath)
                         .collect(Collectors.toList());
 
-        String separator = System.getProperty("file.separator");
         List<String> expected = List.of(
                 String.format("%s%s", root, File.separator + "dir1" + File.separator + "dir2" + File.separator + "dir3" + File.separator + "file7.txt"),
                 String.format("%s%s", root, File.separator + "dir1" + File.separator + "dir2" + File.separator + "dir3" + File.separator + "file8.doc"),
