@@ -8,6 +8,7 @@ import org.junit.rules.TemporaryFolder;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -38,8 +39,9 @@ public class SearchTest {
     public void files() {
         String root = folder.getRoot().toString();
 
+        Predicate<String> predicate = s -> s.endsWith(".txt") || s.endsWith(".doc");
         List<String> actual =
-                new Search().files(root, List.of("txt", "doc")).stream()
+                new Search().files(root, predicate).stream()
                         .map(File::getPath)
                         .collect(Collectors.toList());
 
@@ -51,7 +53,12 @@ public class SearchTest {
                 String.format("%s%s", root, File.separator + "dir1" + File.separator + "file1.txt"),
                 String.format("%s%s", root, File.separator + "dir1" + File.separator + "file2.doc")
         );
-        assertThat(actual.toString(), is(expected.toString()));
+        assertThat(
+                actual.containsAll(expected)
+                        && expected.containsAll(actual)
+                        && actual.size() == expected.size(),
+                is(true)
+        );
     }
 
 }

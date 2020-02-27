@@ -2,10 +2,11 @@ package inout;
 
 import java.io.File;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Search {
 
-    public List<File> files(String parent, List<String> ext) {
+    public List<File> files(String parent, Predicate<String> predicate) {
         File rootDir = new File(parent);
         List<File> result = new ArrayList<>();
         Queue<File> fileTree = new PriorityQueue<>(
@@ -18,10 +19,7 @@ public class Search {
                         List.of(Objects.requireNonNull(currentFile.listFiles()))
                 );
             } else {
-                if (ext.contains(
-                        currentFile.getPath()
-                        .substring(currentFile.getPath().lastIndexOf(".") + 1)
-                )) {
+                if (predicate.test(currentFile.getPath())) {
                     result.add(currentFile);
                 }
             }
