@@ -1,33 +1,31 @@
 package inout;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.Supplier;
 
 public class SimpleChat {
+    private Scanner scanner;
+    private String answers;
+    private Mode chatMode = Mode.NORMAL;
 
     private enum Mode {
         NORMAL("продолжить"),
         SILENT("стоп"),
-        EXIT("закончить");
-        private String value;
+        EXIT("закончить"),
+        DEFAULT("");
+
+        String value;
 
         Mode(String value) {
             this.value = value;
         }
 
-        public String getChatMode() {
+        private String getValue() {
             return value;
         }
     }
-
-    private final static String CMD_CONTINUE = "продолжить";
-    private final static String CMD_SILENT = "стоп";
-    private final static String CMD_EXIT = "закончить";
-    private Scanner scanner;
-    private String answers;
-
-    private Mode chatMode;
 
     public SimpleChat(InputStream in, PrintStream out, String answers) {
         this.scanner = new Scanner(in);
@@ -55,32 +53,35 @@ public class SimpleChat {
         return result;
     };
 
-    private boolean listen(PrintStream out, Supplier<String> question, Supplier<String> answer) {
-        String answerResult = "";
-        String questionResult = question.get();
-        /*switch (questionResult) {
-            case (Mode.NORMAL):
-                Mode.NORMAL;
+    private Mode getMode(String command) {
+        return Arrays.stream(Mode.values())
+                .filter(type -> type.getValue().equals(command))
+                .findFirst()
+                .orElse(Mode.DEFAULT);
+    }
+
+    private void process(PrintStream out, Supplier<String> question, Supplier<String> answer) {
+        switch (getMode(question.get())) {
+            case NORMAL:
+                chatMode = Mode.NORMAL;
                 break;
-            case (CMD_SILENT):
-                Mode.setChatMode(Mode.SILENT);
+            case SILENT:
+                chatMode = Mode.SILENT;
                 break;
-            case (CMD_EXIT):
-                return false;
+            case EXIT:
+                chatMode = Mode.EXIT;
+                break;
             default:
-                answerResult = answer.get();
                 break;
-        }*/
-        //if (chatMode == Mode.NORMAL) {
-            out.println(answerResult);
-        //}
-        return true;
+        }
+        if (chatMode == Mode.NORMAL) {
+            out.println(answer.get());
+        }
     }
 
     private void talk(PrintStream out) {
-        boolean result = true;
-        while (result) {
-            result = listen(out, question, answer);
+        while (chatMode != Mode.EXIT) {
+            process(out, question, answer);
         }
     }
 
