@@ -1,5 +1,6 @@
 package tracker.input;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class InputConsole implements Input {
@@ -15,8 +16,7 @@ public class InputConsole implements Input {
     public int askInt(String question) {
         System.out.println(question);
         if (!scanner.hasNextInt()) {
-            scanner.nextLine();
-            throw new IllegalStateException();
+            throw new NoSuchElementException();
         }
         return scanner.nextInt();
     }
