@@ -36,10 +36,12 @@ public class SearchTest {
     }
 
     @Test
-    public void files() {
+    public void searchFiles() {
         String root = folder.getRoot().toString();
 
-        Predicate<String> predicate = s -> s.endsWith(".txt") || s.endsWith(".doc");
+        Predicate<File> predicate = file ->
+                !file.isDirectory() && file.getPath().endsWith(".txt") || file.getPath().endsWith(".doc");
+
         List<String> actual =
                 new Search().files(root, predicate).stream()
                         .map(File::getPath)
@@ -53,6 +55,32 @@ public class SearchTest {
                 String.format("%s%s", root, File.separator + "dir1" + File.separator + "file1.txt"),
                 String.format("%s%s", root, File.separator + "dir1" + File.separator + "file2.doc")
         );
+
+        assertThat(
+                actual.containsAll(expected)
+                        && expected.containsAll(actual)
+                        && actual.size() == expected.size(),
+                is(true)
+        );
+    }
+
+    @Test
+    public void searchDirs() {
+        String root = folder.getRoot().toString();
+
+        Predicate<File> predicate = File::isDirectory;
+
+        List<String> actual =
+                new Search().files(root, predicate).stream()
+                        .map(File::getPath)
+                        .collect(Collectors.toList());
+
+        List<String> expected = List.of(
+                String.format("%s%s", root, File.separator + "dir1"),
+                String.format("%s%s", root, File.separator + "dir1" + File.separator + "dir2"),
+                String.format("%s%s", root, File.separator + "dir1" + File.separator + "dir2" + File.separator + "dir3")
+        );
+
         assertThat(
                 actual.containsAll(expected)
                         && expected.containsAll(actual)

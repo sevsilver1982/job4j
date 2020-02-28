@@ -6,22 +6,17 @@ import java.util.function.Predicate;
 
 public class Search {
 
-    public List<File> files(String parent, Predicate<String> predicate) {
-        File rootDir = new File(parent);
+    public List<File> files(String root, Predicate<File> predicate) {
         List<File> result = new ArrayList<>();
-        Queue<File> fileTree = new PriorityQueue<>(
-                List.of(Objects.requireNonNull(rootDir.listFiles()))
-        );
-        while (!fileTree.isEmpty()) {
-            File currentFile = fileTree.poll();
-            if (currentFile.isDirectory()) {
-                fileTree.addAll(
-                        List.of(Objects.requireNonNull(currentFile.listFiles()))
-                );
-            } else {
-                if (predicate.test(currentFile.getPath())) {
-                    result.add(currentFile);
-                }
+        Queue<File> directory = new PriorityQueue<>();
+        Collections.addAll(directory, Objects.requireNonNull(new File(root).listFiles()));
+        while (!directory.isEmpty()) {
+            File file = directory.poll();
+            if (file.isDirectory()) {
+                Collections.addAll(directory, Objects.requireNonNull(file.listFiles()));
+            }
+            if (predicate.test(file)) {
+                result.add(file);
             }
         }
         return result;
