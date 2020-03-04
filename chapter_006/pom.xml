@@ -25,7 +25,7 @@
                             <finalName>zip</finalName>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>inout.Zip</mainClass>
+                                    <mainClass>inout.zip.Zip</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

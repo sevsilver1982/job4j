@@ -18,7 +18,7 @@ public class StartUI {
         tracker.findAllActions()
                 .stream()
                 .map(action -> String.format("%s. %s", action.getId(), action.getName()))
-                .forEach(action -> output.accept(action));
+                .forEach(output::accept);
     }
 
     public StartUI(Input input, Tracker tracker, Consumer<String> output) {
