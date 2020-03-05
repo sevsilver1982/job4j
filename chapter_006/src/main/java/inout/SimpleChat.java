@@ -1,14 +1,31 @@
 package inout;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.Supplier;
 
 public class SimpleChat {
+    private ChatLogger logger;
     private Scanner scanner;
     private String answers;
     private Mode chatMode = Mode.NORMAL;
+
+    private class ChatLogger {
+        private PrintStream out;
+        private DateTimeFormatter formatter;
+
+        public ChatLogger(PrintStream out) {
+            this.out = out;
+            this.formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+        }
+
+        public void log(String msg) {
+            out.printf("%s : %s\n",  formatter.format(LocalDateTime.now()), msg);
+        }
+    }
 
     private enum Mode {
         NORMAL("продолжить"),
@@ -27,9 +44,10 @@ public class SimpleChat {
         }
     }
 
-    public SimpleChat(InputStream in, PrintStream out, String answers) {
+    public SimpleChat(InputStream in, PrintStream out, String answers, PrintStream logout) {
         this.scanner = new Scanner(in);
         this.answers = answers;
+        this.logger = new ChatLogger(logout);
         talk(out);
     }
 
@@ -37,7 +55,9 @@ public class SimpleChat {
         if (!scanner.hasNext()) {
             throw new IllegalStateException();
         }
-        return scanner.nextLine().trim().toLowerCase();
+        String result = scanner.nextLine().trim().toLowerCase();
+        logger.log(result);
+        return result;
     };
 
     private Supplier<String> answer = () -> {
@@ -47,6 +67,7 @@ public class SimpleChat {
             result = read.lines().skip(
                     (int) (Math.random() * new BufferedReader(new FileReader(answers)).lines().count())
             ).findFirst().get();
+            logger.log(result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,8 +106,8 @@ public class SimpleChat {
         }
     }
 
-    public static void main(String[] args) {
-        new SimpleChat(System.in, System.out, "c:/soft/answers.txt");
+    public static void main(String[] args) throws FileNotFoundException {
+        new SimpleChat(System.in, System.out, "c:/soft/answers.txt", new PrintStream(new File("c:/soft/chat.log")));
     }
 
 }
