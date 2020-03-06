@@ -1,31 +1,18 @@
 package inout;
 
+import inout.logger.SimpleLogger;
+
 import java.io.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class SimpleChat {
-    private ChatLogger logger;
+    private SimpleLogger logger;
     private Scanner scanner;
     private String answers;
     private Mode chatMode = Mode.NORMAL;
-
-    private class ChatLogger {
-        private PrintStream out;
-        private DateTimeFormatter formatter;
-
-        public ChatLogger(PrintStream out) {
-            this.out = out;
-            this.formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
-        }
-
-        public void log(String msg) {
-            out.printf("%s : %s\n",  formatter.format(LocalDateTime.now()), msg);
-        }
-    }
 
     private enum Mode {
         NORMAL("продолжить"),
@@ -47,7 +34,7 @@ public class SimpleChat {
     public SimpleChat(InputStream in, PrintStream out, String answers, PrintStream logout) {
         this.scanner = new Scanner(in);
         this.answers = answers;
-        this.logger = new ChatLogger(logout);
+        this.logger = new SimpleLogger(logout);
         talk(out);
     }
 
@@ -60,12 +47,12 @@ public class SimpleChat {
         return result;
     };
 
-    private Supplier<String> answer = () -> {
+    private Function<String, String> answer = fileName -> {
         String result = "";
         try {
-            BufferedReader read = new BufferedReader(new FileReader(answers));
+            BufferedReader read = new BufferedReader(new FileReader(fileName));
             result = read.lines().skip(
-                    (int) (Math.random() * new BufferedReader(new FileReader(answers)).lines().count())
+                    (int) (Math.random() * new BufferedReader(new FileReader(fileName)).lines().count())
             ).findFirst().get();
             logger.log(result);
         } catch (IOException e) {
@@ -81,7 +68,7 @@ public class SimpleChat {
                 .orElse(Mode.DEFAULT);
     }
 
-    private void process(PrintStream out, Supplier<String> question, Supplier<String> answer) {
+    private void process(PrintStream out, Supplier<String> question, Function<String, String> answer) {
         switch (getMode(question.get())) {
             case NORMAL:
                 chatMode = Mode.NORMAL;
@@ -96,7 +83,7 @@ public class SimpleChat {
                 break;
         }
         if (chatMode == Mode.NORMAL) {
-            out.println(answer.get());
+            out.println(answer.apply(answers));
         }
     }
 
