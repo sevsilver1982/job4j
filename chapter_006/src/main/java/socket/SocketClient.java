@@ -18,18 +18,25 @@ public class SocketClient {
         this.port = port;
     }
 
-    public void listen(BufferedReader in, PrintWriter out) throws IOException {
-        Scanner console = new Scanner(System.in);
-        do {
-            out.println("Hello oracle");
-            String str;
-            while (!(str = in.readLine()).isEmpty()) {
-                System.out.println(str);
+    public void listen(BufferedReader in, PrintWriter out) {
+        Scanner scanner = new Scanner(System.in);
+        String str = "";
+        while (socket.isConnected()) {
+            if (!scanner.hasNext()) {
+                throw new IllegalStateException();
             }
-        } while (true);
+            out.println(scanner.nextLine());
+            System.out.println("wait answer...");
+            try {
+                str = in.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(str);
+        }
     }
 
-    public boolean start() {
+    public void start() {
         try {
             socket = new Socket(InetAddress.getByName(ip), port);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -37,12 +44,10 @@ public class SocketClient {
             listen(in, out);
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         new SocketClient("127.0.0.1", 777).start();
     }
 
