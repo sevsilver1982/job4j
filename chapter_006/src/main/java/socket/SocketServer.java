@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class SocketServer {
     private SimpleLogger logger;
@@ -30,7 +31,8 @@ public class SocketServer {
                 e.printStackTrace();
             }
             logger.log(ask);
-            out.println(ask);
+            out.write(Arrays.toString("HTTP/1.1 200 OK\r\n".getBytes()));
+            out.write(Arrays.toString("Hello, dear friend.".getBytes()));
         }
     }
 
@@ -49,7 +51,7 @@ public class SocketServer {
     }
 
     public static void main(String[] args) {
-        new SocketServer(777).start();
+        new SocketServer(9000).start();
     }
 
 }
