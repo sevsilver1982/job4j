@@ -12,7 +12,10 @@ public class SimpleLogger {
         this.out = out;
     }
 
-    public void log(String msg) {
-        out.printf("%s : %s\n",  formatter.format(LocalDateTime.now()), msg);
+    public String log(String msg) {
+        String result = String.format("%s : %s",  formatter.format(LocalDateTime.now()), msg);
+        out.println(result);
+        return result;
     }
+
 }
