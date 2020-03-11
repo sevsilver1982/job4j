@@ -1,4 +1,4 @@
-package inout;
+package inout.examples;
 
 import java.io.*;
 import java.util.List;
