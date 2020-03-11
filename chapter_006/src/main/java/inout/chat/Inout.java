@@ -1,24 +1,24 @@
 package inout.chat;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.Scanner;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class Inout {
+public class Inout<T1 extends Reader, T2 extends Writer> {
     private Scanner scanner;
-    private OutputStream out;
+    private T2 out;
 
     /**
-     * Inout constructor
+     * Inout constructor.
      * @param in input stream.
      * @param out output stream.
      * @param testRequest incoming request handler.
      * @param prepareResponse prepare outgoing response.
      */
-    public Inout(InputStream in, OutputStream out, Predicate<String> testRequest, Function<String, String> prepareResponse) {
+    public Inout(T1 in, T2 out, Predicate<String> testRequest, Function<String, String> prepareResponse) throws IOException {
         this.scanner = new Scanner(in);
         this.out = out;
         loop(testRequest, prepareResponse);
@@ -29,23 +29,24 @@ public class Inout {
      * @param testRequest incoming request handler predicate.
      * @param prepareResponse preparation outgoing response function.
      */
-    private void loop(Predicate<String> testRequest, Function<String, String> prepareResponse) {
+    private void loop(Predicate<String> testRequest, Function<String, String> prepareResponse) throws IOException, IllegalStateException {
         String request;
         boolean result;
-        do {
-            if (!scanner.hasNext()) {
-                throw new IllegalStateException();
-            }
-            request = scanner.nextLine();
-            result = testRequest.test(request);
-            if (result) {
-                try {
-                    out.write(prepareResponse.apply(request).getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
+        try {
+            do {
+                if (!scanner.hasNext()) {
+                    throw new IllegalStateException();
                 }
-            }
-        } while (result);
+                request = scanner.nextLine();
+                result = testRequest.test(request);
+                if (result) {
+                    out.write(prepareResponse.apply(request));
+                    out.flush();
+                }
+            } while (result);
+        } catch (IOException e) {
+            throw new IOException();
+        }
     }
 
 }
