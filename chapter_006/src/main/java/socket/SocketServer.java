@@ -13,9 +13,10 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class SocketServer {
-    private SimpleLogger log;
-    private Socket socket;
+    private SimpleLogger log = new SimpleLogger(System.out);
     private final int port;
+    private ServerSocket serverSocket;
+    private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
 
@@ -23,24 +24,11 @@ public class SocketServer {
         this.port = port;
     }
 
-    /*public void listen()  {
-        String ask = "";
-        while (socket.isConnected()) {
-            log.writeln("wait command...");
-            try {
-                ask = in.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            out.write(ask);
-        }
-    }*/
-
     /**
      * Incoming request handler predicate.
      */
     public Predicate<String> testRequest = request -> {
-        log.writeln(request);
+        log.writeln(String.format("server received request: %s", request));
         return true;
     };
 
@@ -48,15 +36,14 @@ public class SocketServer {
      * Outgoing response preparation function.
      */
     Function<String, String> prepareResponse = request -> {
-        String preparedResponse = request;
-        log.write(preparedResponse);
+        String preparedResponse = String.format("echo server received request: %s", request);
+        out.println(preparedResponse);
         return preparedResponse;
     };
 
-    public void init() {
-        log = new SimpleLogger(System.out);
+    public void init() throws IOException, IllegalStateException {
         try {
-            ServerSocket serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket(port);
             socket = serverSocket.accept();
             log.writeln("new connection");
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -64,10 +51,17 @@ public class SocketServer {
             new Inout<>(in, out, testRequest, prepareResponse);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (IllegalStateException e) {
+            System.out.println("init2");
+            socket = serverSocket.accept();
+            log.writeln("new connection");
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+            new Inout<>(in, out, testRequest, prepareResponse);
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new SocketServer(777).init();
     }
 

@@ -29,24 +29,24 @@ public class Inout<T1 extends Reader, T2 extends Writer> {
      * @param testRequest incoming request handler predicate.
      * @param prepareResponse preparation outgoing response function.
      */
-    private void loop(Predicate<String> testRequest, Function<String, String> prepareResponse) throws IOException {
+    private void loop(Predicate<String> testRequest, Function<String, String> prepareResponse) throws IOException, IllegalStateException {
         String request;
         boolean result;
-        do {
-            if (!scanner.hasNext()) {
-                throw new IllegalStateException();
-            }
-            request = scanner.nextLine();
-            result = testRequest.test(request);
-            if (result) {
-                try {
+        try {
+            do {
+                if (!scanner.hasNext()) {
+                    throw new IllegalStateException();
+                }
+                request = scanner.nextLine();
+                result = testRequest.test(request);
+                if (result) {
                     out.write(prepareResponse.apply(request));
                     out.flush();
-                } catch (IOException e) {
-                    throw new IOException(e.getMessage());
                 }
-            }
-        } while (result);
+            } while (result);
+        } catch (IOException e) {
+            throw new IOException();
+        }
     }
 
 }

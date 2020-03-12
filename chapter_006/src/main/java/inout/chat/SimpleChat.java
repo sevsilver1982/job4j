@@ -15,23 +15,9 @@ public class SimpleChat {
     private ChatMode chatMode = ChatMode.NORMAL;
 
     /**
-     * SimpleChat constructor.
-     * @param in input stream.
-     * @param out output stream.
-     * @param answers path to file with answers.
-     * @param log chat log stream.
-     */
-    public SimpleChat(InputStream in, PrintStream out, String answers, PrintStream log) throws IOException {
-        this.writer = new PrintWriter(out);
-        this.reader = new BufferedReader(new InputStreamReader(in));
-        this.answers = answers;
-        this.log = new SimpleLogger(log);
-    }
-
-    /**
      * Incoming request handler predicate.
      */
-    public Predicate<String> testRequest = request -> {
+    private Predicate<String> testRequest = request -> {
         log.writeln(request);
         switch (getMode(request.trim().toLowerCase())) {
             case NORMAL:
@@ -52,7 +38,7 @@ public class SimpleChat {
     /**
      * Outgoing response preparation function.
      */
-    Function<String, String> prepareResponse = request -> {
+    private Function<String, String> prepareResponse = request -> {
         String preparedResponse;
         if (chatMode == ChatMode.NORMAL) {
             try {
@@ -68,6 +54,20 @@ public class SimpleChat {
         }
         return "";
     };
+
+    /**
+     * SimpleChat constructor.
+     * @param in input stream.
+     * @param out output stream.
+     * @param answers path to file with answers.
+     * @param log chat log stream.
+     */
+    public SimpleChat(InputStream in, PrintStream out, String answers, PrintStream log) {
+        this.writer = new PrintWriter(out);
+        this.reader = new BufferedReader(new InputStreamReader(in));
+        this.answers = answers;
+        this.log = new SimpleLogger(log);
+    }
 
     /**
      * Filter request for chat commands.
@@ -93,12 +93,6 @@ public class SimpleChat {
     }
 
     public static void main(String[] args) throws IOException {
-        /*try(PrintWriter pw = new PrintWriter(System.out))
-        {
-            pw.println("Hello world!");
-        }*/
-        /*PrintWriter pw2 = new PrintWriter(System.out, true);
-        pw2.println("111111");*/
         new SimpleChat(
                 System.in,
                 System.out,

@@ -1,12 +1,17 @@
 package socket;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class EchoServer {
 
     public static void main(String[] args) throws IOException {
         System.out.println("2");
-        /*try (ServerSocket server = new ServerSocket(9000)) {
+        try (ServerSocket server = new ServerSocket(9000)) {
             while (true) {
                 Socket socket = server.accept();
                 System.out.println("2");
@@ -22,7 +27,7 @@ public class EchoServer {
                     out.write("Hello, dear friend.".getBytes());
                 }
             }
-        }*/
+        }
     }
 
 }
