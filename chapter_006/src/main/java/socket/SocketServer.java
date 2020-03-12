@@ -1,5 +1,6 @@
 package socket;
 
+import inout.chat.Inout;
 import inout.logger.SimpleLogger;
 
 import java.io.BufferedReader;
@@ -8,10 +9,11 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class SocketServer {
-    private SimpleLogger logger;
+    private SimpleLogger log;
     private Socket socket;
     private final int port;
     private PrintWriter out;
@@ -21,37 +23,52 @@ public class SocketServer {
         this.port = port;
     }
 
-    public void listen()  {
+    /*public void listen()  {
         String ask = "";
         while (socket.isConnected()) {
-            logger.log("wait command...");
+            log.writeln("wait command...");
             try {
                 ask = in.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            logger.log(ask);
-            out.write(Arrays.toString("HTTP/1.1 200 OK\r\n".getBytes()));
-            out.write(Arrays.toString("Hello, dear friend.".getBytes()));
+            out.write(ask);
         }
-    }
+    }*/
 
-    public void start() {
-        logger = new SimpleLogger(System.out);
+    /**
+     * Incoming request handler predicate.
+     */
+    public Predicate<String> testRequest = request -> {
+        log.writeln(request);
+        return true;
+    };
+
+    /**
+     * Outgoing response preparation function.
+     */
+    Function<String, String> prepareResponse = request -> {
+        String preparedResponse = request;
+        log.write(preparedResponse);
+        return preparedResponse;
+    };
+
+    public void init() {
+        log = new SimpleLogger(System.out);
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             socket = serverSocket.accept();
-            logger.log("new connection");
-            out = new PrintWriter(socket.getOutputStream(), true);
+            log.writeln("new connection");
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            listen();
+            out = new PrintWriter(socket.getOutputStream(), true);
+            new Inout<>(in, out, testRequest, prepareResponse);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
-        new SocketServer(9000).start();
+        new SocketServer(777).init();
     }
 
 }
