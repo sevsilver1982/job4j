@@ -20,14 +20,10 @@ public class SocketServer {
     private PrintWriter out;
     private BufferedReader in;
 
-    public SocketServer(int port) {
-        this.port = port;
-    }
-
     /**
      * Incoming request handler predicate.
      */
-    public Predicate<String> testRequest = request -> {
+    private Predicate<String> testRequest = request -> {
         log.writeln(String.format("server received request: %s", request));
         return true;
     };
@@ -35,33 +31,39 @@ public class SocketServer {
     /**
      * Outgoing response preparation function.
      */
-    Function<String, String> prepareResponse = request -> {
+    private Function<String, String> prepareResponse = request -> {
         String preparedResponse = String.format("echo server received request: %s", request);
         out.println(preparedResponse);
         return preparedResponse;
     };
 
-    public void init() throws IOException, IllegalStateException {
+    public SocketServer(int port) {
+        this.port = port;
+    }
+
+    public void setNewListener() throws IOException, IllegalStateException {
         try {
-            serverSocket = new ServerSocket(port);
             socket = serverSocket.accept();
             log.writeln("new connection");
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
             new Inout<>(in, out, testRequest, prepareResponse);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (IllegalStateException e) {
-            System.out.println("init2");
-            socket = serverSocket.accept();
-            log.writeln("new connection");
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
-            new Inout<>(in, out, testRequest, prepareResponse);
+            log.writeln("connection closed");
+            setNewListener();
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public void init() {
+        try {
+            serverSocket = new ServerSocket(port);
+            setNewListener();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
         new SocketServer(777).init();
     }
 

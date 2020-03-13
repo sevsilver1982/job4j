@@ -12,7 +12,7 @@ public class Inout<T1 extends Reader, T2 extends Writer> {
     private T2 out;
 
     /**
-     * Inout constructor
+     * Inout constructor.
      * @param in input stream.
      * @param out output stream.
      * @param testRequest incoming request handler.

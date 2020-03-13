@@ -9,7 +9,7 @@ import java.net.Socket;
 
 public class EchoServer {
 
-    public static void main(String[] args) throws IOException {
+    public void init() throws IOException {
         System.out.println("2");
         try (ServerSocket server = new ServerSocket(9000)) {
             while (true) {
@@ -18,6 +18,7 @@ public class EchoServer {
                 try (OutputStream out = socket.getOutputStream();
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
+
                     String str;
                     while (!(str = in.readLine()).isEmpty()) {
                         System.out.println(str);
@@ -28,6 +29,10 @@ public class EchoServer {
                 }
             }
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        new EchoServer().init();
     }
 
 }
