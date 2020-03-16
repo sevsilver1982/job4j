@@ -17,31 +17,40 @@ public class SocketServer {
     private final int port;
     private ServerSocket serverSocket;
     private Socket socket;
-    private PrintWriter out;
     private BufferedReader in;
+    private PrintWriter out;
 
     /**
      * Incoming request handler predicate.
      */
-    private Predicate<String> testRequest = request -> {
-        log.writeln(String.format("server received request: %s", request));
+    private final Predicate<String> testRequest = request -> {
+        log.writeln(String.format("received: %s", request));
         return true;
     };
 
     /**
      * Outgoing response preparation function.
      */
-    private Function<String, String> prepareResponse = request -> {
-        String preparedResponse = String.format("echo server received request: %s", request);
+    private final Function<String, String> prepareResponse = request -> {
+        String preparedResponse = String.format("echo server received: %s", request);
         out.println(preparedResponse);
         return preparedResponse;
     };
 
+    /**
+     * SocketServer constructor.
+     * @param port the port number.
+     */
     public SocketServer(int port) {
         this.port = port;
     }
 
-    public void setNewListener() throws IOException, IllegalStateException {
+    /**
+     * Server listener.
+     * @throws IOException
+     * @throws IllegalStateException
+     */
+    public void setListener() throws IOException, IllegalStateException {
         try {
             socket = serverSocket.accept();
             log.writeln("new connection");
@@ -50,14 +59,17 @@ public class SocketServer {
             new Inout<>(in, out, testRequest, prepareResponse);
         } catch (IllegalStateException e) {
             log.writeln("connection closed");
-            setNewListener();
+            setListener();
         }
     }
 
+    /**
+     * Init server.
+     */
     public void init() {
         try {
             serverSocket = new ServerSocket(port);
-            setNewListener();
+            setListener();
         } catch (IOException e) {
             e.printStackTrace();
         }

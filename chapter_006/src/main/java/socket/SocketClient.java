@@ -19,12 +19,20 @@ public class SocketClient {
     BufferedReader in;
     PrintWriter out;
 
+    /**
+     * SocketClient constructor.
+     * @param ip the IP address.
+     * @param port the port number.
+     */
     public SocketClient(String ip, int port) {
         this.ip = ip;
         this.port = port;
     }
 
-    private void listen() {
+    /**
+     * Client listener.
+     */
+    private void setListener() {
         try {
             while (socket.isConnected()) {
                 if (!scanner.hasNext()) {
@@ -32,28 +40,30 @@ public class SocketClient {
                 }
                 out.println(scanner.nextLine());
                 log.writeln("wait answer...");
-                    log.writeln(
-                            in.readLine()
-                    );
+                    log.writeln(in.readLine());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void start() {
+    /**
+     * Init client.
+     */
+    public void init() {
         try {
             socket = new Socket(InetAddress.getByName(ip), port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
-            listen();
+            setListener();
         } catch (IOException e) {
+
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
-        new SocketClient("127.0.0.1", 777).start();
+        new SocketClient("127.0.0.1", 777).init();
     }
 
 }
