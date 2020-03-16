@@ -11,10 +11,11 @@ public class ParseURL {
         Map<String, String> result =
                 Stream.of(url.split("\\?")[1])
                 .flatMap(params -> Stream.of(params.split("&")))
-                .flatMap(param -> Stream.of(param.split("=")))
+                .map(s -> s.split("="))
                 .collect(
                         Collectors.toMap(
-                                p -> p, p1 -> p1)
+                                p -> p[0],
+                                p1 -> p1[1])
                         );
         result.forEach((s1, s2) -> System.out.println(s1 + " = " + s2));
     }
