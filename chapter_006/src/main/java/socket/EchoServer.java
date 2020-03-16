@@ -3,10 +3,7 @@ package socket;
 import inout.chat.Inout;
 import inout.logger.SimpleLogger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.function.Function;
@@ -32,10 +29,8 @@ public class EchoServer {
      * Outgoing response preparation function.
      */
     private final Function<String, String> prepareResponse = request -> {
-        String preparedResponse = "HTTP/1.1 200 OK\r\nллл\r\n";
-        //out.println(preparedResponse);
-       // out.println("");
-        //out.write("");
+        log.writeln("send response");
+        String preparedResponse = "HTTP/1.1 200 OK\r\n\r\nHello, dear friend.";
         return preparedResponse;
     };
 
@@ -49,11 +44,13 @@ public class EchoServer {
 
     public void setListener() throws IOException, IllegalStateException {
         try {
-            socket = serverSocket.accept();
-            log.writeln("new connection");
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
-            new Inout<>(in, out, testRequest, prepareResponse);
+            while (!serverSocket.isClosed()) {
+                socket = serverSocket.accept();
+                log.writeln("new connection");
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                out = new PrintWriter(socket.getOutputStream());
+                new Inout<>(in, out, testRequest, prepareResponse);
+            }
         } catch (IllegalStateException e) {
             log.writeln("connection closed");
             setListener();
@@ -63,6 +60,7 @@ public class EchoServer {
     public void init() {
         try {
             serverSocket = new ServerSocket(port);
+            log.writeln("start server");
             setListener();
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,29 +68,37 @@ public class EchoServer {
     }
 
     public void inita() throws IOException {
-        //System.out.println("start----------------------------");
-        /*try (ServerSocket server = new ServerSocket(9000)) {
-            while (true) {
-                Socket socket = server.accept();
-                System.out.println("read----------------------------");
-                try (OutputStream out = socket.getOutputStream();
-                     BufferedReader in = new BufferedReader(
-                             new InputStreamReader(socket.getInputStream()))) {
+        log.writeln("start server");
+        ServerSocket server = new ServerSocket(9000);
 
-                    String str;
-                    while (!(str = in.readLine()).isEmpty()) {
-                        System.out.println(str);
-                    }
-                    System.out.println("write----------------------------");
+        while (server.isBound()) {
+            Socket socket = server.accept();
+            log.writeln("new connection");
+            try (
+                    OutputStream out = socket.getOutputStream();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))
+            ) {
+                log.writeln("read request");
+                StringBuilder stringBuilder = new StringBuilder();
+                String str;
+                str = in.readLine();
+                log.writeln(str);
+                /*while (!(str = in.readLine()).isEmpty()) {
+                    stringBuilder.append(str);
+                }*/
+                if (!(str = stringBuilder.toString()).isEmpty()) {
+                    //log.writeln(str);
+                    log.writeln("send response");
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                     out.write("Hello, dear friend.".getBytes());
                 }
             }
-        }*/
+            log.writeln("connection close");
+        }
     }
 
     public static void main(String[] args) throws IOException {
-        new EchoServer(9000).init();
+        new EchoServer(9000).inita();
     }
 
 }
