@@ -80,14 +80,25 @@ public class EchoServer {
             ) {
                 log.writeln("read request");
                 StringBuilder stringBuilder = new StringBuilder();
-                String str;
-                str = in.readLine();
-                log.writeln(str);
-                /*while (!(str = in.readLine()).isEmpty()) {
-                    stringBuilder.append(str);
-                }*/
-                if (!(str = stringBuilder.toString()).isEmpty()) {
-                    //log.writeln(str);
+                String request;
+                String key = "";
+                String value = "";
+                String response = "";
+                while (!(request = in.readLine()).isEmpty()) {
+
+                    if (request.startsWith("GET") && request.contains("?")) {
+
+
+
+                        String[] array = request.split("\\?");
+                        //key =  //.substring(1, request.indexOf(" "));
+                        log.writeln(response);
+                    }
+
+                    stringBuilder.append(request);
+                }
+                if (!(request = stringBuilder.toString()).isEmpty()) {
+                    log.writeln(request);
                     log.writeln("send response");
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                     out.write("Hello, dear friend.".getBytes());
