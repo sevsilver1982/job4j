@@ -1,6 +1,7 @@
 package tracker;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class Item {
     private String id;
@@ -10,6 +11,7 @@ public class Item {
     }
 
     public Item(String name) {
+        this.id = String.valueOf(Math.abs(new Random().nextLong() + System.currentTimeMillis()));
         this.name = name;
     }
 

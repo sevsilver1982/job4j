@@ -14,7 +14,7 @@ public class ShowAll extends ActionTracker {
 
     @Override
     public boolean action(Input input, Tracker tracker) {
-        List<Item> items = tracker.findAllItems();
+        List<Item> items = tracker.findAll();
         if (items.size() > 0) {
             for (Item item : items) {
                 System.out.println(item.toString());

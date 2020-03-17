@@ -8,6 +8,7 @@ import tracker.input.StubInput;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.List;
 import java.util.StringJoiner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,14 +28,17 @@ public class TrackerTest {
     }
 
     @Test
-    public void renameTest() {
+    public void replaceTest() {
         Tracker tracker = new Tracker();
         Item test1 = new Item("test1");
         tracker.add(test1);
-        Item test2 = new Item("test1");
+        Item test2 = new Item("test2");
         tracker.add(test2);
-        tracker.rename(test2.getId(), "test2");
-        assertThat(tracker.findById(test2.getId()).getName(), is("test2"));
+        Item test3 = new Item("test3");
+        tracker.add(test3);
+        Item test4 = new Item("test4");
+        tracker.replace(test2.getId(), test4);
+        assertThat(tracker.findAll(), is(List.of(test1, test4, test3)));
     }
 
     @Test
@@ -91,7 +95,7 @@ public class TrackerTest {
     }
 
     @Test
-    public void actionFindByNameTest() {
+    public void findByNameTest() {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PrintStream def = System.out;
         System.setOut(new PrintStream(out));
