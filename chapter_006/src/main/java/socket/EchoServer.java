@@ -49,7 +49,7 @@ public class EchoServer {
                 ) {
                     String request;
                     Map<String, String> params = new HashMap<>();
-                    while (!(request = in.readLine()).isEmpty()) {
+                    while ((request = in.readLine()) != null) {
                         if (request.startsWith("GET /?")) {
                             params = getRequestParams(request);
                         }
