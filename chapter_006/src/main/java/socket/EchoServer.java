@@ -1,38 +1,22 @@
 package socket;
 
-import inout.chat.Inout;
 import inout.logger.SimpleLogger;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.net.SocketException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class EchoServer {
     private SimpleLogger log = new SimpleLogger(System.out);
     private final int port;
-    private ServerSocket serverSocket;
-    private Socket socket;
-    private BufferedReader in;
-    private PrintWriter out;
-
-    /**
-     * Incoming request handler predicate.
-     */
-    private final Predicate<String> testRequest = request -> {
-        log.writeln(String.format("received: %s", request));
-        return true;
-    };
-
-    /**
-     * Outgoing response preparation function.
-     */
-    private final Function<String, String> prepareResponse = request -> {
-        log.writeln("send response");
-        String preparedResponse = "HTTP/1.1 200 OK\r\n\r\nHello, dear friend.";
-        return preparedResponse;
-    };
 
     /**
      * EchoServer constructor.
@@ -42,74 +26,62 @@ public class EchoServer {
         this.port = port;
     }
 
-    public void setListener() throws IOException, IllegalStateException {
-        try {
-            while (!serverSocket.isClosed()) {
-                socket = serverSocket.accept();
-                log.writeln("new connection");
-                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                out = new PrintWriter(socket.getOutputStream());
-                new Inout<>(in, out, testRequest, prepareResponse);
-            }
-        } catch (IllegalStateException e) {
-            log.writeln("connection closed");
-            setListener();
-        }
+    public Map<String, String> getRequestParams(String request) {
+        return Stream.of(request.split("\\?")[1])
+                .flatMap(params -> Stream.of(params.split("&")))
+                .flatMap(s -> Stream.of(s.contains(" ") ? s.substring(0, s.indexOf(" ")) : s))
+                .map(s -> s.split("="))
+                .collect(
+                        Collectors.toMap(
+                                p -> p[0],
+                                p1 -> p1[1]
+                        )
+                );
     }
 
     public void init() {
-        try {
-            serverSocket = new ServerSocket(port);
-            log.writeln("start server");
-            setListener();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void inita() throws IOException {
         log.writeln("start server");
-        ServerSocket server = new ServerSocket(9000);
-
-        while (server.isBound()) {
-            Socket socket = server.accept();
-            log.writeln("new connection");
-            try (
-                    OutputStream out = socket.getOutputStream();
-                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))
-            ) {
-                log.writeln("read request");
-                StringBuilder stringBuilder = new StringBuilder();
-                String request;
-                String key = "";
-                String value = "";
-                String response = "";
-                while (!(request = in.readLine()).isEmpty()) {
-
-                    if (request.startsWith("GET") && request.contains("?")) {
-
-
-
-                        String[] array = request.split("\\?");
-                        //key =  //.substring(1, request.indexOf(" "));
-                        log.writeln(response);
+        try (ServerSocket server = new ServerSocket(port)) {
+            while (!server.isClosed()) {
+                try (Socket socket = server.accept();
+                     OutputStream out = socket.getOutputStream();
+                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))
+                ) {
+                    String request;
+                    Map<String, String> params = new HashMap<>();
+                    while ((request = in.readLine()) != null) {
+                        if (request.startsWith("GET /?")) {
+                            params = getRequestParams(request);
+                        }
                     }
-
-                    stringBuilder.append(request);
-                }
-                if (!(request = stringBuilder.toString()).isEmpty()) {
-                    log.writeln(request);
-                    log.writeln("send response");
-                    out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
-                    out.write("Hello, dear friend.".getBytes());
+                    if (!params.isEmpty()) {
+                        String msg = params.get("msg");
+                        switch (msg.toLowerCase()) {
+                            case "buy":
+                            case "exit":
+                                log.writeln("server shutdown");
+                                out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                                out.write("server shutdown".getBytes());
+                                server.close();
+                                break;
+                            default:
+                                log.writeln(String.format("echo response: %s", msg));
+                                out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                                out.write(msg.getBytes());
+                                break;
+                        }
+                    }
+                } catch (SocketException e) {
+                    log.writeln(e.getMessage());
                 }
             }
-            log.writeln("connection close");
+        } catch (IOException e) {
+            log.writeln(e.getMessage());
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        new EchoServer(9000).inita();
+    public static void main(String[] args) {
+        new EchoServer(9000).init();
     }
 
 }

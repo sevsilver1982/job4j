@@ -46,7 +46,7 @@ public class StartUI {
         Tracker tracker = new Tracker();
         tracker.addAction(new NewItem());
         tracker.addAction(new ShowAll());
-        tracker.addAction(new RenameItem());
+        tracker.addAction(new ReplaceItem());
         tracker.addAction(new DeleteItem());
         tracker.addAction(new FindItemById());
         tracker.addAction(new FindItemByName());
