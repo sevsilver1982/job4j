@@ -1,7 +1,7 @@
 package tracker.actions;
 
+import tracker.ITracker;
 import tracker.Item;
-import tracker.Tracker;
 import tracker.input.Input;
 
 public class DeleteItem extends ActionTracker {
@@ -11,9 +11,9 @@ public class DeleteItem extends ActionTracker {
     }
 
     @Override
-    public boolean action(Input input, Tracker tracker) {
+    public boolean action(Input input, ITracker tracker) {
         Item item = tracker.findById(input.askString("Enter item id: "));
-        if (tracker.delete(item)) {
+        if (tracker.delete(item.getId())) {
             System.out.println(String.format("%s deleted", item.toString()));
         } else {
             System.out.println("Item not found");

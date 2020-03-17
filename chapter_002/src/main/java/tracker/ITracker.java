@@ -1,5 +1,7 @@
 package tracker;
 
+import tracker.actions.Action;
+
 import java.util.List;
 
 public interface ITracker {
@@ -9,4 +11,5 @@ public interface ITracker {
     List<Item> findAll();
     List<Item> findByName(String key);
     Item findById(String id);
+    List<Action> actionList();
 }

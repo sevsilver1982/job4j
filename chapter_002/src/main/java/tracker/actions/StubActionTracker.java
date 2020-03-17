@@ -1,6 +1,6 @@
 package tracker.actions;
 
-import tracker.Tracker;
+import tracker.ITracker;
 import tracker.input.Input;
 
 public class StubActionTracker extends ActionTracker implements Action {
@@ -11,7 +11,7 @@ public class StubActionTracker extends ActionTracker implements Action {
     }
 
     @Override
-    public boolean action(Input input, Tracker tracker) {
+    public boolean action(Input input, ITracker tracker) {
         this.call = true;
         return false;
     }

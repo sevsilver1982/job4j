@@ -1,7 +1,7 @@
 package tracker.actions;
 
+import tracker.ITracker;
 import tracker.Item;
-import tracker.Tracker;
 import tracker.input.Input;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class ShowAll extends ActionTracker {
     }
 
     @Override
-    public boolean action(Input input, Tracker tracker) {
+    public boolean action(Input input, ITracker tracker) {
         List<Item> items = tracker.findAll();
         if (items.size() > 0) {
             for (Item item : items) {

@@ -40,7 +40,7 @@ public class SocketClient {
                 }
                 out.println(scanner.nextLine());
                 log.writeln("wait answer...");
-                    log.writeln(in.readLine());
+                log.writeln(in.readLine());
             }
         } catch (IOException e) {
             e.printStackTrace();

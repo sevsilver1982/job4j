@@ -1,7 +1,7 @@
 package tracker.actions;
 
+import tracker.ITracker;
 import tracker.Item;
-import tracker.Tracker;
 import tracker.input.Input;
 
 public class ReplaceItem extends ActionTracker {
@@ -11,7 +11,7 @@ public class ReplaceItem extends ActionTracker {
     }
 
     @Override
-    public boolean action(Input input, Tracker tracker) {
+    public boolean action(Input input, ITracker tracker) {
         Item item = tracker.findById(input.askString("Enter item id: "));
         if (item.getId() != null && item.getName() != null) {
             tracker.replace(

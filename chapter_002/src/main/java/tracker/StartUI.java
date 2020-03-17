@@ -10,12 +10,12 @@ import java.util.function.Consumer;
 
 public class StartUI {
     private final Input input;
-    private final Tracker tracker;
+    private final ITracker tracker;
     private final Consumer<String> output;
 
-    private void showMenu(Tracker tracker, Consumer<String> output) {
+    private void showMenu(ITracker tracker, Consumer<String> output) {
         System.out.println("Menu:");
-        tracker.findAllActions()
+        tracker.actionList()
                 .stream()
                 .map(action -> String.format("%s. %s", action.getId(), action.getName()))
                 .forEach(output::accept);
@@ -31,7 +31,7 @@ public class StartUI {
         boolean run = true;
         while (run) {
             this.showMenu(this.tracker, this.output);
-            List<Action> actions = this.tracker.findAllActions();
+            List<Action> actions = this.tracker.actionList();
             int select = this.input.askInt("Select: ", actions.size() + 1);
             for (Action action : actions) {
                 if (action.getId() == select) {
@@ -54,7 +54,7 @@ public class StartUI {
         new StartUI(new InputValidate(
                 new InputConsole()),
                 tracker,
-                System.out::println
+                x -> System.out.println(x)
         ).init();
     }
 

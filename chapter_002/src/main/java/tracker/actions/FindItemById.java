@@ -1,7 +1,7 @@
 package tracker.actions;
 
+import tracker.ITracker;
 import tracker.Item;
-import tracker.Tracker;
 import tracker.input.Input;
 
 public class FindItemById extends ActionTracker {
@@ -11,7 +11,7 @@ public class FindItemById extends ActionTracker {
     }
 
     @Override
-    public boolean action(Input input, Tracker tracker) {
+    public boolean action(Input input, ITracker tracker) {
         String id = input.askString("Enter item id: ");
         Item item = tracker.findById(id);
         if (item.getId() != null) {

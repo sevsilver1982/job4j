@@ -17,6 +17,38 @@ import static org.hamcrest.core.Is.is;
 public class TrackerTest {
 
     @Test
+    public void initTest() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream def = System.out;
+        System.setOut(new PrintStream(out));
+        StubInput input = new StubInput(
+                new String[] {"1"}
+        );
+        Tracker tracker = new Tracker();
+        tracker.addAction(new StubActionTracker());
+        new StartUI(input, tracker, System.out::println).init();
+        String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator() + System.lineSeparator())
+                .add("Menu:")
+                .add("1. Stub action")
+                .add("==== Stub action ====")
+                .toString();
+        assertThat(new String(out.toByteArray()), is(expect));
+        System.setOut(def);
+    }
+
+    @Test
+    public void exitTest() {
+        Tracker tracker = new Tracker();
+        StubActionTracker action = new StubActionTracker();
+        tracker.addAction(action);
+        StubInput input = new StubInput(
+                new String[] {"1"}
+        );
+        new StartUI(input, tracker, System.out::println).init();
+        assertThat(action.isCall(), is(true));
+    }
+
+    @Test
     public void findByIdTest() {
         Tracker tracker = new Tracker();
         Item item = new Item("test1");
@@ -39,38 +71,6 @@ public class TrackerTest {
         Item test4 = new Item("test4");
         tracker.replace(test2.getId(), test4);
         assertThat(tracker.findAll(), is(List.of(test1, test4, test3)));
-    }
-
-    @Test
-    public void whenExit() {
-        Tracker tracker = new Tracker();
-        StubActionTracker action = new StubActionTracker();
-        tracker.addAction(action);
-        StubInput input = new StubInput(
-                new String[] {"1"}
-        );
-        new StartUI(input, tracker, System.out::println).init();
-        assertThat(action.isCall(), is(true));
-    }
-
-    @Test
-    public void testInit() {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        PrintStream def = System.out;
-        System.setOut(new PrintStream(out));
-        StubInput input = new StubInput(
-                new String[] {"1"}
-        );
-        Tracker tracker = new Tracker();
-        tracker.addAction(new StubActionTracker());
-        new StartUI(input, tracker, System.out::println).init();
-        String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator() + System.lineSeparator())
-                .add("Menu:")
-                .add("1. Stub action")
-                .add("==== Stub action ====")
-                .toString();
-        assertThat(new String(out.toByteArray()), is(expect));
-        System.setOut(def);
     }
 
     @Test

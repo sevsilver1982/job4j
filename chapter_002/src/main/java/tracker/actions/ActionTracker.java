@@ -1,6 +1,6 @@
 package tracker.actions;
 
-import tracker.Tracker;
+import tracker.ITracker;
 import tracker.input.Input;
 
 public abstract class ActionTracker implements Action {
@@ -23,9 +23,9 @@ public abstract class ActionTracker implements Action {
         return this.name;
     }
 
-    public abstract boolean action(Input input, Tracker tracker);
+    public abstract boolean action(Input input, ITracker tracker);
 
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, ITracker tracker) {
         System.out.println(String.format("==== %s ====", getName()));
         return action(input, tracker);
     }

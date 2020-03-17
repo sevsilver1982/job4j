@@ -1,6 +1,6 @@
 package tracker.actions;
 
-import tracker.Tracker;
+import tracker.ITracker;
 import tracker.input.Input;
 
 public class ExitProgram extends ActionTracker {
@@ -10,7 +10,7 @@ public class ExitProgram extends ActionTracker {
     }
 
     @Override
-    public boolean action(Input input, Tracker tracker) {
+    public boolean action(Input input, ITracker tracker) {
         return false;
     }
 

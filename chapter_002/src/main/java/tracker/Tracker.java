@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Tracker /*implements ITracker*/ {
+public class Tracker implements ITracker {
     private List<Action> actions = new ArrayList<>();
     private List<Item> items = new ArrayList<>();
 
-    public List<Action> findAllActions() {
-        return this.actions;
+    public List<Action> actionList() {
+        return actions;
     }
 
     public boolean addAction(Action action) {
@@ -33,8 +33,8 @@ public class Tracker /*implements ITracker*/ {
         return false;
     }
 
-    public boolean delete(Item item) {
-        return items.remove(item);
+    public boolean delete(String id) {
+        return items.remove(indexById(id)) != null;
     };
 
     public int indexById(String id) {
