@@ -13,6 +13,10 @@ public class SimpleLogger {
         this.out = out;
     }
 
+    public OutputStream getOutput() {
+        return out;
+    }
+
     public void write(String msg) {
         try {
             out.write(String.format("%s  %s",  formatter.format(LocalDateTime.now()), msg).getBytes());

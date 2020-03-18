@@ -11,7 +11,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class SocketClient {
-    private SimpleLogger log = new SimpleLogger(System.out);
+    private final SimpleLogger log = new SimpleLogger(System.out);
     Scanner scanner = new Scanner(System.in);
     private String ip;
     private int port;

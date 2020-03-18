@@ -2,20 +2,16 @@ package socket;
 
 import inout.logger.SimpleLogger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class EchoServer {
-    private SimpleLogger log = new SimpleLogger(System.out);
+    private final SimpleLogger log = new SimpleLogger(System.out);
     private final int port;
 
     /**
@@ -33,12 +29,15 @@ public class EchoServer {
                 .map(s -> s.split("="))
                 .collect(
                         Collectors.toMap(
-                                p -> p[0],
-                                p1 -> p1[1]
+                                key -> key[0],
+                                value -> value[1]
                         )
                 );
     }
 
+    /**
+     * Init server.
+     */
     public void init() {
         log.writeln("start server");
         try (ServerSocket server = new ServerSocket(port)) {
@@ -47,15 +46,9 @@ public class EchoServer {
                      OutputStream out = socket.getOutputStream();
                      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))
                 ) {
-                    String request;
-                    Map<String, String> params = new HashMap<>();
-                    while ((request = in.readLine()) != null) {
-                        if (request.startsWith("GET /?")) {
-                            params = getRequestParams(request);
-                        }
-                    }
-                    if (!params.isEmpty()) {
-                        String msg = params.get("msg");
+                    String request = in.readLine();
+                    if (request != null && request.startsWith("GET /?")) {
+                        String msg = getRequestParams(request).getOrDefault("msg", "");
                         switch (msg.toLowerCase()) {
                             case "buy":
                             case "exit":
@@ -72,11 +65,11 @@ public class EchoServer {
                         }
                     }
                 } catch (SocketException e) {
-                    log.writeln(e.getMessage());
+                    e.printStackTrace(new PrintStream(log.getOutput()));
                 }
             }
         } catch (IOException e) {
-            log.writeln(e.getMessage());
+            e.printStackTrace(new PrintStream(log.getOutput()));
         }
     }
 

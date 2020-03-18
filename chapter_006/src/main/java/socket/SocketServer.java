@@ -13,7 +13,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class SocketServer {
-    private SimpleLogger log = new SimpleLogger(System.out);
+    private final SimpleLogger log = new SimpleLogger(System.out);
     private final int port;
     private ServerSocket serverSocket;
     private Socket socket;
