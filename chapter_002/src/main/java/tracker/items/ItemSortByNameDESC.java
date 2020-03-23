@@ -1,7 +1,5 @@
 package tracker.items;
 
-import tracker.Item;
-
 import java.util.Comparator;
 
 public class ItemSortByNameDESC implements Comparator<Item> {

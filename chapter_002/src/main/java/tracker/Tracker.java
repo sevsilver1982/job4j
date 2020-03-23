@@ -1,22 +1,17 @@
 package tracker;
 
-import tracker.actions.Action;
+import tracker.actions.IAction;
+import tracker.items.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Tracker implements ITracker {
-    private List<Action> actions = new ArrayList<>();
+public class Tracker extends AbstractTracker {
     private List<Item> items = new ArrayList<>();
 
-    public List<Action> actionList() {
-        return actions;
-    }
-
-    public boolean addAction(Action action) {
-        action.setId(actions.size() + 1);
-        return actions.add(action);
+    public Tracker(List<IAction> actions) {
+        super(actions);
     }
 
     public Item add(Item item) {

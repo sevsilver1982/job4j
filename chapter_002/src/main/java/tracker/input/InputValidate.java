@@ -1,9 +1,9 @@
 package tracker.input;
 
-public class InputValidate implements Input {
-    private final Input input;
+public class InputValidate implements IInput {
+    private final IInput input;
 
-    public InputValidate(Input input) {
+    public InputValidate(IInput input) {
         this.input = input;
     }
 

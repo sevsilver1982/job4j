@@ -10,7 +10,7 @@ import java.io.PrintStream;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class InputValidateTest {
+public class IInputValidateTest {
 
     @Test
     public void whenInvalidInput() {

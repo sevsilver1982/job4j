@@ -1,6 +1,7 @@
 package tracker;
 
 import org.junit.Test;
+import tracker.items.Item;
 import tracker.items.ItemSortByNameASC;
 import tracker.items.ItemSortByNameDESC;
 

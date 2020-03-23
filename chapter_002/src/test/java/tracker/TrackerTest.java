@@ -3,11 +3,13 @@ package tracker;
 import org.junit.Test;
 import tracker.actions.FindItemByName;
 import tracker.actions.ShowAll;
-import tracker.actions.StubActionTracker;
+import tracker.actions.StubAbstractAction;
 import tracker.input.StubInput;
+import tracker.items.Item;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Collections;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -24,8 +26,7 @@ public class TrackerTest {
         StubInput input = new StubInput(
                 new String[] {"1"}
         );
-        Tracker tracker = new Tracker();
-        tracker.addAction(new StubActionTracker());
+        AbstractTracker tracker = new Tracker(List.of(new StubAbstractAction()));
         new StartUI(input, tracker, System.out::println).init();
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator() + System.lineSeparator())
                 .add("Menu:")
@@ -38,9 +39,8 @@ public class TrackerTest {
 
     @Test
     public void exitTest() {
-        Tracker tracker = new Tracker();
-        StubActionTracker action = new StubActionTracker();
-        tracker.addAction(action);
+        StubAbstractAction action = new StubAbstractAction();
+        Tracker tracker = new Tracker(List.of(action));
         StubInput input = new StubInput(
                 new String[] {"1"}
         );
@@ -50,7 +50,7 @@ public class TrackerTest {
 
     @Test
     public void findByIdTest() {
-        Tracker tracker = new Tracker();
+        Tracker tracker = new Tracker(Collections.EMPTY_LIST);
         Item item = new Item("test1");
         tracker.add(item);
         Item test2 = new Item("test2");
@@ -61,7 +61,7 @@ public class TrackerTest {
 
     @Test
     public void replaceTest() {
-        Tracker tracker = new Tracker();
+        Tracker tracker = new Tracker(Collections.EMPTY_LIST);
         Item test1 = new Item("test1");
         tracker.add(test1);
         Item test2 = new Item("test2");
@@ -81,7 +81,7 @@ public class TrackerTest {
         StubInput input = new StubInput(
                 new String[] {"item_1"}
         );
-        Tracker tracker = new Tracker();
+        Tracker tracker = new Tracker(Collections.EMPTY_LIST);
         Item item = new Item(input.askString(""));
         tracker.add(item);
         new ShowAll().execute(input, tracker);
@@ -102,14 +102,14 @@ public class TrackerTest {
         StubInput input = new StubInput(
                 new String[] {"item_1", "item_1"}
         );
-        Tracker tracker = new Tracker();
+        Tracker tracker = new Tracker(Collections.EMPTY_LIST);
         Item item = new Item(input.askString(""));
         tracker.add(item);
         new FindItemByName().execute(input, tracker);
 
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add("==== Find item by name ====")
-                .add(String.format("%s found by name", item.toString()))
+                .add(item.toString())
                 .toString();
         assertThat(new String(out.toByteArray()), is(expect));
         System.setOut(def);

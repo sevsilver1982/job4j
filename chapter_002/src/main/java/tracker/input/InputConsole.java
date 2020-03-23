@@ -3,7 +3,7 @@ package tracker.input;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class InputConsole implements Input {
+public class InputConsole implements IInput {
     private Scanner scanner = new Scanner(System.in);
 
     @Override

@@ -1,21 +1,21 @@
 package tracker.actions;
 
-import tracker.ITracker;
-import tracker.Item;
-import tracker.input.Input;
+import tracker.AbstractTracker;
+import tracker.input.IInput;
+import tracker.items.Item;
 
-public class FindItemById extends ActionTracker {
+public class FindItemById extends AbstractAction {
 
     public FindItemById() {
         super("Find item by id");
     }
 
     @Override
-    public boolean action(Input input, ITracker tracker) {
+    public boolean action(IInput input, AbstractTracker tracker) {
         String id = input.askString("Enter item id: ");
         Item item = tracker.findById(id);
         if (item.getId() != null) {
-            System.out.println(String.format("%s found by id", item.toString()));
+            System.out.println(item.toString());
         } else {
             System.out.println("Item not found");
         }

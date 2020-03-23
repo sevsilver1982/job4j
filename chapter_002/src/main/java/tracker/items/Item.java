@@ -1,7 +1,7 @@
-package tracker;
+package tracker.items;
 
 import java.util.Objects;
-import java.util.Random;
+import java.util.UUID;
 
 public class Item {
     private String id;
@@ -11,7 +11,12 @@ public class Item {
     }
 
     public Item(String name) {
-        this.id = String.valueOf(Math.abs(new Random().nextLong() + System.currentTimeMillis()));
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+    }
+
+    public Item(String id, String name) {
+        this.id = id;
         this.name = name;
     }
 
