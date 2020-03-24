@@ -1,8 +1,8 @@
 package pseudo;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -11,18 +11,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 public class PaintTest {
-    private final PrintStream stdout = System.out;
-    private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private static PrintStream stdout = System.out;
+    private static ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-    @Before
-    public void loadOutput() {
+    @BeforeAll
+    public static void loadOutput() {
         System.out.println("execute before method");
-        System.setOut(new PrintStream(this.out));
+        System.setOut(new PrintStream(out));
     }
 
-    @After
-    public void backOutput() {
-        System.setOut(this.stdout);
+    @AfterAll
+    public static void backOutput() {
+        System.setOut(stdout);
         System.out.println("execute after method");
     }
 
@@ -30,7 +30,7 @@ public class PaintTest {
     public void whenDrawSquare() {
         new Paint().draw(new Square());
         assertThat(
-                new String(out.toByteArray()),
+                out.toString(),
                 is(
                         new StringBuilder()
                                 .append("+++++++\n")

@@ -1,12 +1,13 @@
 package inout;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -16,28 +17,29 @@ import static org.hamcrest.core.Is.is;
 
 public class SearchTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    public static Path folder;
+    public static File file;
 
-    @Before
-    public void prepare() throws IOException {
-        folder.newFolder("dir1");
-        folder.newFile("dir1/file1.txt");
-        folder.newFile("dir1/file2.doc");
-        folder.newFile("dir1/file3.exe");
-        folder.newFolder("dir1/dir2");
-        folder.newFile("dir1/dir2/file4.txt");
-        folder.newFile("dir1/dir2/file5.doc");
-        folder.newFile("dir1/dir2/file6.exe");
-        folder.newFolder("dir1/dir2/dir3");
-        folder.newFile("dir1/dir2/dir3/file7.txt");
-        folder.newFile("dir1/dir2/dir3/file8.doc");
-        folder.newFile("dir1/dir2/dir3/file9.exe");
+    @BeforeAll
+    public static void prepare() throws IOException {
+        Files.createDirectory(folder.resolve("dir1"));
+        Files.createFile(folder.resolve("dir1/file1.txt"));
+        Files.createFile(folder.resolve("dir1/file2.doc"));
+        Files.createFile(folder.resolve("dir1/file3.exe"));
+        Files.createDirectory(folder.resolve("dir1/dir2/"));
+        Files.createFile(folder.resolve("dir1/dir2/file4.txt"));
+        Files.createFile(folder.resolve("dir1/dir2/file5.doc"));
+        Files.createFile(folder.resolve("dir1/dir2/file6.exe"));
+        Files.createDirectory(folder.resolve("dir1/dir2/dir3/"));
+        Files.createFile(folder.resolve("dir1/dir2/dir3/file7.txt"));
+        Files.createFile(folder.resolve("dir1/dir2/dir3/file8.doc"));
+        Files.createFile(folder.resolve("dir1/dir2/dir3/file9.exe"));
     }
 
     @Test
     public void searchFiles() {
-        String root = folder.getRoot().toString().replaceAll("\\\\", "/");
+        String root = folder.toString().replaceAll("\\\\", "/");
 
         Predicate<File> predicate = file ->
                 !file.isDirectory() && file.getPath().endsWith(".txt") || file.getPath().endsWith(".doc");
@@ -66,7 +68,7 @@ public class SearchTest {
 
     @Test
     public void searchDirs() {
-        String root = folder.getRoot().toString();
+        String root = folder.toString();
 
         Predicate<File> predicate = File::isDirectory;
 

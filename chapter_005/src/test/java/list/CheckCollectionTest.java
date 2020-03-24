@@ -1,6 +1,6 @@
 package list;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import simple.Node;
 
 import static org.hamcrest.MatcherAssert.assertThat;

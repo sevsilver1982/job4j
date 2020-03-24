@@ -1,6 +1,6 @@
 package tracker;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import tracker.input.InputValidate;
 import tracker.input.StubInput;
 

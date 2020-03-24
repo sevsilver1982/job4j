@@ -1,6 +1,6 @@
 package tracker;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import tracker.items.Item;
 import tracker.items.ItemSortByNameASC;
 import tracker.items.ItemSortByNameDESC;

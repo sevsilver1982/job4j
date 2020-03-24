@@ -1,7 +1,6 @@
 package iterator;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 
@@ -10,16 +9,12 @@ import static org.hamcrest.Matchers.is;
 
 public class MatrixIteratorTest {
 
-    private Iterator<Integer> it;
-
-    @Before
-    public void setUp() {
-        it = new MatrixIterator(new int[][]{
-                {1},
-                {2, 3},
-                {4, 5, 6}
-        });
-    }
+    private Iterator<Integer> it = new MatrixIterator(
+            new int[][]{
+                    {1},
+                    {2, 3},
+                    {4, 5, 6}
+            });
 
     @Test
     public void testsThatNextMethodDoesNotDependsOnPriorHasNextInvocation() {

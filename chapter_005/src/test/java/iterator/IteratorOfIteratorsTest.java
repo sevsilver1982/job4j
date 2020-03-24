@@ -1,7 +1,7 @@
 package iterator;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
@@ -9,19 +9,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class IteratorOfIteratorsTest {
-    Iterator<Integer> it;
-
-    @Before
-    public void setUp() {
-        Converter converter = new Converter(
-                List.of(
-                        Arrays.asList(1, 2, 3).iterator(),
-                        Arrays.asList(4, 5, 6).iterator(),
-                        Arrays.asList(7, 8, 9).iterator()
-                ).iterator()
-        );
-        it = converter.convert();
-    }
+    Iterator<Integer> it = new Converter(
+            List.of(
+                    Arrays.asList(1, 2, 3).iterator(),
+                    Arrays.asList(4, 5, 6).iterator(),
+                    Arrays.asList(7, 8, 9).iterator()
+            ).iterator()
+    ).convert();
 
     @Test
     public void hasNextNextSequentialInvocation() {
@@ -106,18 +100,20 @@ public class IteratorOfIteratorsTest {
         assertThat(it.hasNext(), is(false));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void invocationOfNextMethodShouldThrowNoSuchElementException() {
-        Converter converter = new Converter(
-                List.of(
-                        List.of(1, 2, 3).iterator()
-                ).iterator()
-        );
-        it = converter.convert();
-        assertThat(it.next(), is(1));
-        assertThat(it.next(), is(2));
-        assertThat(it.next(), is(3));
-        it.next();
+        Assertions.assertThrows(NoSuchElementException.class, () -> {
+            Converter converter = new Converter(
+                    List.of(
+                            List.of(1, 2, 3).iterator()
+                    ).iterator()
+            );
+            it = converter.convert();
+            assertThat(it.next(), is(1));
+            assertThat(it.next(), is(2));
+            assertThat(it.next(), is(3));
+            it.next();
+        });
     }
 
 }

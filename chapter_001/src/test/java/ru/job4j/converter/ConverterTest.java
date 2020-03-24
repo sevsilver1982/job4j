@@ -1,7 +1,9 @@
 package ru.job4j.converter;
 
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ConverterTest {
     @Test
@@ -9,7 +11,7 @@ public class ConverterTest {
         double in = 140;
         double expected = 2;
         double actual = Converter.rub2eur(in);
-        Assert.assertEquals(expected, actual, 0);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -17,7 +19,7 @@ public class ConverterTest {
         double in = 1;
         double expected = 70;
         double actual = Converter.eur2rub(in);
-        Assert.assertEquals(expected, actual, 0);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -25,7 +27,7 @@ public class ConverterTest {
         double in = 120;
         double expected = 2;
         double actual = Converter.rub2usd(in);
-        Assert.assertEquals(expected, actual, 0);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -33,7 +35,7 @@ public class ConverterTest {
         double in = 130;
         double expected = 7800;
         double actual = Converter.usd2rub(in);
-        Assert.assertEquals(expected, actual, 0);
+        assertEquals(expected, actual);
     }
 
 }

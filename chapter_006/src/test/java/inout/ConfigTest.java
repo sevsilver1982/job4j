@@ -1,9 +1,8 @@
 package inout;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,14 +12,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class ConfigTest {
-    private Config config;
+    private static Config config;
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    public static File file;
 
-    @Before
-    public void load() throws IOException {
-        File source = folder.newFile("app.properties");
+    @BeforeAll
+    public static void load() throws IOException {
+        File source = new File(file, "app.properties");
         try (PrintWriter out = new PrintWriter(source)) {
             out.println(" = ##comment=");
             out.println("");

@@ -1,9 +1,8 @@
 package inout;
 
 import inout.examples.Abuse;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.*;
 import java.util.List;
@@ -13,13 +12,13 @@ import static org.hamcrest.core.Is.is;
 
 public class AbuseTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    public File file;
 
     @Test
     public void drop() throws IOException {
-        File source = folder.newFile("source.txt");
-        File target = folder.newFile("target.txt");
+        File source = new File(file, "source.txt");
+        File target = new File(file, "target.txt");
         try (PrintWriter out = new PrintWriter(source)) {
             out.println("hello foolish dude ");
         }

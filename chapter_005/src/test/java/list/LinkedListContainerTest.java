@@ -1,6 +1,7 @@
 package list;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -53,28 +54,32 @@ public class LinkedListContainerTest {
         assertThat(it.hasNext(), is(false));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void iteratorNoSuchElementException() {
-        LinkedListContainer<Integer> list = new LinkedListContainer<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        Iterator<Integer> it = list.iterator();
-        assertThat(it.next(), is(1));
-        assertThat(it.next(), is(2));
-        assertThat(it.next(), is(3));
-        it.next();
+        Assertions.assertThrows(NoSuchElementException.class, () -> {
+            LinkedListContainer<Integer> list = new LinkedListContainer<>();
+            list.add(1);
+            list.add(2);
+            list.add(3);
+            Iterator<Integer> it = list.iterator();
+            assertThat(it.next(), is(1));
+            assertThat(it.next(), is(2));
+            assertThat(it.next(), is(3));
+            it.next();
+        });
     }
 
-    @Test(expected = ConcurrentModificationException.class)
+    @Test
     public void iteratorConcurrentModificationException() {
-        LinkedListContainer<Integer> list = new LinkedListContainer<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        Iterator<Integer> it = list.iterator();
-        list.add(4);
-        it.next();
+        Assertions.assertThrows(ConcurrentModificationException.class, () -> {
+            LinkedListContainer<Integer> list = new LinkedListContainer<>();
+            list.add(1);
+            list.add(2);
+            list.add(3);
+            Iterator<Integer> it = list.iterator();
+            list.add(4);
+            it.next();
+        });
     }
 
 }

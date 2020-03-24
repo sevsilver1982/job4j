@@ -1,7 +1,7 @@
 package iterator;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -10,23 +10,22 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class EvenNumbersIteratorTest {
-    private Iterator<Integer> it;
+    private Iterator<Integer> it = new EvenNumbersIterator(
+            new int[]{1, 2, 3, 4, 5, 6, 7}
+            );
 
-    @Before
-    public void setUp() {
-        it = new EvenNumbersIterator(new int[]{1, 2, 3, 4, 5, 6, 7});
-    }
-
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void shouldReturnEvenNumbersSequentially() {
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(2));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(4));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(6));
-        assertThat(it.hasNext(), is(false));
-        it.next();
+        Assertions.assertThrows(NoSuchElementException.class, () -> {
+            assertThat(it.hasNext(), is(true));
+            assertThat(it.next(), is(2));
+            assertThat(it.hasNext(), is(true));
+            assertThat(it.next(), is(4));
+            assertThat(it.hasNext(), is(true));
+            assertThat(it.next(), is(6));
+            assertThat(it.hasNext(), is(false));
+            it.next();
+        });
     }
 
     @Test

@@ -1,6 +1,7 @@
 package list;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -33,13 +34,15 @@ public class ArrayListContainerTest {
         assertThat(list.get(3), is(4));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void getIndexOutOfBoundsException() {
-        ArrayListContainer<Integer> list = new ArrayListContainer<>();
-        list.get(0);
-        list.add(1);
-        assertThat(list.get(0), is(1));
-        list.get(0);
+        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+            ArrayListContainer<Integer> list = new ArrayListContainer<>();
+            list.get(0);
+            list.add(1);
+            assertThat(list.get(0), is(1));
+            list.get(0);
+        });
     }
 
     @Test
@@ -60,28 +63,32 @@ public class ArrayListContainerTest {
         assertThat(it.hasNext(), is(false));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void iteratorNoSuchElementException() {
-        ArrayListContainer<Integer> list = new ArrayListContainer<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        Iterator<Integer> it = list.iterator();
-        assertThat(it.next(), is(1));
-        assertThat(it.next(), is(2));
-        assertThat(it.next(), is(3));
-        it.next();
+        Assertions.assertThrows(NoSuchElementException.class, () -> {
+            ArrayListContainer<Integer> list = new ArrayListContainer<>();
+            list.add(1);
+            list.add(2);
+            list.add(3);
+            Iterator<Integer> it = list.iterator();
+            assertThat(it.next(), is(1));
+            assertThat(it.next(), is(2));
+            assertThat(it.next(), is(3));
+            it.next();
+        });
     }
 
-    @Test(expected = ConcurrentModificationException.class)
+    @Test
     public void iteratorConcurrentModificationException() {
-        ArrayListContainer<Integer> list = new ArrayListContainer<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        Iterator<Integer> it = list.iterator();
-        list.add(4);
-        it.next();
+        Assertions.assertThrows(ConcurrentModificationException.class, () -> {
+            ArrayListContainer<Integer> list = new ArrayListContainer<>();
+            list.add(1);
+            list.add(2);
+            list.add(3);
+            Iterator<Integer> it = list.iterator();
+            list.add(4);
+            it.next();
+        });
     }
 
 }
