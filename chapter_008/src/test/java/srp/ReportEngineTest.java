@@ -1,4 +1,4 @@
-package SRP;
+package srp;
 
 import org.junit.Test;
 
@@ -10,7 +10,7 @@ import static org.hamcrest.core.Is.is;
 public class ReportEngineTest {
 
     @Test
-    public void ReportGeneratorCSVTest() {
+    public void reportGeneratorCSVTest() {
         MemoryStore store = new MemoryStore();
         Calendar now = Calendar.getInstance();
         Employer worker1 = new Employer("worker1", now, now, 100);
@@ -18,7 +18,7 @@ public class ReportEngineTest {
         store.add(worker1);
         store.add(worker2);
         assertThat(
-                new ReportEngine(store, new ReportGeneratorCSV()).generate(employer -> employer.equals(worker1)),
+                new ReportEngine<>(store, new ReportGeneratorCSV()).generate(employer -> employer.equals(worker1)),
                 is(new StringBuilder()
                         .append("Name; Hired; Fired; Salary;").append(System.lineSeparator())
                         .append(worker1.getName()).append(";")
@@ -31,7 +31,7 @@ public class ReportEngineTest {
     }
 
     @Test
-    public void ReportGeneratorHTMLTest() {
+    public void reportGeneratorHTMLTest() {
         MemoryStore store = new MemoryStore();
         Calendar now = Calendar.getInstance();
         Employer worker1 = new Employer("worker1", now, now, 100);
@@ -39,7 +39,7 @@ public class ReportEngineTest {
         store.add(worker1);
         store.add(worker2);
         assertThat(
-                new ReportEngine(store, new ReportGeneratorHTML()).generate(),
+                new ReportEngine<>(store, new ReportGeneratorHTML()).generate(),
                 is(new StringBuilder()
                         .append("<table>")
                         .append("<tr>")
@@ -67,7 +67,7 @@ public class ReportEngineTest {
     }
 
     @Test
-    public void ReportGeneratorCSVSalaryEURTest() {
+    public void reportGeneratorCSVSalaryEURTest() {
         MemoryStore store = new MemoryStore();
         Calendar now = Calendar.getInstance();
         Employer worker1 = new Employer("worker1", now, now, 100);
@@ -77,7 +77,7 @@ public class ReportEngineTest {
         String currency = "EUR";
         double rate = 85.37;
         assertThat(
-                new ReportEngine(store, new ReportGeneratorCSVSalaryByRate(currency, rate)).generate(),
+                new ReportEngine<>(store, new ReportGeneratorCSVSalaryByRate(currency, rate)).generate(),
                 is(new StringBuilder()
                         .append(String.format("Name; Hired; Fired; Salary %s;", currency)).append(System.lineSeparator())
                         .append(worker1.getName()).append(";")
@@ -94,7 +94,7 @@ public class ReportEngineTest {
     }
 
     @Test
-    public void ReportGeneratorCSVSalaryDESCTest() {
+    public void reportGeneratorCSVSalaryDESCTest() {
         MemoryStore store = new MemoryStore();
         Calendar now = Calendar.getInstance();
         Employer worker1 = new Employer("worker1", now, now, 100);
@@ -108,7 +108,7 @@ public class ReportEngineTest {
         store.add(worker4);
         store.add(worker5);
         assertThat(
-                new ReportEngine(store, new ReportGeneratorCSVSalaryDESC()).generate(),
+                new ReportEngine<>(store, new ReportGeneratorCSVSalaryDESC()).generate(),
                 is(new StringBuilder()
                         .append("Name; Salary;").append(System.lineSeparator())
                         .append(worker5.getName()).append(";")
