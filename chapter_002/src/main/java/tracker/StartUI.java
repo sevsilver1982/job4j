@@ -29,7 +29,7 @@ public class StartUI {
 
     public void init() {
         boolean run = true;
-        while (run) {
+        do {
             this.showMenu(tracker, output);
             List<IAction> actions = tracker.getActionList();
             int select = input.askInt("Select: ", actions.size() + 1);
@@ -40,7 +40,7 @@ public class StartUI {
                 }
             }
             System.out.println();
-        }
+        } while (run);
     }
 
     public static void main(String[] args) {
