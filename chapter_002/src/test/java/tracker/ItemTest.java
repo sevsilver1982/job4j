@@ -8,8 +8,8 @@ import tracker.items.ItemSortByNameDESC;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 
 public class ItemTest {
     private Item task1 = new Item("Task1");

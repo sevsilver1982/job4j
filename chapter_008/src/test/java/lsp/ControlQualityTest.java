@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Calendar;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ControlQualityTest {
     private static Warehouse<AbstractProduct> warehouse = new Warehouse<>("Warehouse", product -> product.getExpirationValue() < 25);

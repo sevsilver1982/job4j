@@ -6,8 +6,8 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.*;
 import java.util.StringJoiner;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 
 public class AnalysisTest {
     private Analysis analise = new Analysis();
