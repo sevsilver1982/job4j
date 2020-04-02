@@ -2,16 +2,15 @@ package lsp.store;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
-public abstract class AbstractStoreHouse<T extends AbstractProduct> {
+public abstract class AbstractStoreHouse implements IStore {
     private String name;
-    private List<T> productList = new ArrayList<>();
-    private Predicate<T> condition;
+    private List<IProduct> productList = new ArrayList<>();
+    private IStoreCondition storeCondition;
 
-    public AbstractStoreHouse(String name, Predicate<T> condition) {
+    public AbstractStoreHouse(String name, IStoreCondition storeCondition) {
         this.name = name;
-        this.condition = condition;
+        this.storeCondition = storeCondition;
     }
 
     public String getName() {
@@ -22,20 +21,24 @@ public abstract class AbstractStoreHouse<T extends AbstractProduct> {
         this.name = name;
     }
 
-    public List<T> getProductList() {
-        return productList;
+    public List<IProduct> getProductList() {
+        return new ArrayList<>(productList);
     }
 
-    public Predicate<T> getCondition() {
-        return condition;
+    public IStoreCondition getCondition() {
+        return storeCondition;
     }
 
-    public void setCondition(Predicate<T> condition) {
-        this.condition = condition;
+    public void setCondition(IStoreCondition storeCondition) {
+        this.storeCondition = storeCondition;
     }
 
-    public boolean add(T product) {
+    public boolean add(IProduct product) {
         return productList.add(product);
+    }
+
+    public boolean remove(IProduct product) {
+        return productList.remove(product);
     }
 
     @Override

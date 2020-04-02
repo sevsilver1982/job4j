@@ -3,10 +3,9 @@ package lsp.store;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
-public abstract class AbstractProduct {
+public abstract class AbstractProduct implements IProduct {
     private String name;
     private Calendar creationDate;
     private Calendar expirationDate;
@@ -61,16 +60,6 @@ public abstract class AbstractProduct {
         this.discount = discount;
     }
 
-    private int daysBetween(Date d1, Date d2){
-        return (int)((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
-    }
-
-    public int getExpirationValue() {
-        int period = daysBetween(creationDate.getTime(), expirationDate.getTime());
-        int now = daysBetween(creationDate.getTime(), Calendar.getInstance().getTime());
-        return now * 100 / period;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -80,9 +69,9 @@ public abstract class AbstractProduct {
             return false;
         }
         AbstractProduct that = (AbstractProduct) o;
-        return name.equals(that.name)
-                && Objects.equals(creationDate, that.creationDate)
-                && Objects.equals(expirationDate, that.expirationDate);
+        return name.equals(that.name) &&
+                creationDate.equals(that.creationDate) &&
+                expirationDate.equals(that.expirationDate);
     }
 
     @Override
@@ -92,12 +81,10 @@ public abstract class AbstractProduct {
 
     @Override
     public String toString() {
-        return "name='" + name + '\'' +
-                ", creationDate=" + creationDate +
-                ", expirationDate=" + expirationDate +
-                ", price=" + price +
-                ", discount=" + discount +
-                '}';
+        return String.format(
+                "name='%s', creationDate=%s, expirationDate=%s, price=%s, discount=%s",
+                name, creationDate, expirationDate, price, discount
+        );
     }
 
 }

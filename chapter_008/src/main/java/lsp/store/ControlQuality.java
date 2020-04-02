@@ -1,41 +1,31 @@
 package lsp.store;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class ControlQuality<E extends AbstractStoreHouse<T>, T extends AbstractProduct> {
-    private List<E> storeHouseList;
+public class ControlQuality {
+    private List<IStore> storeList;
 
-    public ControlQuality(List<E> storeHouseList) {
-        this.storeHouseList = storeHouseList;
+    public ControlQuality(List<IStore> storeHouseList) {
+        this.storeList = storeHouseList;
     }
 
-    /*public void transfer(E from, E to, T product) {
+    private List<IStore> getStoreListByProductCondition(IProduct product, Date toDate) {
+        return storeList.stream()
+                .filter(store -> store.getCondition().testCondition(product, toDate))
+                .collect(Collectors.toList());
+    }
 
-    }*/
-
-    public void control() {
-        List<E> acceptorStore = new ArrayList<E>(storeHouseList);
-        storeHouseList.forEach(storeHouse -> {
-            System.out.println(storeHouse.toString());
-            Iterator<T> productList = storeHouse.getProductList().iterator();
-            while (productList.hasNext()) {
-                T product = productList.next();
-                System.out.print(String.format("Product: %s; Expired: %s %%; Discount: %s", product.getName(), product.getExpirationValue(), product.getDiscount()));
-                if (!storeHouse.getCondition().test(product)) {
-                    acceptorStore.forEach(acceptor -> {
-                        if (acceptor.getCondition().test(product)) {
-                            System.out.print(String.format(" -> %s", acceptor.getName()));
-                            //transfer(productList, acceptor, product);
-                            acceptor.add(product);
-                            productList.remove();
-                        }
-                    });
+    public void fullControl(Date toDate) {
+        storeList.forEach(store -> {
+            System.out.println(store.toString());
+            store.getProductList().forEach(product -> {
+                if (!store.getCondition().testCondition(product, toDate)) {
+                    getStoreListByProductCondition(product, toDate).get(0).add(product);
+                    store.remove(product);
                 }
-                System.out.println();
-            }
-            System.out.println();
+            });
         });
     }
 
