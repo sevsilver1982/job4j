@@ -6,17 +6,17 @@ public class ReportEngine<T extends IReportGenerator> {
     private T reportGenerator;
     private IStore store;
 
+    public ReportEngine(IStore store, T reportGenerator) {
+        this.store = store;
+        this.reportGenerator = reportGenerator;
+    }
+
     public void setReportGenerator(T reportGenerator) {
         this.reportGenerator = reportGenerator;
     }
 
     public void setStore(IStore store) {
         this.store = store;
-    }
-
-    public ReportEngine(IStore store, T reportGenerator) {
-        this.store = store;
-        this.reportGenerator = reportGenerator;
     }
 
     public String generate(Predicate<Employer> filter) {

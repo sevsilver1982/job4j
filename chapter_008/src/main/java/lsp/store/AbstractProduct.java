@@ -69,9 +69,9 @@ public abstract class AbstractProduct implements IProduct {
             return false;
         }
         AbstractProduct that = (AbstractProduct) o;
-        return name.equals(that.name) &&
-                creationDate.equals(that.creationDate) &&
-                expirationDate.equals(that.expirationDate);
+        return name.equals(that.name)
+                && creationDate.equals(that.creationDate)
+                && expirationDate.equals(that.expirationDate);
     }
 
     @Override
