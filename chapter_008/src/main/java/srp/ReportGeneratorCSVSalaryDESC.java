@@ -18,10 +18,10 @@ public class ReportGeneratorCSVSalaryDESC implements IReportGenerator {
         employers.sort(new SalaryDESC());
         StringBuilder text = new StringBuilder()
                 .append("Name; Salary;").append(System.lineSeparator());
-        employers.stream().forEach(employer -> {
-            text.append(employer.getName()).append(";")
-                    .append(employer.getSalary()).append(";").append(System.lineSeparator());
-        });
+        employers.stream().forEach(employer -> text
+                .append(employer.getName()).append(";")
+                .append(employer.getSalary()).append(";").append(System.lineSeparator())
+        );
         return text.toString();
     }
 

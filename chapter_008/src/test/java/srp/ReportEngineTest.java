@@ -1,5 +1,7 @@
 package srp;
 
+import ocp.ReportGeneratorJSON;
+import ocp.ReportGeneratorXML;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
@@ -121,6 +123,66 @@ public class ReportEngineTest {
                         .append(worker2.getSalary()).append(";").append(System.lineSeparator())
                         .append(worker1.getName()).append(";")
                         .append(worker1.getSalary()).append(";").append(System.lineSeparator())
+                        .toString()
+                )
+        );
+    }
+
+    @Test
+    public void reportGeneratorXMLTest() {
+        MemoryStore store = new MemoryStore();
+        Calendar now = Calendar.getInstance();
+        Employer worker1 = new Employer("worker1", now, now, 100);
+        Employer worker2 = new Employer("worker2", now, now, 200);
+        store.add(worker1);
+        store.add(worker2);
+        assertThat(
+                new ReportEngine<>(store, new ReportGeneratorXML()).generate(),
+                is(new StringBuilder()
+                        .append("<Employers>")
+                        .append("<Employer>")
+                        .append(String.format("<Name>%s</Name>", worker1.getName()))
+                        .append(String.format("<Hired>%s</Hired>", worker1.getHired().getTime()))
+                        .append(String.format("<Fired>%s</Fired>", worker1.getFired().getTime()))
+                        .append(String.format("<Salary>%s</Salary>", worker1.getSalary()))
+                        .append("</Employer>")
+                        .append("<Employer>")
+                        .append(String.format("<Name>%s</Name>", worker2.getName()))
+                        .append(String.format("<Hired>%s</Hired>", worker2.getHired().getTime()))
+                        .append(String.format("<Fired>%s</Fired>", worker2.getFired().getTime()))
+                        .append(String.format("<Salary>%s</Salary>", worker2.getSalary()))
+                        .append("</Employer>")
+                        .append("</Employers>")
+                        .toString()
+                )
+        );
+    }
+
+    @Test
+    public void reportGeneratorJSONTest() {
+        MemoryStore store = new MemoryStore();
+        Calendar now = Calendar.getInstance();
+        Employer worker1 = new Employer("worker1", now, now, 100);
+        Employer worker2 = new Employer("worker2", now, now, 200);
+        store.add(worker1);
+        store.add(worker2);
+        assertThat(
+                new ReportEngine<>(store, new ReportGeneratorJSON()).generate(),
+                is(new StringBuilder()
+                        .append("[")
+                        .append("{")
+                        .append(String.format("\"Name\": \"%s\"", worker1.getName()))
+                        .append(String.format("\"Hired\": \"%s\"", worker1.getHired()))
+                        .append(String.format("\"Fired\": \"%s\"", worker1.getFired()))
+                        .append(String.format("\"Salary\": \"%s\"", worker1.getSalary()))
+                        .append("},")
+                        .append("{")
+                        .append(String.format("\"Name\": \"%s\"", worker2.getName()))
+                        .append(String.format("\"Hired\": \"%s\"", worker2.getHired()))
+                        .append(String.format("\"Fired\": \"%s\"", worker2.getFired()))
+                        .append(String.format("\"Salary\": \"%s\"", worker2.getSalary()))
+                        .append("}")
+                        .append("]")
                         .toString()
                 )
         );

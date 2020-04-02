@@ -16,11 +16,11 @@ public class ReportGeneratorCSVSalaryByRate implements IReportGenerator {
     public String generate(List<Employer> employers) {
         StringBuilder text = new StringBuilder()
                 .append(String.format("Name; Hired; Fired; Salary %s;", currency)).append(System.lineSeparator());
-        employers.forEach(employer ->
-                text.append(employer.getName()).append(";")
-                        .append(employer.getHired().getTime()).append(";")
-                        .append(employer.getFired().getTime()).append(";")
-                        .append(String.format("%.2f", employer.getSalary() / rate)).append(";").append(System.lineSeparator())
+        employers.forEach(employer -> text
+                .append(employer.getName()).append(";")
+                .append(employer.getHired().getTime()).append(";")
+                .append(employer.getFired().getTime()).append(";")
+                .append(String.format("%.2f", employer.getSalary() / rate)).append(";").append(System.lineSeparator())
         );
         return text.toString();
     }

@@ -14,14 +14,14 @@ public class ReportGeneratorHTML implements IReportGenerator {
                 .append("<th>Fired</th>")
                 .append("<th>Salary</th>")
                 .append("</tr>");
-        employers.stream().forEach(employer -> {
-            text.append("<tr>")
-                    .append(String.format("<td>%s</td>", employer.getName()))
-                    .append(String.format("<td>%s</td>", employer.getHired().getTime()))
-                    .append(String.format("<td>%s</td>", employer.getFired().getTime()))
-                    .append(String.format("<td>%s</td>", employer.getSalary()))
-                    .append("</tr>");
-        });
+        employers.stream().forEach(employer -> text
+                .append("<tr>")
+                .append(String.format("<td>%s</td>", employer.getName()))
+                .append(String.format("<td>%s</td>", employer.getHired().getTime()))
+                .append(String.format("<td>%s</td>", employer.getFired().getTime()))
+                .append(String.format("<td>%s</td>", employer.getSalary()))
+                .append("</tr>")
+        );
         text.append("</table>");
         return text.toString();
     }
