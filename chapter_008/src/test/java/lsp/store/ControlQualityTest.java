@@ -1,14 +1,13 @@
-package lsp;
+package lsp.store;
 
-import lsp.store.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ControlQualityTest {
     private static StoreWarehouse storeWarehouse;
@@ -65,7 +64,7 @@ public class ControlQualityTest {
         storeWarehouse.add(product5);
         storeWarehouse.add(product6);
 
-        controlQuality.fullControl(toDate.getTime());
+        controlQuality.resort(toDate.getTime());
 
         List<IProduct> warehouseProductList = List.of(product6);
         List<IProduct> shopProductList = List.of(product2, product3, product4, product5);
