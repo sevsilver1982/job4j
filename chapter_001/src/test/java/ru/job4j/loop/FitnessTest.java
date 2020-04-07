@@ -2,30 +2,32 @@ package ru.job4j.loop;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FitnessTest {
 
     @Test
     public void whenIvanGreatNik() {
-        Fitness fit = new Fitness();
-        int month = fit.calc(95, 90);
-        assertThat(month, is(0));
+        assertEquals(
+                0,
+                new Fitness().calc(95, 90)
+        );
     }
 
     @Test
     public void whenIvanLessByOneNik() {
-        Fitness fit = new Fitness();
-        int month = fit.calc(90, 95);
-        assertThat(month, is(1));
+        assertEquals(
+                1,
+                new Fitness().calc(90, 95)
+        );
     }
 
     @Test
     public void whenIvanLessByFewNik() {
-        Fitness fit = new Fitness();
-        int month = fit.calc(50, 90);
-        assertThat(month, is(2));
+        assertEquals(
+                2,
+                new Fitness().calc(50, 90)
+        );
     }
 
 }

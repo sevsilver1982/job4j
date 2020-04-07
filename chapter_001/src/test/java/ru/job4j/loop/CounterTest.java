@@ -2,12 +2,16 @@ package ru.job4j.loop;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CounterTest {
+
     @Test
     public void whenSumEvenNumbersFromOneToTenThenThirty() {
-        assertThat(new Counter().add(1, 10), is(30));
+        assertEquals(
+                30,
+                new Counter().add(1, 10)
+        );
     }
+
 }

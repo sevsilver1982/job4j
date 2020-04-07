@@ -2,8 +2,8 @@ package ru.job4j.array;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CheckTest {
 
@@ -11,32 +11,36 @@ public class CheckTest {
     public void whenDataEvenMonoByTrueThenTrue() {
         Check check = new Check();
         boolean[] input = new boolean[] {true, true, true};
-        boolean result = check.mono(input);
-        assertThat(result, is(true));
+        assertTrue(
+                check.mono(input)
+        );
     }
 
     @Test
     public void whenDataEvenNotMonoByTrueThenFalse() {
         Check check = new Check();
         boolean[] input = new boolean[] {true, false, true};
-        boolean result = check.mono(input);
-        assertThat(result, is(false));
+        assertFalse(
+                check.mono(input)
+        );
     }
 
     @Test
     public void whenDataOddMonoByTrueThenTrue() {
         Check check = new Check();
         boolean[] input = new boolean[] {true, true, true, true};
-        boolean result = check.mono(input);
-        assertThat(result, is(true));
+        assertTrue(
+                check.mono(input)
+        );
     }
 
     @Test
     public void whenDataOddNotMonoByTrueThenFalse() {
         Check check = new Check();
         boolean[] input = new boolean[] {true, false, true, false};
-        boolean result = check.mono(input);
-        assertThat(result, is(false));
+        assertFalse(
+                check.mono(input)
+        );
     }
 
 }

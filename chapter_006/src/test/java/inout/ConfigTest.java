@@ -8,8 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ConfigTest {
     private static Config config;
@@ -37,14 +36,26 @@ public class ConfigTest {
 
     @Test
     public void value() {
-        assertThat(config.value("hibernate.connection.username"), is("postgres"));
-        assertThat(config.value("hibernate.connection.password"), is("password"));
-        assertThat(config.value("name"), is("Petr Arsentev"));
+        assertEquals(
+                "postgres",
+                config.value("hibernate.connection.username")
+        );
+        assertEquals(
+                "password",
+                config.value("hibernate.connection.password")
+        );
+        assertEquals(
+                "Petr Arsentev",
+                config.value("name")
+        );
     }
 
     @Test
     public void getParamsCount() {
-        assertThat(config.getParamsCount(), is(6));
+        assertEquals(
+                6,
+                config.getParamsCount()
+        );
     }
 
 }

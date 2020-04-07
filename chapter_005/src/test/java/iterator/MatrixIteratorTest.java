@@ -4,13 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MatrixIteratorTest {
 
     private Iterator<Integer> it = new MatrixIterator(
-            new int[][]{
+            new int[][] {
                     {1},
                     {2, 3},
                     {4, 5, 6}
@@ -18,41 +17,95 @@ public class MatrixIteratorTest {
 
     @Test
     public void testsThatNextMethodDoesNotDependsOnPriorHasNextInvocation() {
-        assertThat(it.next(), is(1));
-        assertThat(it.next(), is(2));
-        assertThat(it.next(), is(3));
-        assertThat(it.next(), is(4));
-        assertThat(it.next(), is(5));
-        assertThat(it.next(), is(6));
+        assertEquals(
+                1,
+                it.next()
+        );
+        assertEquals(
+                2,
+                it.next()
+        );
+        assertEquals(
+                3,
+                it.next()
+        );
+        assertEquals(
+                4,
+                it.next()
+        );
+        assertEquals(
+                5,
+                it.next()
+        );
+        assertEquals(
+                6,
+                it.next()
+        );
     }
 
     @Test
     public void sequentialHasNextInvocationDoesntAffectRetrievalOrder() {
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(1));
-        assertThat(it.next(), is(2));
-        assertThat(it.next(), is(3));
-        assertThat(it.next(), is(4));
-        assertThat(it.next(), is(5));
-        assertThat(it.next(), is(6));
+        assertTrue(it.hasNext());
+        assertTrue(it.hasNext());
+        assertEquals(
+                1,
+                it.next()
+        );
+        assertEquals(
+                2,
+                it.next()
+        );
+        assertEquals(
+                3,
+                it.next()
+        );
+        assertEquals(
+                4,
+                it.next()
+        );
+        assertEquals(
+                5,
+                it.next()
+        );
+        assertEquals(
+                6,
+                it.next()
+        );
     }
 
     @Test
     public void hasNextNextSequentialInvocation() {
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(1));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(2));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(3));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(4));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(5));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(6));
-        assertThat(it.hasNext(), is(false));
+        assertTrue(it.hasNext());
+        assertEquals(
+                1,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                2,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                3,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                4,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                5,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                6,
+                it.next()
+        );
+        assertFalse(it.hasNext());
     }
 
 }

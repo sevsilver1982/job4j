@@ -4,15 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TrackerSQLTest {
 
     @Test
     public void init() {
-            TrackerSQL sql = new TrackerSQL(Collections.EMPTY_LIST);
-            assertThat(sql.init(), is(true));
+            TrackerSQL sql = new TrackerSQL(Collections.emptyList());
+            assertTrue(sql.init());
     }
 
 }

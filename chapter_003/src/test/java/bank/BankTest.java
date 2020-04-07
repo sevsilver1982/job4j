@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BankTest {
 
@@ -19,10 +18,13 @@ public class BankTest {
         bank.addAccountToUser("4500 000001", acc1);
         Account acc2 = new Account(2000, "00000000000000000002");
         bank.addAccountToUser("4500 000001", acc2);
-
-        assertThat(
-                bank.getUserAccounts(user.getPassport()),
-                is(Optional.of(List.of(acc1, acc2)))
+        assertEquals(
+                Optional.of(
+                        List.of(acc1, acc2)
+                ),
+                bank.getUserAccounts(
+                        user.getPassport()
+                )
         );
     }
 
@@ -35,12 +37,14 @@ public class BankTest {
         bank.addAccountToUser("4500 000001", acc1);
         Account acc2 = new Account(2000, "00000000000000000002");
         bank.addAccountToUser("4500 000001", acc2);
-
         bank.deleteAccountFromUser("4500 000001", acc2);
-
-        assertThat(
-                bank.getUserAccounts(user.getPassport()),
-                is(Optional.of(List.of(acc1)))
+        assertEquals(
+                Optional.of(
+                        List.of(acc1)
+                ),
+                bank.getUserAccounts(
+                        user.getPassport()
+                )
         );
     }
 
@@ -60,8 +64,14 @@ public class BankTest {
 
         bank.transferMoney("4500 000001", "00000000000000000001", "4500 000002", "00000000000000000002", 500);
 
-        assertThat(acc1.getValue(), is(500D));
-        assertThat(acc2.getValue(), is(2500D));
+        assertEquals(
+                500,
+                acc1.getValue()
+        );
+        assertEquals(
+                2500,
+                acc2.getValue()
+        );
     }
 
 }

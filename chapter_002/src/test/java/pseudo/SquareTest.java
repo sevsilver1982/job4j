@@ -2,34 +2,31 @@ package pseudo;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SquareTest {
 
     @Test
     public void whenDrawSquare() {
-        Square square = new Square();
-        assertThat(square.draw(), is(
+        assertEquals(
                 new StringBuilder()
                         .append("+++++++\n")
                         .append("+     +\n")
                         .append("+     +\n")
-                        .append("+++++++").toString()
-                )
+                        .append("+++++++").toString(),
+                new Square().draw()
         );
     }
 
     @Test
     public void whenDrawTriangle() {
-        Triangle square = new Triangle();
-        assertThat(square.draw(), is(
+        assertEquals(
                 new StringBuilder()
                         .append("   +\n")
                         .append("  + +\n")
                         .append(" +   +\n")
-                        .append("+++++++").toString()
-                )
+                        .append("+++++++").toString(),
+                new Triangle().draw()
         );
     }
 

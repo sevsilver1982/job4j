@@ -1,14 +1,12 @@
 package list;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ArrayListContainerTest {
 
@@ -18,7 +16,10 @@ public class ArrayListContainerTest {
         for (int i = 0; i < 250; i++) {
             list.add(i);
         }
-        assertThat(list.getSize(), is(250));
+        assertEquals(
+                250,
+                list.getSize()
+        );
     }
 
     @Test
@@ -28,21 +29,38 @@ public class ArrayListContainerTest {
         list.add(2);
         list.add(3);
         list.add(4);
-        assertThat(list.get(0), is(1));
-        assertThat(list.get(1), is(2));
-        assertThat(list.get(2), is(3));
-        assertThat(list.get(3), is(4));
+        assertEquals(
+                1,
+                list.get(0)
+        );
+        assertEquals(
+                2,
+                list.get(1)
+        );
+        assertEquals(
+                3,
+                list.get(2)
+        );
+        assertEquals(
+                4,
+                list.get(3)
+        );
     }
 
     @Test
     public void getIndexOutOfBoundsException() {
-        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
-            ArrayListContainer<Integer> list = new ArrayListContainer<>();
-            list.get(0);
-            list.add(1);
-            assertThat(list.get(0), is(1));
-            list.get(0);
-        });
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> {
+                    ArrayListContainer<Integer> list = new ArrayListContainer<>();
+                    list.get(0);
+                    list.add(1);
+                    assertEquals(
+                            1,
+                            list.get(0)
+                    );
+                    list.get(0);
+                });
     }
 
     @Test
@@ -52,43 +70,65 @@ public class ArrayListContainerTest {
         list.add(2);
         list.add(3);
         Iterator<Integer> it = list.iterator();
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(1));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(2));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(3));
-        assertThat(it.hasNext(), is(false));
-        assertThat(it.hasNext(), is(false));
+        assertTrue(it.hasNext());
+        assertTrue(it.hasNext());
+        assertEquals(
+                1,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                2,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                3,
+                it.next()
+        );
+        assertFalse(it.hasNext());
+        assertFalse(it.hasNext());
     }
 
     @Test
     public void iteratorNoSuchElementException() {
-        Assertions.assertThrows(NoSuchElementException.class, () -> {
-            ArrayListContainer<Integer> list = new ArrayListContainer<>();
-            list.add(1);
-            list.add(2);
-            list.add(3);
-            Iterator<Integer> it = list.iterator();
-            assertThat(it.next(), is(1));
-            assertThat(it.next(), is(2));
-            assertThat(it.next(), is(3));
-            it.next();
-        });
+        assertThrows(
+                NoSuchElementException.class,
+                () -> {
+                    ArrayListContainer<Integer> list = new ArrayListContainer<>();
+                    list.add(1);
+                    list.add(2);
+                    list.add(3);
+                    Iterator<Integer> it = list.iterator();
+                    assertEquals(
+                            1,
+                            it.next()
+                    );
+                    assertEquals(
+                            2,
+                            it.next()
+                    );
+                    assertEquals(
+                            3,
+                            it.next()
+                    );
+                    it.next();
+                });
     }
 
     @Test
     public void iteratorConcurrentModificationException() {
-        Assertions.assertThrows(ConcurrentModificationException.class, () -> {
-            ArrayListContainer<Integer> list = new ArrayListContainer<>();
-            list.add(1);
-            list.add(2);
-            list.add(3);
-            Iterator<Integer> it = list.iterator();
-            list.add(4);
-            it.next();
-        });
+        assertThrows(
+                ConcurrentModificationException.class,
+                () -> {
+                    ArrayListContainer<Integer> list = new ArrayListContainer<>();
+                    list.add(1);
+                    list.add(2);
+                    list.add(3);
+                    Iterator<Integer> it = list.iterator();
+                    list.add(4);
+                    it.next();
+                });
     }
 
 }

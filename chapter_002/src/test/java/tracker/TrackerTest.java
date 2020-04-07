@@ -9,12 +9,13 @@ import tracker.items.Item;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringJoiner;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TrackerTest {
 
@@ -23,45 +24,60 @@ public class TrackerTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PrintStream def = System.out;
         System.setOut(new PrintStream(out));
-        StubInput input = new StubInput(
-                new String[] {"1"}
+        new StartUI(
+                new StubInput(
+                        new String[] {"1"}
+                ),
+                new Tracker(
+                        Arrays.asList(
+                                new StubAbstractAction()
+                        )
+                ),
+                System.out::println
+        ).init();
+        assertEquals(
+                new StringJoiner(System.lineSeparator(), "", System.lineSeparator() + System.lineSeparator())
+                        .add("Menu:")
+                        .add("1. Stub action")
+                        .add("==== Stub action ====")
+                        .toString(),
+                new String(out.toByteArray())
         );
-        AbstractTracker tracker = new Tracker(List.of(new StubAbstractAction()));
-        new StartUI(input, tracker, System.out::println).init();
-        String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator() + System.lineSeparator())
-                .add("Menu:")
-                .add("1. Stub action")
-                .add("==== Stub action ====")
-                .toString();
-        assertThat(new String(out.toByteArray()), is(expect));
         System.setOut(def);
     }
 
     @Test
     public void exitTest() {
         StubAbstractAction action = new StubAbstractAction();
-        Tracker tracker = new Tracker(List.of(action));
-        StubInput input = new StubInput(
-                new String[] {"1"}
+        new StartUI(
+                new StubInput(
+                        new String[] {"1"}
+                ),
+                new Tracker(
+                        List.of(action)
+                ),
+                System.out::println).init();
+        assertTrue(
+                action.isCall()
         );
-        new StartUI(input, tracker, System.out::println).init();
-        assertThat(action.isCall(), is(true));
     }
 
     @Test
     public void findByIdTest() {
-        Tracker tracker = new Tracker(Collections.EMPTY_LIST);
+        Tracker tracker = new Tracker(Collections.emptyList());
         Item item = new Item("test1");
         tracker.add(item);
         Item test2 = new Item("test2");
         tracker.add(test2);
-        Item result = tracker.findById(item.getId());
-        assertThat(result.getName(), is(item.getName()));
+        assertEquals(
+                item.getName(),
+                tracker.findById(item.getId()).getName()
+        );
     }
 
     @Test
     public void replaceTest() {
-        Tracker tracker = new Tracker(Collections.EMPTY_LIST);
+        Tracker tracker = new Tracker(Collections.emptyList());
         Item test1 = new Item("test1");
         tracker.add(test1);
         Item test2 = new Item("test2");
@@ -70,7 +86,10 @@ public class TrackerTest {
         tracker.add(test3);
         Item test4 = new Item("test4");
         tracker.replace(test2.getId(), test4);
-        assertThat(tracker.findAll(), is(List.of(test1, test4, test3)));
+        assertEquals(
+                List.of(test1, test4, test3),
+                tracker.findAll()
+        );
     }
 
     @Test
@@ -81,16 +100,17 @@ public class TrackerTest {
         StubInput input = new StubInput(
                 new String[] {"item_1"}
         );
-        Tracker tracker = new Tracker(Collections.EMPTY_LIST);
+        Tracker tracker = new Tracker(Collections.emptyList());
         Item item = new Item(input.askString(""));
         tracker.add(item);
         new ShowAll().execute(input, tracker);
-
-        String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
-                .add("==== Show all items ====")
-                .add(item.toString())
-                .toString();
-        assertThat(new String(out.toByteArray()), is(expect));
+        assertEquals(
+                new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
+                        .add("==== Show all items ====")
+                        .add(item.toString())
+                        .toString(),
+                new String(out.toByteArray())
+        );
         System.setOut(def);
     }
 
@@ -102,16 +122,17 @@ public class TrackerTest {
         StubInput input = new StubInput(
                 new String[] {"item_1", "item_1"}
         );
-        Tracker tracker = new Tracker(Collections.EMPTY_LIST);
+        Tracker tracker = new Tracker(Collections.emptyList());
         Item item = new Item(input.askString(""));
         tracker.add(item);
         new FindItemByName().execute(input, tracker);
-
-        String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
-                .add("==== Find item by name ====")
-                .add(item.toString())
-                .toString();
-        assertThat(new String(out.toByteArray()), is(expect));
+        assertEquals(
+                new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
+                        .add("==== Find item by name ====")
+                        .add(item.toString())
+                        .toString(),
+                new String(out.toByteArray())
+        );
         System.setOut(def);
     }
 

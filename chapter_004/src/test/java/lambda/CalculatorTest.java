@@ -6,21 +6,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CalculatorTest {
 
     @Test
     public void whenAdd1Until3() {
-        Calculator calc = new Calculator();
         List<Double> buffer = new ArrayList<>();
-        calc.multiple(
+        new Calculator().multiple(
                 0, 3, 1,
                 MathUtil::add,
                 buffer::add
         );
-        assertThat(buffer, is(Arrays.asList(1D, 2D, 3D)));
+        assertEquals(
+                Arrays.asList(1D, 2D, 3D),
+                buffer
+        );
     }
 
 }

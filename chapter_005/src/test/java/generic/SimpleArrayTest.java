@@ -1,14 +1,12 @@
 package generic;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import simple.SimpleArray;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SimpleArrayTest {
 
@@ -16,53 +14,84 @@ public class SimpleArrayTest {
     public void add() {
         SimpleArray<Integer> objects = new SimpleArray<>(5);
         objects.add(1);
-        assertThat(objects.get(0), is(1));
+        assertEquals(
+                1,
+                objects.get(0)
+        );
     }
 
     @Test
     public void set() {
-        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+        assertThrows(IndexOutOfBoundsException.class, () -> {
             SimpleArray<Integer> objects = new SimpleArray<>(5);
             objects.add(1);
-            assertThat(objects.get(0), is(1));
+            assertEquals(
+                    1,
+                    objects.get(0)
+            );
             objects.set(0, 2);
-            assertThat(objects.get(0), is(2));
+            assertEquals(
+                    2,
+                    objects.get(0)
+            );
             objects.set(1, 2);
         });
     }
 
     @Test
     public void remove() {
-        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
-            SimpleArray<Integer> objects = new SimpleArray<>(5);
-            objects.add(0);
-            objects.add(1);
-            objects.add(2);
-            objects.add(3);
-            objects.add(4);
-            objects.remove(1);
-            objects.remove(1);
-            objects.remove(1);
-            objects.add(9);
-            assertThat(objects.get(0), is(0));
-            assertThat(objects.get(1), is(4));
-            assertThat(objects.get(2), is(9));
-            objects.get(3);
-        });
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> {
+                    SimpleArray<Integer> objects = new SimpleArray<>(5);
+                    objects.add(0);
+                    objects.add(1);
+                    objects.add(2);
+                    objects.add(3);
+                    objects.add(4);
+                    objects.remove(1);
+                    objects.remove(1);
+                    objects.remove(1);
+                    objects.add(9);
+                    assertEquals(
+                            0,
+                            objects.get(0)
+                    );
+                    assertEquals(
+                            4,
+                            objects.get(1)
+                    );
+                    assertEquals(
+                            9,
+                            objects.get(2)
+                    );
+                    objects.get(3);
+                });
     }
 
     @Test
     public void get() {
-        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
-            SimpleArray<Integer> objects = new SimpleArray<>(5);
-            objects.add(1);
-            objects.add(2);
-            objects.add(3);
-            assertThat(objects.get(0), is(1));
-            assertThat(objects.get(1), is(2));
-            assertThat(objects.get(2), is(3));
-            objects.get(3);
-        });
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> {
+                    SimpleArray<Integer> objects = new SimpleArray<>(5);
+                    objects.add(1);
+                    objects.add(2);
+                    objects.add(3);
+                    assertEquals(
+                            1,
+                            objects.get(0)
+                    );
+                    assertEquals(
+                            2,
+                            objects.get(1)
+                    );
+                    assertEquals(
+                            3,
+                            objects.get(2)
+                    );
+                    objects.get(3);
+                });
     }
 
     @Test
@@ -74,43 +103,62 @@ public class SimpleArrayTest {
         objects.add(4);
         objects.add(5);
         Iterator<Integer> it = objects.iterator();
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(1));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(2));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(3));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(4));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(5));
-        assertThat(it.hasNext(), is(false));
+        assertTrue(it.hasNext());
+        assertEquals(
+                1,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                2,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                3,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                4,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                5,
+                it.next()
+        );
+        assertFalse(it.hasNext());
     }
 
     @Test
     public void iteratorNoSuchElementException() {
-        Assertions.assertThrows(NoSuchElementException.class, () -> {
-            SimpleArray<Integer> objects = new SimpleArray<>(5);
-            objects.add(1);
-            objects.add(2);
-            objects.add(3);
-            Iterator<Integer> it = objects.iterator();
-            assertThat(it.hasNext(), is(true));
-            assertThat(it.next(), is(1));
-            assertThat(it.hasNext(), is(true));
-            assertThat(it.next(), is(2));
-            assertThat(it.hasNext(), is(true));
-            assertThat(it.next(), is(3));
-            assertThat(it.hasNext(), is(false));
-            it.next();
-        });
+        assertThrows(
+                NoSuchElementException.class,
+                () -> {
+                    SimpleArray<Integer> objects = new SimpleArray<>(5);
+                    objects.add(1);
+                    objects.add(2);
+                    objects.add(3);
+                    Iterator<Integer> it = objects.iterator();
+                    assertTrue(it.hasNext());
+                    assertEquals(
+                            1,
+                            it.next()
+                    );
+                    assertTrue(it.hasNext());
+                    assertEquals(
+                            2,
+                            it.next()
+                    );
+                    assertTrue(it.hasNext());
+                    assertEquals(
+                            3,
+                            it.next()
+                    );
+                    assertFalse(it.hasNext());
+                    it.next();
+                });
     }
 
-    @Test
-    public void getIndexByObject() {
-    }
-
-    @Test
-    public void getIndexById() {
-    }
 }

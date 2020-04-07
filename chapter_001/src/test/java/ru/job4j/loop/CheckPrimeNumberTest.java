@@ -2,156 +2,156 @@ package ru.job4j.loop;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CheckPrimeNumberTest {
 
     @Test
     public void when0() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(0);
-        assertThat(rsl, is(false));
+        assertFalse(
+                new CheckPrimeNumber().check(0)
+        );
     }
 
     @Test
     public void when1() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(1);
-        assertThat(rsl, is(false));
+        assertFalse(
+                new CheckPrimeNumber().check(1)
+        );
     }
 
     @Test
     public void when2() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(2);
-        assertThat(rsl, is(true));
+        assertTrue(
+                new CheckPrimeNumber().check(2)
+        );
     }
 
     @Test
     public void when3() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(3);
-        assertThat(rsl, is(true));
+        assertTrue(
+                new CheckPrimeNumber().check(3)
+        );
     }
 
     @Test
     public void when4() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(4);
-        assertThat(rsl, is(false));
+        assertFalse(
+                new CheckPrimeNumber().check(4)
+        );
     }
 
     @Test
     public void when5() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(5);
-        assertThat(rsl, is(true));
+        assertTrue(
+                new CheckPrimeNumber().check(5)
+        );
     }
 
     @Test
     public void when6() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(6);
-        assertThat(rsl, is(false));
+        assertFalse(
+                new CheckPrimeNumber().check(6)
+        );
     }
 
     @Test
     public void when7() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(7);
-        assertThat(rsl, is(true));
+        assertTrue(
+                new CheckPrimeNumber().check(7)
+        );
     }
 
     @Test
     public void when8() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(8);
-        assertThat(rsl, is(false));
+        assertFalse(
+                new CheckPrimeNumber().check(8)
+        );
     }
 
     @Test
     public void when9() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(9);
-        assertThat(rsl, is(false));
+        assertFalse(
+                new CheckPrimeNumber().check(9)
+        );
     }
 
     @Test
     public void when10() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(10);
-        assertThat(rsl, is(false));
+        assertFalse(
+                new CheckPrimeNumber().check(10)
+        );
     }
 
     @Test
     public void when11() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(11);
-        assertThat(rsl, is(true));
+        assertTrue(
+                new CheckPrimeNumber().check(11)
+        );
     }
 
     @Test
     public void when12() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(12);
-        assertThat(rsl, is(false));
+        assertFalse(
+                new CheckPrimeNumber().check(12)
+        );
     }
 
     @Test
     public void when13() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(13);
-        assertThat(rsl, is(true));
+        assertTrue(
+                new CheckPrimeNumber().check(13)
+        );
     }
 
     @Test
     public void when14() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(14);
-        assertThat(rsl, is(false));
+        assertFalse(
+                new CheckPrimeNumber().check(14)
+        );
     }
 
     @Test
     public void when15() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(15);
-        assertThat(rsl, is(false));
+        assertFalse(
+                new CheckPrimeNumber().check(15)
+        );
     }
 
     @Test
     public void when16() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(16);
-        assertThat(rsl, is(false));
+        assertFalse(
+                new CheckPrimeNumber().check(16)
+        );
     }
 
     @Test
     public void when17() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(17);
-        assertThat(rsl, is(true));
+        assertTrue(
+                new CheckPrimeNumber().check(17)
+        );
     }
 
     @Test
     public void when18() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(18);
-        assertThat(rsl, is(false));
+        assertFalse(
+                new CheckPrimeNumber().check(18)
+        );
     }
 
     @Test
     public void when19() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(19);
-        assertThat(rsl, is(true));
+        assertTrue(
+                new CheckPrimeNumber().check(19)
+        );
     }
 
     @Test
     public void when20() {
-        CheckPrimeNumber prime = new CheckPrimeNumber();
-        boolean rsl = prime.check(20);
-        assertThat(rsl, is(false));
+        assertFalse(
+                new CheckPrimeNumber().check(20)
+        );
     }
 
 }

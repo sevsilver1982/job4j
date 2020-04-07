@@ -2,24 +2,32 @@ package ru.job4j.condition;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DummyBotTest {
 
     @Test
     public void whenGreetBot() {
-        assertThat(DummyBot.answer("Привет, Бот."), is("Привет, умник."));
+        assertEquals(
+                "Привет, умник.",
+                DummyBot.answer("Привет, Бот.")
+        );
     }
 
     @Test
     public void whenByeBot() {
-        assertThat(DummyBot.answer("Пока."), is("До скорой встречи."));
+        assertEquals(
+                "До скорой встречи.",
+                DummyBot.answer("Пока.")
+        );
     }
 
     @Test
     public void whenUnknownBot() {
-        assertThat(DummyBot.answer("Сколько будет 2 + 2?"), is("Это ставит меня в тупик. Задайте другой вопрос."));
+        assertEquals(
+                "Это ставит меня в тупик. Задайте другой вопрос.",
+                DummyBot.answer("Сколько будет 2 + 2?")
+        );
     }
 
 }

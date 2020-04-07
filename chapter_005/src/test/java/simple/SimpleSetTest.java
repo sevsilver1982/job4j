@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SimpleSetTest {
 
@@ -18,7 +17,10 @@ public class SimpleSetTest {
         set.add(2);
         set.add(3);
         set.add(3);
-        assertThat(set.getSize(), is(3));
+        assertEquals(
+                3,
+                set.getSize()
+        );
     }
 
     @Test
@@ -31,16 +33,25 @@ public class SimpleSetTest {
         set.add(3);
         set.add(3);
         Iterator<Integer> it = set.iterator();
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(1));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(2));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(3));
-        assertThat(it.hasNext(), is(false));
+        assertTrue(it.hasNext());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasNext());
+        assertEquals(
+                1,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                2,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                3,
+                it.next()
+        );
+        assertFalse(it.hasNext());
     }
 
 }

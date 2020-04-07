@@ -1,35 +1,61 @@
 package simple;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.NoSuchElementException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SimpleQueueTest {
 
     @Test
     public void all() {
-        Assertions.assertThrows(NoSuchElementException.class, () -> {
-            SimpleQueue<Integer> queue = new SimpleQueue<>();
-            queue.push(1);
-            assertThat(queue.getSize(), is(1));
-            queue.push(2);
-            assertThat(queue.getSize(), is(2));
-            queue.push(3);
-            assertThat(queue.getSize(), is(3));
-
-            assertThat(queue.poll(), is(1));
-            assertThat(queue.getSize(), is(2));
-            assertThat(queue.poll(), is(2));
-            assertThat(queue.getSize(), is(1));
-            assertThat(queue.poll(), is(3));
-            assertThat(queue.getSize(), is(0));
-
-            queue.poll();
-        });
+        assertThrows(
+                NoSuchElementException.class,
+                () -> {
+                    SimpleQueue<Integer> queue = new SimpleQueue<>();
+                    queue.push(1);
+                    assertEquals(
+                            1,
+                            queue.getSize()
+                    );
+                    queue.push(2);
+                    assertEquals(
+                            2,
+                            queue.getSize()
+                    );
+                    queue.push(3);
+                    assertEquals(
+                            3,
+                            queue.getSize()
+                    );
+                    assertEquals(
+                            1,
+                            queue.poll()
+                    );
+                    assertEquals(
+                            2,
+                            queue.getSize()
+                    );
+                    assertEquals(
+                            2,
+                            queue.poll()
+                    );
+                    assertEquals(
+                            1,
+                            queue.getSize()
+                    );
+                    assertEquals(
+                            3,
+                            queue.poll()
+                    );
+                    assertEquals(
+                            0,
+                            queue.getSize()
+                    );
+                    queue.poll();
+                });
     }
 
 }

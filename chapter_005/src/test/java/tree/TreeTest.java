@@ -2,8 +2,8 @@ package tree;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TreeTest {
 
@@ -16,9 +16,8 @@ public class TreeTest {
         tree.add(1, 4);
         tree.add(2, 5);
         tree.add(5, 6);
-        assertThat(
-                tree.findBy(6).isPresent(),
-                is(true)
+        assertTrue(
+                tree.findBy(6).isPresent()
         );
     }
 
@@ -26,9 +25,8 @@ public class TreeTest {
     public void when6ElFindNotExitThenOptionEmpty() {
         Tree<Integer> tree = new Tree<>(1);
         tree.add(1, 2);
-        assertThat(
-                tree.findBy(7).isPresent(),
-                is(false)
+        assertFalse(
+                tree.findBy(7).isPresent()
         );
     }
 

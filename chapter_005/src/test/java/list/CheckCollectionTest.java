@@ -3,8 +3,8 @@ package list;
 import org.junit.jupiter.api.Test;
 import simple.Node;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CheckCollectionTest {
 
@@ -18,10 +18,10 @@ public class CheckCollectionTest {
         first.setNext(two);
         two.setNext(third);
         third.setNext(first);
-        assertThat(checkList.hasCycle(first), is(true));
+        assertTrue(checkList.hasCycle(first));
 
         third.setNext(two);
-        assertThat(checkList.hasCycle(first), is(true));
+        assertTrue(checkList.hasCycle(first));
     }
 
     @Test
@@ -34,7 +34,7 @@ public class CheckCollectionTest {
         first.setNext(two);
         two.setNext(third);
 
-        assertThat(checkList.hasCycle(first), is(false));
+        assertFalse(checkList.hasCycle(first));
     }
 
 }

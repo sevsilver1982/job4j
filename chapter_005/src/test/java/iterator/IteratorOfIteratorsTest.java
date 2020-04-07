@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class IteratorOfIteratorsTest {
     Iterator<Integer> it = new Converter(
@@ -19,53 +18,134 @@ public class IteratorOfIteratorsTest {
 
     @Test
     public void hasNextNextSequentialInvocation() {
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(1));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(2));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(3));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(4));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(5));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(6));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(7));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(8));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(9));
-        assertThat(it.hasNext(), is(false));
+        assertTrue(it.hasNext());
+        assertEquals(
+                1,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                2,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                3,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                4,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                5,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                6,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                7,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                8,
+                it.next()
+        );
+        assertTrue(it.hasNext());
+        assertEquals(
+                9,
+                it.next()
+        );
+        assertFalse(it.hasNext());
     }
 
     @Test
     public void testsThatNextMethodDoesntDependsOnPriorHasNextInvocation() {
-        assertThat(it.next(), is(1));
-        assertThat(it.next(), is(2));
-        assertThat(it.next(), is(3));
-        assertThat(it.next(), is(4));
-        assertThat(it.next(), is(5));
-        assertThat(it.next(), is(6));
-        assertThat(it.next(), is(7));
-        assertThat(it.next(), is(8));
-        assertThat(it.next(), is(9));
+        assertEquals(
+                1,
+                it.next()
+        );
+        assertEquals(
+                2,
+                it.next()
+        );
+        assertEquals(
+                3,
+                it.next()
+        );
+        assertEquals(
+                4,
+                it.next()
+        );
+        assertEquals(
+                5,
+                it.next()
+        );
+        assertEquals(
+                6,
+                it.next()
+        );
+        assertEquals(
+                7,
+                it.next()
+        );
+        assertEquals(
+                8,
+                it.next()
+        );
+        assertEquals(
+                9,
+                it.next()
+        );
     }
 
     @Test
     public void sequentialHasNextInvocationDoesntAffectRetrievalOrder() {
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(1));
-        assertThat(it.next(), is(2));
-        assertThat(it.next(), is(3));
-        assertThat(it.next(), is(4));
-        assertThat(it.next(), is(5));
-        assertThat(it.next(), is(6));
-        assertThat(it.next(), is(7));
-        assertThat(it.next(), is(8));
-        assertThat(it.next(), is(9));
+        assertTrue(it.hasNext());
+        assertTrue(it.hasNext());
+        assertEquals(
+                1,
+                it.next()
+        );
+        assertEquals(
+                2,
+                it.next()
+        );
+        assertEquals(
+                3,
+                it.next()
+        );
+        assertEquals(
+                4,
+                it.next()
+        );
+        assertEquals(
+                5,
+                it.next()
+        );
+        assertEquals(
+                6,
+                it.next()
+        );
+        assertEquals(
+                7,
+                it.next()
+        );
+        assertEquals(
+                8,
+                it.next()
+        );
+        assertEquals(
+                9,
+                it.next()
+        );
     }
 
     @Test
@@ -79,12 +159,30 @@ public class IteratorOfIteratorsTest {
                 ).iterator()
         );
         it = converter.convert();
-        assertThat(it.next(), is(1));
-        assertThat(it.next(), is(2));
-        assertThat(it.next(), is(3));
-        assertThat(it.next(), is(4));
-        assertThat(it.next(), is(5));
-        assertThat(it.next(), is(6));
+        assertEquals(
+                1,
+                it.next()
+        );
+        assertEquals(
+                2,
+                it.next()
+        );
+        assertEquals(
+                3,
+                it.next()
+        );
+        assertEquals(
+                4,
+                it.next()
+        );
+        assertEquals(
+                5,
+                it.next()
+        );
+        assertEquals(
+                6,
+                it.next()
+        );
     }
 
     @Test
@@ -97,23 +195,34 @@ public class IteratorOfIteratorsTest {
                 ).iterator()
         );
         it = converter.convert();
-        assertThat(it.hasNext(), is(false));
+        assertFalse(it.hasNext());
     }
 
     @Test
     public void invocationOfNextMethodShouldThrowNoSuchElementException() {
-        Assertions.assertThrows(NoSuchElementException.class, () -> {
-            Converter converter = new Converter(
-                    List.of(
-                            List.of(1, 2, 3).iterator()
-                    ).iterator()
-            );
-            it = converter.convert();
-            assertThat(it.next(), is(1));
-            assertThat(it.next(), is(2));
-            assertThat(it.next(), is(3));
-            it.next();
-        });
+        Assertions.assertThrows(
+                NoSuchElementException.class,
+                () -> {
+                    Converter converter = new Converter(
+                            List.of(
+                                    List.of(1, 2, 3).iterator()
+                            ).iterator()
+                    );
+                    it = converter.convert();
+                    assertEquals(
+                            1,
+                            it.next()
+                    );
+                    assertEquals(
+                            2,
+                            it.next()
+                    );
+                    assertEquals(
+                            3,
+                            it.next()
+                    );
+                    it.next();
+                });
     }
 
 }

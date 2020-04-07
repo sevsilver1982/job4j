@@ -2,156 +2,176 @@ package ru.job4j.loop;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PrimeNumberTest {
 
     @Test
     public void when0() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(0);
-        assertThat(rsl, is(0));
+        assertEquals(
+                0,
+                new PrimeNumber().calc(0)
+        );
     }
 
     @Test
     public void when1() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(1);
-        assertThat(rsl, is(0));
+        assertEquals(
+                0,
+                new PrimeNumber().calc(1)
+        );
     }
 
     @Test
     public void when2() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(2);
-        assertThat(rsl, is(1));
+        assertEquals(
+                1,
+                new PrimeNumber().calc(2)
+        );
     }
 
     @Test
     public void when3() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(3);
-        assertThat(rsl, is(2));
+        assertEquals(
+                2,
+                new PrimeNumber().calc(3)
+        );
     }
 
     @Test
     public void when4() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(4);
-        assertThat(rsl, is(2));
+        assertEquals(
+                2,
+                new PrimeNumber().calc(4)
+        );
     }
 
     @Test
     public void when5() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(5);
-        assertThat(rsl, is(3));
+        assertEquals(
+                3,
+                new PrimeNumber().calc(5)
+        );
     }
 
     @Test
     public void when6() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(6);
-        assertThat(rsl, is(3));
+        assertEquals(
+                3,
+                new PrimeNumber().calc(6)
+        );
     }
 
     @Test
     public void when7() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(7);
-        assertThat(rsl, is(4));
+        assertEquals(
+                4,
+                new PrimeNumber().calc(7)
+        );
     }
 
     @Test
     public void when8() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(8);
-        assertThat(rsl, is(4));
+        assertEquals(
+                4,
+                new PrimeNumber().calc(8)
+        );
     }
 
     @Test
     public void when9() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(9);
-        assertThat(rsl, is(4));
+        assertEquals(
+                4,
+                new PrimeNumber().calc(9)
+        );
     }
 
     @Test
     public void when10() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(10);
-        assertThat(rsl, is(4));
+        assertEquals(
+                4,
+                new PrimeNumber().calc(10)
+        );
     }
 
     @Test
     public void when11() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(11);
-        assertThat(rsl, is(5));
+        assertEquals(
+                5,
+                new PrimeNumber().calc(11)
+        );
     }
 
     @Test
     public void when12() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(12);
-        assertThat(rsl, is(5));
+        assertEquals(
+                5,
+                new PrimeNumber().calc(12)
+        );
     }
 
     @Test
     public void when13() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(13);
-        assertThat(rsl, is(6));
+        assertEquals(
+                6,
+                new PrimeNumber().calc(13)
+        );
     }
 
     @Test
     public void when14() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(14);
-        assertThat(rsl, is(6));
+        assertEquals(
+                6,
+                new PrimeNumber().calc(14)
+        );
     }
 
     @Test
     public void when15() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(15);
-        assertThat(rsl, is(6));
+        assertEquals(
+                6,
+                new PrimeNumber().calc(15)
+        );
     }
 
     @Test
     public void when16() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(16);
-        assertThat(rsl, is(6));
+        assertEquals(
+                6,
+                new PrimeNumber().calc(16)
+        );
     }
 
     @Test
     public void when17() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(17);
-        assertThat(rsl, is(7));
+        assertEquals(
+                7,
+                new PrimeNumber().calc(17)
+        );
     }
 
     @Test
     public void when18() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(18);
-        assertThat(rsl, is(7));
+        assertEquals(
+                7,
+                new PrimeNumber().calc(18)
+        );
     }
 
     @Test
     public void when19() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(19);
-        assertThat(rsl, is(8));
+        assertEquals(
+                8,
+                new PrimeNumber().calc(19)
+        );
     }
 
     @Test
     public void when20() {
-        PrimeNumber prime = new PrimeNumber();
-        int rsl = prime.calc(20);
-        assertThat(rsl, is(8));
+        assertEquals(
+                8,
+                new PrimeNumber().calc(20)
+        );
     }
 
 }

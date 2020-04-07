@@ -10,4 +10,5 @@ public class Paint {
         new Paint().draw(new Triangle());
         new Paint().draw(new Square());
     }
+
 }

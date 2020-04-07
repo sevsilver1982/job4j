@@ -10,8 +10,6 @@ public class UserTest {
 
     @Test
     public void mapTest() {
-        var qwe = "123";
-
         User user1 = new User("user1", 0, Calendar.getInstance());
         User user2 = new User("user1", 0, Calendar.getInstance());
 

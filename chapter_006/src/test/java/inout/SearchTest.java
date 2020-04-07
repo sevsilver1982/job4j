@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SearchTest {
 
@@ -40,15 +39,12 @@ public class SearchTest {
     @Test
     public void searchFiles() {
         String root = folder.toString().replaceAll("\\\\", "/");
-
         Predicate<File> predicate = file ->
                 !file.isDirectory() && file.getPath().endsWith(".txt") || file.getPath().endsWith(".doc");
-
         List<String> actual =
                 new Search().files(root, predicate).stream()
                         .map(file -> file.getPath().replaceAll("\\\\", "/"))
                         .collect(Collectors.toList());
-
         List<String> expected = List.of(
                 String.format("%s%s", root, "/dir1/dir2/dir3/file7.txt"),
                 String.format("%s%s", root, "/dir1/dir2/dir3/file8.doc"),
@@ -57,37 +53,28 @@ public class SearchTest {
                 String.format("%s%s", root, "/dir1/file1.txt"),
                 String.format("%s%s", root, "/dir1/file2.doc")
         );
-
-        assertThat(
-                actual.containsAll(expected)
-                        && expected.containsAll(actual)
-                        && actual.size() == expected.size(),
-                is(true)
+        assertEquals(
+                expected,
+                actual
         );
     }
 
     @Test
     public void searchDirs() {
         String root = folder.toString();
-
         Predicate<File> predicate = File::isDirectory;
-
         List<String> actual =
                 new Search().files(root, predicate).stream()
                         .map(File::getPath)
                         .collect(Collectors.toList());
-
         List<String> expected = List.of(
                 String.format("%s%s", root, File.separator + "dir1"),
                 String.format("%s%s", root, File.separator + "dir1" + File.separator + "dir2"),
                 String.format("%s%s", root, File.separator + "dir1" + File.separator + "dir2" + File.separator + "dir3")
         );
-
-        assertThat(
-                actual.containsAll(expected)
-                        && expected.containsAll(actual)
-                        && actual.size() == expected.size(),
-                is(true)
+        assertEquals(
+                expected,
+                actual
         );
     }
 

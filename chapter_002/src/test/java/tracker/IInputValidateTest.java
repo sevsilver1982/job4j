@@ -7,8 +7,7 @@ import tracker.input.StubInput;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class IInputValidateTest {
 
@@ -17,13 +16,12 @@ public class IInputValidateTest {
         ByteArrayOutputStream mem = new ByteArrayOutputStream();
         PrintStream out = System.out;
         System.setOut(new PrintStream(mem));
-        InputValidate input = new InputValidate(
+        new InputValidate(
                 new StubInput(new String[] {"invalid", "0"})
-        );
-        input.askInt("Enter", 1);
-        assertThat(
-                mem.toString(),
-                is(String.format("Please enter validate data again%n"))
+        ).askInt("Enter", 1);
+        assertEquals(
+                String.format("Please enter validate data again%n"),
+                mem.toString()
         );
         System.setOut(out);
     }

@@ -2,48 +2,51 @@ package ru.job4j.array;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MatrixCheckTest {
 
     @Test
     public void whenDataMonoByTrueThenTrue() {
-        char[][] input = {
-                {' ', ' ', 'X', ' ', ' '},
-                {' ', ' ', 'X', ' ', ' '},
-                {' ', ' ', 'X', ' ', ' '},
-                {' ', ' ', 'X', ' ', ' '},
-                {' ', ' ', 'X', ' ', ' '},
-        };
-        boolean result = MatrixCheck.isWin(input);
-        assertThat(result, is(true));
+        assertTrue(
+                MatrixCheck.isWin(
+                        new char[][] {
+                                {' ', ' ', 'X', ' ', ' '},
+                                {' ', ' ', 'X', ' ', ' '},
+                                {' ', ' ', 'X', ' ', ' '},
+                                {' ', ' ', 'X', ' ', ' '},
+                                {' ', ' ', 'X', ' ', ' '},
+                        })
+        );
     }
 
     @Test
     public void whenDataNotMonoByTrueThenFalse() {
-        char[][] input = {
-                {' ', ' ', 'X', ' ', ' '},
-                {' ', ' ', 'X', ' ', ' '},
-                {' ', 'X', ' ', ' ', ' '},
-                {' ', ' ', 'X', ' ', ' '},
-                {' ', ' ', 'X', ' ', ' '},
-        };
-        boolean result = MatrixCheck.isWin(input);
-        assertThat(result, is(false));
+        assertFalse(
+                MatrixCheck.isWin(
+                        new char[][] {
+                                {' ', ' ', 'X', ' ', ' '},
+                                {' ', ' ', 'X', ' ', ' '},
+                                {' ', 'X', ' ', ' ', ' '},
+                                {' ', ' ', 'X', ' ', ' '},
+                                {' ', ' ', 'X', ' ', ' '},
+                        })
+        );
     }
 
     @Test
     public void test2() {
-        char[][] input = {
-                {'X', 'X', 'X', 'X', 'X'},
-                {'X', ' ', ' ', ' ', ' '},
-                {'X', ' ', ' ', ' ', ' '},
-                {'X', ' ', ' ', ' ', ' '},
-                {'X', ' ', ' ', ' ', ' '},
-        };
-        boolean result = MatrixCheck.isWin(input);
-        assertThat(result, is(true));
+        assertTrue(
+                MatrixCheck.isWin(
+                        new char[][] {
+                                {'X', 'X', 'X', 'X', 'X'},
+                                {'X', ' ', ' ', ' ', ' '},
+                                {'X', ' ', ' ', ' ', ' '},
+                                {'X', ' ', ' ', ' ', ' '},
+                                {'X', ' ', ' ', ' ', ' '},
+                        })
+        );
     }
 
 }

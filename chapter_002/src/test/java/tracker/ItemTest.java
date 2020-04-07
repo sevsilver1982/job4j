@@ -8,8 +8,7 @@ import tracker.items.ItemSortByNameDESC;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ItemTest {
     private Item task1 = new Item("Task1");
@@ -17,20 +16,34 @@ public class ItemTest {
     private Item task3 = new Item("Task3");
     private Item task4 = new Item("Task4");
     private Item task5 = new Item("Task5");
-    private List<Item> actual = Arrays.asList(task2, task3, task1, task5, task4);
+    private List<Item> actual = Arrays.asList(
+            task2, task3, task1, task5, task4
+    );
 
     @Test
     public void comparatorItemSortByNameASC() {
-        actual.sort(new ItemSortByNameASC());
-        List<Item> expect = Arrays.asList(task1, task2, task3, task4, task5);
-        assertThat(actual, is(expect));
+        actual.sort(
+                new ItemSortByNameASC()
+        );
+        assertEquals(
+                Arrays.asList(
+                        task1, task2, task3, task4, task5
+                ),
+                actual
+        );
     }
 
     @Test
     public void comparatorItemSortByNameDESC() {
-        actual.sort(new ItemSortByNameDESC());
-        List<Item> expect = Arrays.asList(task5, task4, task3, task2, task1);
-        assertThat(actual, is(expect));
+        actual.sort(
+                new ItemSortByNameDESC()
+        );
+        assertEquals(
+                Arrays.asList(
+                        task5, task4, task3, task2, task1
+                ),
+                actual
+        );
     }
 
 }

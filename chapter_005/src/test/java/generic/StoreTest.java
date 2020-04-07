@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StoreTest {
 
@@ -16,15 +15,17 @@ public class StoreTest {
         User user2 = new User("user_2");
         userStore.add(user1);
         userStore.add(user2);
-        assertThat(userStore.findById("user_1").isPresent(), is(true));
-        assertThat(userStore.findById("user_2").isPresent(), is(true));
-        assertThat(
+        assertTrue(
+                userStore.findById("user_1").isPresent()
+        );
+        assertTrue(
+                userStore.findById("user_2").isPresent()
+        );
+        assertEquals(
+                List.of(user1, user2),
                 List.of(
                         (Object[]) userStore.getItems().getObjects()
-                ).containsAll(
-                        List.of(user1, user2)
-                ),
-                is(true)
+                )
         );
     }
 
@@ -39,14 +40,14 @@ public class StoreTest {
         userStore.add(user2);
         userStore.add(user3);
         userStore.replace("user_2", user4);
-        assertThat(userStore.findById("user_2").isPresent(), is(false));
-        assertThat(
+        assertFalse(
+                userStore.findById("user_2").isPresent()
+        );
+        assertEquals(
+                List.of(user1, user4, user3),
                 List.of(
                         (Object[]) userStore.getItems().getObjects()
-                ).containsAll(
-                        List.of(user1, user4, user3)
-                ),
-                is(true)
+                )
         );
     }
 
@@ -59,17 +60,21 @@ public class StoreTest {
         userStore.add(user1);
         userStore.add(user2);
         userStore.add(user3);
-        assertThat(userStore.delete("user_2"), is(true));
-        assertThat(userStore.findById("user_2").isPresent(), is(false));
-        assertThat(
+        assertTrue(
+                userStore.delete("user_2")
+        );
+        assertFalse(
+                userStore.findById("user_2").isPresent()
+        );
+        assertEquals(
+                List.of(user1, user3),
                 List.of(
                         (Object[]) userStore.getItems().getObjects()
-                ).containsAll(
-                        List.of(user1, user3)
-                ),
-                is(true)
+                )
         );
-        assertThat(userStore.delete("user_9999999999"), is(false));
+        assertFalse(
+                userStore.delete("user_9999999999")
+        );
     }
 
     @Test
@@ -78,10 +83,18 @@ public class StoreTest {
         userStore.add(new User("user_1"));
         userStore.add(new User("user_2"));
         userStore.add(new User("user_3"));
-        assertThat(userStore.findById("user_1").isPresent(), is(true));
-        assertThat(userStore.findById("user_2").isPresent(), is(true));
-        assertThat(userStore.findById("user_3").isPresent(), is(true));
-        assertThat(userStore.findById("user_12").isPresent(), is(false));
+        assertTrue(
+                userStore.findById("user_1").isPresent()
+        );
+        assertTrue(
+                userStore.findById("user_2").isPresent()
+        );
+        assertTrue(
+                userStore.findById("user_3").isPresent()
+        );
+        assertFalse(
+                userStore.findById("user_12").isPresent()
+        );
     }
 
 }

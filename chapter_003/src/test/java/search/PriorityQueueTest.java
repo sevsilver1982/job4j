@@ -2,8 +2,7 @@ package search;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PriorityQueueTest {
 
@@ -17,13 +16,22 @@ public class PriorityQueueTest {
         queue.put(new Task("2", 2));
         queue.put(new Task("4", 4));
         queue.put(new Task("1", 1));
-        assertThat(queue.size(), is(7));
+        assertEquals(
+                7,
+                queue.size()
+        );
         queue.take();
         queue.take();
         queue.take();
         var task = queue.take();
-        assertThat(queue.size(), is(3));
-        assertThat(task.getDesc(), is("3"));
+        assertEquals(
+                3,
+                queue.size()
+        );
+        assertEquals(
+                "3",
+                task.getDesc()
+        );
     }
 
 }

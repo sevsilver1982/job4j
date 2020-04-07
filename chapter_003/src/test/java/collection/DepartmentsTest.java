@@ -6,28 +6,31 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DepartmentsTest {
 
     @Test
     public void whenMissed() {
-        assertThat(
-                Departments.fillGaps(List.of("k1/sk1")).stream()
+        assertEquals(
+                List.of("k1", "k1/sk1"),
+                Departments.fillGaps(
+                        List.of("k1/sk1")
+                ).stream()
                         .sorted(Comparator.naturalOrder())
-                        .collect(Collectors.toList()),
-                is(List.of("k1", "k1/sk1"))
+                        .collect(Collectors.toList())
         );
     }
 
     @Test
     public void whenNonChange() {
-        assertThat(
-                Departments.fillGaps(List.of("k1", "k1/sk1")).stream()
+        assertEquals(
+                List.of("k1", "k1/sk1"),
+                Departments.fillGaps(
+                        List.of("k1", "k1/sk1")
+                ).stream()
                         .sorted(Comparator.naturalOrder())
-                        .collect(Collectors.toList()),
-                is(List.of("k1", "k1/sk1"))
+                        .collect(Collectors.toList())
         );
     }
 

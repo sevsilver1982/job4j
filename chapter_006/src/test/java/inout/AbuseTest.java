@@ -7,8 +7,7 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.*;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AbuseTest {
 
@@ -27,7 +26,10 @@ public class AbuseTest {
         try (BufferedReader in = new BufferedReader(new FileReader(target))) {
             in.lines().forEach(rsl::append);
         }
-        assertThat(rsl.toString(), is("hello dude "));
+        assertEquals(
+                "hello dude ",
+                rsl.toString()
+        );
     }
 
 }

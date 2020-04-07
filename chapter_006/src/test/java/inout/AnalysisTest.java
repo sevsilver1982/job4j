@@ -6,8 +6,7 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.*;
 import java.util.StringJoiner;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AnalysisTest {
     private Analysis analise = new Analysis();
@@ -28,15 +27,17 @@ public class AnalysisTest {
         }
         File target = new File(file, "unavailable.csv");
         analise.unavailable(tmp.getPath(), target.getPath());
+        StringJoiner expected = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
+                .add("10:57:01;10:59:01")
+                .add("11:01:02;11:02:02");
         StringJoiner actual = new StringJoiner(System.lineSeparator(), "", System.lineSeparator());
         try (BufferedReader reader = new BufferedReader(new FileReader(target.getPath()))) {
             reader.lines().forEach(actual::add);
         }
-        StringJoiner expected = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
-                .add("10:57:01;10:59:01")
-                .add("11:01:02;11:02:02");
-
-        assertThat(actual.toString(), is(expected.toString()));
+        assertEquals(
+                expected.toString(),
+                actual.toString()
+        );
     }
 
 }

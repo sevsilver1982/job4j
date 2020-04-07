@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PaintTest {
     private static PrintStream stdout = System.out;
@@ -29,17 +28,15 @@ public class PaintTest {
     @Test
     public void whenDrawSquare() {
         new Paint().draw(new Square());
-        assertThat(
-                out.toString(),
-                is(
-                        new StringBuilder()
-                                .append("+++++++\n")
-                                .append("+     +\n")
-                                .append("+     +\n")
-                                .append("+++++++")
-                                .append(System.lineSeparator())
-                                .toString()
-                )
+        assertEquals(
+                new StringBuilder()
+                        .append("+++++++\n")
+                        .append("+     +\n")
+                        .append("+     +\n")
+                        .append("+++++++")
+                        .append(System.lineSeparator())
+                        .toString(),
+                out.toString()
         );
         System.setOut(stdout);
     }
@@ -50,18 +47,17 @@ public class PaintTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         new Paint().draw(new Triangle());
-        assertThat(
-                new String(out.toByteArray()),
-                is(
-                        new StringBuilder()
-                                .append("   +\n")
-                                .append("  + +\n")
-                                .append(" +   +\n")
-                                .append("+++++++")
-                                .append(System.lineSeparator())
-                                .toString()
-                )
+        assertEquals(
+                new StringBuilder()
+                        .append("   +\n")
+                        .append("  + +\n")
+                        .append(" +   +\n")
+                        .append("+++++++")
+                        .append(System.lineSeparator())
+                        .toString(),
+                new String(out.toByteArray())
         );
         System.setOut(stdout);
     }
+
 }
