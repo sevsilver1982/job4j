@@ -16,6 +16,7 @@
         <module>chapter_006</module>
         <module>chapter_007</module>
         <module>chapter_008</module>
+        <module>chapter_010</module>
     </modules>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
