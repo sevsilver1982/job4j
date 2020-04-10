@@ -39,8 +39,8 @@ public class ThreadState {
         /**
          * Wait until all threads terminated
          */
-        boolean allThreadTerminated = false;
-        while (!allThreadTerminated) {
+        boolean allThreadTerminated;
+        do {
             allThreadTerminated = true;
             for (Thread thread : threadList) {
                 System.out.println(
@@ -50,7 +50,7 @@ public class ThreadState {
                     allThreadTerminated = false;
                 }
             }
-        }
+        } while (!allThreadTerminated);
 
         System.out.println("all threads terminated");
     }
