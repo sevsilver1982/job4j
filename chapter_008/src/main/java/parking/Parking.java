@@ -1,7 +1,5 @@
 package parking;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -79,7 +77,7 @@ public class Parking implements IParking {
      * @return add result
      */
     @Override
-    public boolean accept(@NotNull ICar car) {
+    public boolean accept(ICar car) {
         if (placeList.stream().noneMatch(p -> p.getCar().isPresent() && p.getCar().get().equals(car))) {
             Optional<Place> place = placeList.stream().filter(p -> p.getCar().isEmpty() && p.getSize() == car.getSize()).findFirst();
             if (place.isPresent()) {

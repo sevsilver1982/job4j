@@ -22,7 +22,7 @@ notifications:
   email:
     recipients:
       - suvorovev@mail.ru
-    on_success: never # default: change
+    on_success: always # default: change. never.
     on_failure: always # default: always
 
 env:

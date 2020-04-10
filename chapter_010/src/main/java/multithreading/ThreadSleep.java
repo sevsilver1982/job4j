@@ -12,7 +12,7 @@ public class ThreadSleep {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        System.out.printf("\rLoading: %s", + i);
+                        System.out.printf("\rLoading: %s", i);
                     }
                     System.out.println("\nLoaded");
                 }).start();

@@ -1,6 +1,6 @@
 package multithreading;
 
-public class ConsoleProgress implements Runnable{
+public class ConsoleProgress implements Runnable {
     private final char[] progress = new char[] {
       '―', '\\', '|', '/'
     };

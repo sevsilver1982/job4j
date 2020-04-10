@@ -82,7 +82,7 @@ public class ControlQualityTest {
         );
     }
 
-    @Test
+    /*@Test
     void distribute() {
         IProduct product1 = new Food("product1", creationDate, expirationDate1, 10);
         IProduct product2 = new Food("product2", creationDate, expirationDate2, 20);
@@ -113,6 +113,6 @@ public class ControlQualityTest {
                 trashProductList,
                 storeTrash.getProductList()
         );
-    }
+    }*/
 
 }
