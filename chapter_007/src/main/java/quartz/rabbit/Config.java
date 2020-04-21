@@ -1,18 +1,20 @@
-package quartz;
+package quartz.rabbit;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
-public class Config {
-    Properties config;
+import static quartz.rabbit.Constants.RABBIT_PROPERTIES;
 
-    public void load(InputStream propertiesStream) {
-        config = new Properties();
+public class Config {
+    private final Properties config;
+
+    public Config() {
+        this.config = new Properties();
         try {
-            config.load(propertiesStream);
+            this.config.load(Config.class.getClassLoader().getResourceAsStream(RABBIT_PROPERTIES));
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException("Properties not found");
         }
     }
 

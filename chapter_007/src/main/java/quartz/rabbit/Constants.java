@@ -1,10 +1,10 @@
-package quartz;
+package quartz.rabbit;
 
 public final class Constants {
     public static final String RABBIT_PROPERTIES = "rabbit.properties";
     public static final String RABBIT_INTERVAL = "rabbit.interval";
 
-    public Constants() {
+    private Constants() {
     }
 
 }
