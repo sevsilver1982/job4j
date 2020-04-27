@@ -1,4 +1,4 @@
-package sql;
+package tracker;
 
 import org.junit.jupiter.api.Test;
 

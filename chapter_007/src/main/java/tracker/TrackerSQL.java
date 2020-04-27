@@ -1,7 +1,5 @@
-package sql;
+package tracker;
 
-import tracker.AbstractTracker;
-import tracker.StartUI;
 import tracker.actions.*;
 import tracker.input.InputConsole;
 import tracker.input.InputValidate;
