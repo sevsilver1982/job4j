@@ -3,11 +3,16 @@ package grabber;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
+import java.io.IOException;
+import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static grabber.Constants.PROPERTY_CRON_TIME;
+
 
 public class JobScheduler {
+    private static final String APP_PROPERTIES = "app.grabber.properties";
 
     private JobDetail buildJobDetail(Class<? extends org.quartz.Job> jobClass) {
         return JobBuilder.newJob(jobClass)
@@ -23,7 +28,7 @@ public class JobScheduler {
                 .build();
     }
 
-    public void start(IParser parser) {
+    public void start(IParser parser, String cronExpression) {
         try {
             Scheduler scheduler = new StdSchedulerFactory().getScheduler();
             scheduler.getContext().put("parser", parser);
@@ -40,7 +45,7 @@ public class JobScheduler {
                             buildCronTrigger(
                                     "SQLRUParser",
                                     "grabber",
-                                    Config.getInstance().getProperty("cron.time")
+                                    cronExpression
                             )
                     ).collect(Collectors.toSet()),
                     false
@@ -52,9 +57,14 @@ public class JobScheduler {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        Properties properties = new Properties();
+        properties.load(JobScheduler.class.getClassLoader().getResourceAsStream(APP_PROPERTIES));
+        Store store = new Store(properties);
+        store.init(true);
         new JobScheduler().start(
-                new SQLRUParser(new Store())
+                new SQLRUParser(store),
+                properties.getProperty(PROPERTY_CRON_TIME)
         );
     }
 

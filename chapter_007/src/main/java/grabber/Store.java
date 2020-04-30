@@ -10,25 +10,36 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static grabber.Constants.*;
+
 public class Store implements IStore, AutoCloseable {
+    private static final String CHANGE_LOG_FILE = "db/scripts/grabber/grabber.xml";
+    private Properties properties;
     private Connection connection;
 
-    public Store() {
+    public Store(Properties properties) {
+        this.properties = properties;
+    }
+
+    public boolean init(boolean validateStruct) {
         try {
-            Class.forName(Config.getInstance().getProperty("jdbc.driver"));
+            Class.forName(properties.getProperty(PROPERTY_JDBC_DRIVER));
             connection = DriverManager.getConnection(
-                    Config.getInstance().getProperty("jdbc.url"),
-                    Config.getInstance().getProperty("jdbc.username"),
-                    Config.getInstance().getProperty("jdbc.password")
+                    properties.getProperty(PROPERTY_JDBC_URL),
+                    properties.getProperty(PROPERTY_JDBC_USERNAME),
+                    properties.getProperty(PROPERTY_JDBC_PASSWORD)
             );
-            validateStruct();
+            if (validateStruct) {
+                validateStruct();
+            }
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
+        return connection != null;
     }
 
     public Connection getConnection() {
@@ -43,22 +54,13 @@ public class Store implements IStore, AutoCloseable {
     public void validateStruct() {
         try {
             Liquibase liquibase = new liquibase.Liquibase(
-                    "db/scripts/grabber/grabber.xml",
+                    CHANGE_LOG_FILE,
                     new ClassLoaderResourceAccessor(),
-                    DatabaseFactory.getInstance().findCorrectDatabaseImplementation(
-                            new JdbcConnection(
-                                    DriverManager.getConnection(
-                                            Config.getInstance().getProperty("jdbc.url"),
-                                            Config.getInstance().getProperty("jdbc.username"),
-                                            Config.getInstance().getProperty("jdbc.password")
-                                    )
-                            )
-                    )
+                    DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection))
             );
             liquibase.update(new Contexts(), new LabelExpression());
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -89,8 +91,7 @@ public class Store implements IStore, AutoCloseable {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -121,8 +122,7 @@ public class Store implements IStore, AutoCloseable {
                 );
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
         return joboffers;
     }

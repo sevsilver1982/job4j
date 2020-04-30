@@ -89,8 +89,7 @@ public class SQLRUParser implements IParser {
                     }
                 }
             } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException();
+                throw new RuntimeException(e);
             }
         }
         return result;
@@ -129,8 +128,7 @@ public class SQLRUParser implements IParser {
                                 .get(1)
                                 .text();
                     } catch (IOException e) {
-                        e.printStackTrace();
-                        throw new RuntimeException();
+                        throw new RuntimeException(e);
                     }
                     post.setText(text.trim());
                 })
@@ -145,8 +143,7 @@ public class SQLRUParser implements IParser {
                 return resultSet.getTimestamp("date");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -163,8 +160,7 @@ public class SQLRUParser implements IParser {
                 try {
                     tmp.setTime(new SimpleDateFormat("yy").parse(year));
                 } catch (ParseException e) {
-                    e.printStackTrace();
-                    throw new RuntimeException();
+                    throw new RuntimeException(e);
                 }
                 calendar.set(tmp.get(Calendar.YEAR), month, day);
             }
@@ -199,8 +195,7 @@ public class SQLRUParser implements IParser {
                     .max(Comparator.naturalOrder())
                     .orElse(0);
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
         return result;
     }

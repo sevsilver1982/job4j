@@ -22,8 +22,7 @@ public class JobOfferCollector implements Job {
             });
             LOG.info("end grabber proc");
         } catch (SchedulerException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
