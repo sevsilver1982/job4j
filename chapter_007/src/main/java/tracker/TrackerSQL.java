@@ -5,15 +5,18 @@ import tracker.input.InputConsole;
 import tracker.input.InputValidate;
 import tracker.items.Item;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class TrackerSQL extends AbstractTracker implements AutoCloseable {
-    private Connection connection;
+    private static final String APP_PROPERTIES = "app.tracker.properties";
+    private final Connection connection;
 
     public TrackerSQL(Connection connection) {
         this.connection = connection;
@@ -124,8 +127,10 @@ public class TrackerSQL extends AbstractTracker implements AutoCloseable {
         return item;
     }
 
-    public static void main(String[] args) {
-        Store store = new Store();
+    public static void main(String[] args) throws IOException {
+        Properties properties = new Properties();
+        properties.load(TrackerSQL.class.getClassLoader().getResourceAsStream(APP_PROPERTIES));
+        Store store = new Store(properties);
         if (store.init(true)) {
             TrackerSQL tracker = new TrackerSQL(store.getConnection());
             tracker.setActionList(

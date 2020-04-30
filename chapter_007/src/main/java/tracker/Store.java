@@ -1,6 +1,5 @@
 package tracker;
 
-import grabber.Config;
 import liquibase.Contexts;
 import liquibase.LabelExpression;
 import liquibase.Liquibase;
@@ -10,20 +9,26 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
-import static tracker.Constants.*;
+import static grabber.Constants.*;
 
 public class Store implements AutoCloseable {
+    private static final String CHANGE_LOG_FILE = "db/scripts/tracker/tracker.xml";
+    private Properties properties;
     private Connection connection;
-    private String changeLogFile = "db/scripts/tracker/tracker.xml";
+
+    public Store(Properties properties) {
+        this.properties = properties;
+    }
 
     public boolean init(boolean validateStruct) {
         try {
-            Class.forName(Config.getInstance().getProperty(PROPERTY_JDBC_DRIVER));
+            Class.forName(properties.getProperty(PROPERTY_JDBC_DRIVER));
             connection = DriverManager.getConnection(
-                    Config.getInstance().getProperty(PROPERTY_JDBC_URL),
-                    Config.getInstance().getProperty(PROPERTY_JDBC_USERNAME),
-                    Config.getInstance().getProperty(PROPERTY_JDBC_PASSWORD)
+                    properties.getProperty(PROPERTY_JDBC_URL),
+                    properties.getProperty(PROPERTY_JDBC_USERNAME),
+                    properties.getProperty(PROPERTY_JDBC_PASSWORD)
             );
             if (validateStruct) {
                 validateStruct();
@@ -46,18 +51,9 @@ public class Store implements AutoCloseable {
     public void validateStruct() {
         try {
             Liquibase liquibase = new Liquibase(
-                    changeLogFile,
+                    CHANGE_LOG_FILE,
                     new ClassLoaderResourceAccessor(),
-                    DatabaseFactory.getInstance().findCorrectDatabaseImplementation(
-                            new JdbcConnection(
-                                    DriverManager.getConnection(
-                                            Config.getInstance().getProperty(PROPERTY_JDBC_URL),
-                                            Config.getInstance().getProperty(PROPERTY_JDBC_USERNAME),
-                                            Config.getInstance().getProperty(PROPERTY_JDBC_PASSWORD)
-                                    )
-                            )
-                    )
-            );
+                    DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection)));
             liquibase.update(new Contexts(), new LabelExpression());
         } catch (Exception e) {
             throw new RuntimeException(e);
