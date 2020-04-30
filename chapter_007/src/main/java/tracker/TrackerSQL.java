@@ -5,56 +5,27 @@ import tracker.input.InputConsole;
 import tracker.input.InputValidate;
 import tracker.items.Item;
 
-import java.io.InputStream;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class TrackerSQL extends AbstractTracker implements AutoCloseable {
     private Connection connection;
 
-    public TrackerSQL(List<IAction> actions) {
-        super(actions);
-    }
-
-    private boolean validateDBStruct() {
-        boolean result = false;
-        try (PreparedStatement preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS items (id character varying(36) NOT NULL, name character varying, CONSTRAINT items_pkey PRIMARY KEY (id));")) {
-            preparedStatement.execute();
-            result = true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    /**
-     * Init connection to database.
-     * @return result.
-     */
-    public boolean init() {
-        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.tracker.properties")) {
-            Properties config = new Properties();
-            config.load(in);
-            Class.forName(config.getProperty("driver-class-name"));
-            connection = DriverManager.getConnection(
-                    config.getProperty("url"),
-                    config.getProperty("username"),
-                    config.getProperty("password")
-            );
-            if (!validateDBStruct()) {
-                return false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return connection != null;
+    public TrackerSQL(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
-    public void close() throws Exception {
-        connection.close();
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -65,36 +36,32 @@ public class TrackerSQL extends AbstractTracker implements AutoCloseable {
             preparedStatement.setString(2, item.getName());
             int rowsAffected = preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return item;
     }
 
     @Override
     public boolean replace(String id, Item item) {
-        int rowsAffected = 0;
         try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE items SET id = ?, name = ? WHERE id = ?")
         ) {
             preparedStatement.setString(1, item.getId());
             preparedStatement.setString(2, item.getName());
             preparedStatement.setString(3, id);
-            rowsAffected = preparedStatement.executeUpdate();
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return rowsAffected > 0;
     }
 
     @Override
     public boolean delete(String id) {
-        int rowsAffected = 0;
         try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM items WHERE id = ?")) {
             preparedStatement.setString(1, id);
-            rowsAffected = preparedStatement.executeUpdate();
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return rowsAffected > 0;
     }
 
     @Override
@@ -112,7 +79,7 @@ public class TrackerSQL extends AbstractTracker implements AutoCloseable {
                 );
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return items;
     }
@@ -133,7 +100,7 @@ public class TrackerSQL extends AbstractTracker implements AutoCloseable {
             }
             resultSet.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return items;
     }
@@ -152,24 +119,26 @@ public class TrackerSQL extends AbstractTracker implements AutoCloseable {
             }
             resultSet.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return item;
     }
 
     public static void main(String[] args) {
-        TrackerSQL tracker = new TrackerSQL(
-                List.of(
-                        new NewItem(),
-                        new ShowAll(),
-                        new ReplaceItem(),
-                        new DeleteItem(),
-                        new FindItemById(),
-                        new FindItemByName(),
-                        new ExitProgram()
-                )
-        );
-        if (tracker.init()) {
+        Store store = new Store();
+        if (store.init(true)) {
+            TrackerSQL tracker = new TrackerSQL(store.getConnection());
+            tracker.setActionList(
+                    List.of(
+                            new NewItem(),
+                            new ShowAll(),
+                            new ReplaceItem(),
+                            new DeleteItem(),
+                            new FindItemById(),
+                            new FindItemByName(),
+                            new ExitProgram()
+                    )
+            );
             new StartUI(
                     new InputValidate(new InputConsole()),
                     tracker,
