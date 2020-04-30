@@ -1,6 +1,6 @@
-package quartz.rabbit;
+package rabbit;
 
-import static quartz.rabbit.Constants.RABBIT_INTERVAL;
+import static rabbit.Constants.RABBIT_INTERVAL;
 
 public class RabbitScheduler {
 

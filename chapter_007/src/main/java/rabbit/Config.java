@@ -1,9 +1,9 @@
-package quartz.rabbit;
+package rabbit;
 
 import java.io.IOException;
 import java.util.Properties;
 
-import static quartz.rabbit.Constants.RABBIT_PROPERTIES;
+import static rabbit.Constants.RABBIT_PROPERTIES;
 
 public class Config {
     private static Config instance = new Config();

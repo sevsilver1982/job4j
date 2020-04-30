@@ -81,6 +81,20 @@
                             <goal>update</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>spammer</id>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <changeLogFile>db/scripts/spammer/spammer.xml</changeLogFile>
+                            <url>jdbc:postgresql://127.0.0.1:5432/spammer</url>
+                            <driver>org.postgresql.Driver</driver>
+                            <username>postgres</username>
+                            <password>123</password>
+                        </configuration>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>

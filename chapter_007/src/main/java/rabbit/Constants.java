@@ -1,4 +1,4 @@
-package quartz.rabbit;
+package rabbit;
 
 public final class Constants {
     public static final String RABBIT_PROPERTIES = "app.rabbit.properties";

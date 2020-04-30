@@ -1,4 +1,4 @@
-package quartz.rabbit;
+package rabbit;
 
 import org.quartz.Job;
 import org.quartz.Scheduler;
