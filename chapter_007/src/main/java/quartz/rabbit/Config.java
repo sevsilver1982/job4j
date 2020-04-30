@@ -16,8 +16,7 @@ public class Config {
                     Config.class.getClassLoader().getResourceAsStream(RABBIT_PROPERTIES)
             );
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Properties not found");
+            throw new RuntimeException(e);
         }
     }
 

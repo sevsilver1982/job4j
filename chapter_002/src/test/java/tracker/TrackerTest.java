@@ -10,7 +10,6 @@ import tracker.items.Item;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -24,15 +23,15 @@ public class TrackerTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PrintStream def = System.out;
         System.setOut(new PrintStream(out));
+        Tracker tracker = new Tracker();
+        tracker.setActionList(
+                Arrays.asList(new StubAbstractAction())
+        );
         new StartUI(
                 new StubInput(
                         new String[] {"1"}
                 ),
-                new Tracker(
-                        Arrays.asList(
-                                new StubAbstractAction()
-                        )
-                ),
+                tracker,
                 System.out::println
         ).init();
         assertEquals(
@@ -49,13 +48,13 @@ public class TrackerTest {
     @Test
     public void exitTest() {
         StubAbstractAction action = new StubAbstractAction();
+        Tracker tracker = new Tracker();
+        tracker.setActionList(
+                List.of(action)
+        );
         new StartUI(
-                new StubInput(
-                        new String[] {"1"}
-                ),
-                new Tracker(
-                        List.of(action)
-                ),
+                new StubInput(new String[] {"1"}),
+                tracker,
                 System.out::println).init();
         assertTrue(
                 action.isCall()
@@ -64,7 +63,7 @@ public class TrackerTest {
 
     @Test
     public void findByIdTest() {
-        Tracker tracker = new Tracker(Collections.emptyList());
+        Tracker tracker = new Tracker();
         Item item = new Item("test1");
         tracker.add(item);
         Item test2 = new Item("test2");
@@ -77,7 +76,7 @@ public class TrackerTest {
 
     @Test
     public void replaceTest() {
-        Tracker tracker = new Tracker(Collections.emptyList());
+        Tracker tracker = new Tracker();
         Item test1 = new Item("test1");
         tracker.add(test1);
         Item test2 = new Item("test2");
@@ -100,7 +99,7 @@ public class TrackerTest {
         StubInput input = new StubInput(
                 new String[] {"item_1"}
         );
-        Tracker tracker = new Tracker(Collections.emptyList());
+        Tracker tracker = new Tracker();
         Item item = new Item(input.askString(""));
         tracker.add(item);
         new ShowAll().execute(input, tracker);
@@ -122,7 +121,7 @@ public class TrackerTest {
         StubInput input = new StubInput(
                 new String[] {"item_1", "item_1"}
         );
-        Tracker tracker = new Tracker(Collections.emptyList());
+        Tracker tracker = new Tracker();
         Item item = new Item(input.askString(""));
         tracker.add(item);
         new FindItemByName().execute(input, tracker);

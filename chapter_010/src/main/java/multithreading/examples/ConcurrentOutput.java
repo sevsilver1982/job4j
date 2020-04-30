@@ -1,4 +1,4 @@
-package multithreading;
+package multithreading.examples;
 
 public class ConcurrentOutput {
 

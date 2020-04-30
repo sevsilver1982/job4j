@@ -44,19 +44,21 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
+        Tracker tracker = new Tracker();
+        tracker.setActionList(
+                List.of(
+                        new NewItem(),
+                        new ShowAll(),
+                        new ReplaceItem(),
+                        new DeleteItem(),
+                        new FindItemById(),
+                        new FindItemByName(),
+                        new ExitProgram()
+                )
+        );
         new StartUI(
                 new InputValidate(new InputConsole()),
-                new Tracker(
-                        List.of(
-                                new NewItem(),
-                                new ShowAll(),
-                                new ReplaceItem(),
-                                new DeleteItem(),
-                                new FindItemById(),
-                                new FindItemByName(),
-                                new ExitProgram()
-                        )
-                ),
+                tracker,
                 System.out::println
         ).init();
     }

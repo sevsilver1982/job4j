@@ -1,4 +1,4 @@
-package multithreading;
+package multithreading.examples;
 
 public class ConsoleProgress implements Runnable {
     private final char[] progress = new char[] {

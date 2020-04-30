@@ -1,6 +1,5 @@
 package tracker;
 
-import tracker.actions.IAction;
 import tracker.items.Item;
 
 import java.util.ArrayList;
@@ -9,10 +8,6 @@ import java.util.stream.Collectors;
 
 public class Tracker extends AbstractTracker {
     private List<Item> items = new ArrayList<>();
-
-    public Tracker(List<IAction> actions) {
-        super(actions);
-    }
 
     public Item add(Item item) {
         items.add(item);
