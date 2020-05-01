@@ -5,50 +5,96 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 
+import static java.lang.Thread.sleep;
+
 public class FileDownload {
-    private String in;
-    private String out;
-    private int rate = 200;
+    private static final Integer DEFAULT_CONTROL_TIME = 1000;
+    private static final Integer DEFAULT_BUFFER_LENGTH = 1024;
+    private final int bufferLength;
+    private final String in;
+    private final String out;
+    private final Integer rate;
+    private Integer total = 0;
+    private Integer bytesPerSecond = 0;
+    private Thread threadDownload;
 
     public FileDownload(String in, String out, int rate) {
         this.in = in;
         this.out = out;
         this.rate = rate;
+        this.bufferLength = Math.min(DEFAULT_BUFFER_LENGTH, rate);
     }
 
+    public synchronized Integer getTotal() {
+        return total;
+    }
 
-    public void download(String in6, String out, int rate) {
-        try (BufferedInputStream in = new BufferedInputStream(new URL(this.in).openStream());
-             FileOutputStream fileOutputStream = new FileOutputStream(this.out)
-        ) {
-            byte[] dataBuffer = new byte[1024];
-            int bytesRead;
-            int totalBytesRead = 0;
-            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-                totalBytesRead += bytesRead;
-                fileOutputStream.write(dataBuffer, 0, bytesRead);
+    public synchronized void setTotal(Integer totalBytesRead) {
+        this.total = totalBytesRead;
+    }
 
-                System.out.printf(String.format("\rload: %s", totalBytesRead));
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+    public synchronized Integer getBytesPerSecond() {
+        return bytesPerSecond;
+    }
+
+    public synchronized void setBytesPerSecond(Integer bytesPerSecond) {
+        this.bytesPerSecond = bytesPerSecond;
+    }
+
+    public void downloadRateControl() {
+        do {
+            int before = getTotal();
+            try {
+                sleep(DEFAULT_CONTROL_TIME);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            setBytesPerSecond(getTotal() - before);
+        } while (threadDownload.getState() != Thread.State.TERMINATED);
+    }
+
+    public void download() {
+        try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new URL(in).openStream());
+             FileOutputStream fileOutputStream = new FileOutputStream(out)
+        ) {
+            byte[] dataBuffer = new byte[bufferLength];
+            int bytesRead;
+            int total;
+            int pause;
+            while ((bytesRead = bufferedInputStream.read(dataBuffer, 0, dataBuffer.length)) != -1) {
+                fileOutputStream.write(dataBuffer, 0, bytesRead);
+                total = getTotal();
+                setTotal(total + bytesRead);
+                pause = rate <= 0 ? 1 : DEFAULT_CONTROL_TIME * bufferLength / rate;
+                System.out.print(
+                        String.format(
+                                "\rload: %s; %s bsec; %s ms; state: %s",
+                                total,
+                                getBytesPerSecond(),
+                                pause,
+                                threadDownload.getState()
+                        )
+                );
+                sleep(pause);
+            }
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
+    public void start() {
+        threadDownload = new Thread(this::download);
+        threadDownload.start();
+        new Thread(this::downloadRateControl).start();
+    }
 
     public static void main(String[] args) {
-        /*new Thread(
-            new FileDownload(
-                    "https://youtu.be/9xFYc3KCbHw",
-                    "C:/soft/workspace/job4j/video.avi",
-                    200
-            )
-        ).start();*/
+        Args arguments = new Args(args);
+        new FileDownload(
+                arguments.getUrl(),
+                arguments.getOutput(),
+                arguments.getRate() * 1024
+        ).start();
     }
 
 }

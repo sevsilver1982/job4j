@@ -1,0 +1,2 @@
+java -jar C:\soft\workspace\job4j\chapter_010\target\wget.jar -url "https://postgrespro.ru/media/docs/postgrespro/12/ru/postgres-A4.pdf" -output "C:/soft/workspace/job4j/chapter_010/documentation.pdf" -rate 200
+pause
