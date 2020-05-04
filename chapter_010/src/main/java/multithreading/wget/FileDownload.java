@@ -25,19 +25,19 @@ public class FileDownload {
         this.bufferLength = Math.min(DEFAULT_BUFFER_LENGTH, rate);
     }
 
-    public synchronized Integer getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
-    public synchronized void setTotal(Integer totalBytesRead) {
+    public void setTotal(Integer totalBytesRead) {
         this.total = totalBytesRead;
     }
 
-    public synchronized Integer getBytesPerSecond() {
+    public Integer getBytesPerSecond() {
         return bytesPerSecond;
     }
 
-    public synchronized void setBytesPerSecond(Integer bytesPerSecond) {
+    public void setBytesPerSecond(Integer bytesPerSecond) {
         this.bytesPerSecond = bytesPerSecond;
     }
 
