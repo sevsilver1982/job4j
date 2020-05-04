@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserStoreTest {
 
@@ -25,13 +26,20 @@ class UserStoreTest {
     }
 
     @Test
-    void add() {
+    void add() throws InterruptedException {
         UserStore store = new UserStore();
         User user1 = new User(1, 100);
         User user2 = new User(2, 200);
-        new Thread(() -> store.add(user1)).start();
-        new Thread(() -> store.add(user2)).start();
-        assertEquals(List.of(user1, user2), store.getUsers());
+        Thread thread1 = new Thread(() -> store.add(user1));
+        Thread thread2 = new Thread(() -> store.add(user2));
+        thread1.start();
+        thread2.start();
+        thread1.join();
+        thread2.join();
+        assertTrue(
+                store.getUsers().containsAll(List.of(user1, user2))
+                        && List.of(user1, user2).containsAll(store.getUsers())
+        );
     }
 
     @Test

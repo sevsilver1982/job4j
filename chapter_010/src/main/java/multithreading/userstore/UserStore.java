@@ -15,8 +15,8 @@ public class UserStore implements IStore {
     }
 
     @Override
-    public synchronized User findById(int Id) {
-        return users.stream().filter(u -> u.getId() == Id).findFirst().orElse(null);
+    public synchronized User findById(int id) {
+        return users.stream().filter(u -> u.getId() == id).findFirst().orElse(null);
     }
 
     @Override
