@@ -13,8 +13,8 @@ public class JobOfferCollector implements Job {
         try {
             LOG.info("init");
             SchedulerContext schedulerContext = jobExecutionContext.getScheduler().getContext();
-            IParser parser = (IParser) schedulerContext.get("parser");
-            IStore store = parser.getStore();
+            Parser parser = (Parser) schedulerContext.get("parser");
+            Store store = parser.getStore();
             LOG.info("begin grabber proc");
             parser.list(URL).forEach(post -> {
                 LOG.info(post);

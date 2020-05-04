@@ -28,7 +28,7 @@ public class JobScheduler {
                 .build();
     }
 
-    public void start(IParser parser, String cronExpression) {
+    public void start(Parser parser, String cronExpression) {
         try {
             Scheduler scheduler = new StdSchedulerFactory().getScheduler();
             scheduler.getContext().put("parser", parser);
@@ -60,10 +60,10 @@ public class JobScheduler {
     public static void main(String[] args) throws IOException {
         Properties properties = new Properties();
         properties.load(JobScheduler.class.getClassLoader().getResourceAsStream(APP_PROPERTIES));
-        Store store = new Store(properties);
-        store.init(true);
+        SQLStore sqlStore = new SQLStore(properties);
+        sqlStore.init(true);
         new JobScheduler().start(
-                new SQLRUParser(store),
+                new SQLRUParser(sqlStore),
                 properties.getProperty(PROPERTY_CRON_TIME)
         );
     }

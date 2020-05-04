@@ -5,9 +5,6 @@ import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,8 +24,8 @@ import java.util.stream.Stream;
  * 8. В системе не должно быть вывода, либо ввода информации. Все настройки должны быть в файле. app.grabber.properties.
  * 9. Для вывода нужной информации использовать логгер log4j.
  */
-public class SQLRUParser implements IParser {
-    private IStore store;
+public class SQLRUParser implements Parser {
+    private Store store;
     private static final Logger LOG = LogManager.getLogger(JobScheduler.class.getName());
     private static final Map<String, Integer> MONTH = Stream.of(
             new AbstractMap.SimpleImmutableEntry<>("янв", Calendar.JANUARY),
@@ -47,11 +44,11 @@ public class SQLRUParser implements IParser {
             Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
     );
 
-    public SQLRUParser(IStore store) {
+    public SQLRUParser(Store store) {
         this.store = store;
     }
 
-    public IStore getStore() {
+    public Store getStore() {
         return store;
     }
 
@@ -69,7 +66,7 @@ public class SQLRUParser implements IParser {
                 && !post.getName().contains("Java Script"));
 
         // 7. Учитывать время последнего запуска, если это первый запуск, то нужно собрать все объявления с начала года.
-        Date lastDate = getLastOfferDate();
+        Date lastDate = store.getLastOfferDate();
         if (lastDate == null) {
             Calendar c = Calendar.getInstance();
             c.set(Calendar.MONTH, Calendar.JANUARY);
@@ -133,18 +130,6 @@ public class SQLRUParser implements IParser {
                     post.setText(text.trim());
                 })
                 .collect(Collectors.toList());
-    }
-
-    private Timestamp getLastOfferDate() {
-        try {
-            try (PreparedStatement ps = store.getConnection().prepareStatement("SELECT max(date) AS date FROM joboffers")) {
-                ResultSet resultSet = ps.executeQuery();
-                resultSet.next();
-                return resultSet.getTimestamp("date");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private static Timestamp stringToDate(String str) {
