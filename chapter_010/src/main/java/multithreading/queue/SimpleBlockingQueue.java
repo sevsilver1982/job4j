@@ -21,15 +21,10 @@ public class SimpleBlockingQueue<T> {
         this.notifyAll();
     }
 
-    public synchronized T poll() {
+    public synchronized T poll() throws InterruptedException {
         T result;
         while ((result = queue.poll()) == null) {
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-            this.notifyAll();
+            this.wait();
         }
         return result;
     }
