@@ -25,15 +25,15 @@ class SimpleBlockingQueueTest {
             System.out.println("consumer end");
         });
         Thread producer = new Thread(() -> {
-            for (int i = 0; i != 10; i++) {
-                queue.offer(i);
-                System.out.println(i);
+            IntStream.range(0, 10).forEach(value -> {
+                queue.offer(value);
+                System.out.println(value);
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
-            }
+            });
             consumer.interrupt();
             System.out.println("producer end");
         });
