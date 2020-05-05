@@ -9,7 +9,7 @@ import java.util.List;
 
 @ThreadSafe
 public class SingleLockList<T> implements Iterable<T> {
-    ArrayListContainer<T> arrayListContainer = new ArrayListContainer();
+    ArrayListContainer<T> arrayListContainer = new ArrayListContainer<>();
 
     public synchronized void add(T value) {
         arrayListContainer.add(value);
