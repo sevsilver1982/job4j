@@ -1,5 +1,6 @@
 package multithreading.userstore;
 
+import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
 import java.util.ArrayList;
@@ -7,11 +8,13 @@ import java.util.List;
 
 @ThreadSafe
 public class UserStore implements IStore {
+
+    @GuardedBy("this")
     private List<User> users = new ArrayList<>();
 
     @Override
-    public List<User> getUsers() {
-        return users;
+    public synchronized List<User> getUsers() {
+        return new ArrayList<>(users);
     }
 
     @Override

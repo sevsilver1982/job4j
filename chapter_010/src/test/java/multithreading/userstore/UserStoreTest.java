@@ -43,23 +43,31 @@ class UserStoreTest {
     }
 
     @Test
-    void delete() {
+    void delete() throws InterruptedException {
         UserStore store = new UserStore();
         User user1 = new User(1, 100);
         User user2 = new User(2, 200);
-        new Thread(() -> store.add(user1)).start();
-        new Thread(() -> store.add(user2)).start();
+        Thread thread1 = new Thread(() -> store.add(user1));
+        Thread thread2 = new Thread(() -> store.add(user2));
+        thread1.start();
+        thread2.start();
+        thread1.join();
+        thread2.join();
         store.delete(user2);
         assertEquals(List.of(user1), store.getUsers());
     }
 
     @Test
-    void transfer() {
+    void transfer() throws InterruptedException {
         UserStore store = new UserStore();
         User user1 = new User(1, 100);
         User user2 = new User(2, 200);
-        new Thread(() -> store.add(user1)).start();
-        new Thread(() -> store.add(user2)).start();
+        Thread thread1 = new Thread(() -> store.add(user1));
+        Thread thread2 = new Thread(() -> store.add(user2));
+        thread1.start();
+        thread2.start();
+        thread1.join();
+        thread2.join();
         store.transfer(1, 2, 50);
         assertEquals(50, user1.getAmount());
         assertEquals(250, user2.getAmount());
