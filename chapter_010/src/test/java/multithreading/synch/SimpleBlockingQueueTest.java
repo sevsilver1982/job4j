@@ -1,4 +1,4 @@
-package multithreading.queue;
+package multithreading.synch;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package multithreading.collections;
+package multithreading.synch;
 
 import list.ArrayListContainer;
 import net.jcip.annotations.ThreadSafe;

@@ -1,4 +1,4 @@
-package multithreading.userstore;
+package multithreading.synch.userstore;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package multithreading.collections;
+package multithreading.synch;
 
 import org.junit.jupiter.api.Test;
 

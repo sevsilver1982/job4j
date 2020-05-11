@@ -1,6 +1,6 @@
-package multithreading.collections;
+package multithreading.synch;
 
-import multithreading.queue.SimpleBlockingQueue;
+import multithreading.synch.SimpleBlockingQueue;
 
 import java.util.stream.IntStream;
 

@@ -1,4 +1,4 @@
-package multithreading.userstore;
+package multithreading.synch.userstore;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;

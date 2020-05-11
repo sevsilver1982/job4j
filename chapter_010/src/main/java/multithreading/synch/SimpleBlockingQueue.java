@@ -1,4 +1,4 @@
-package multithreading.queue;
+package multithreading.synch;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
