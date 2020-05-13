@@ -7,16 +7,13 @@ import java.net.URL;
 
 import static java.lang.Thread.sleep;
 
-public class FileDownload {
+public class FileDownload implements Runnable {
     private static final Integer DEFAULT_CONTROL_TIME = 1000;
     private static final Integer DEFAULT_BUFFER_LENGTH = 1024;
     private final int bufferLength;
     private final String in;
     private final String out;
     private final Integer rate;
-    private Integer total = 0;
-    private Integer bytesPerSecond = 0;
-    private Thread threadDownload;
 
     public FileDownload(String in, String out, int rate) {
         this.in = in;
@@ -25,67 +22,53 @@ public class FileDownload {
         this.bufferLength = Math.min(DEFAULT_BUFFER_LENGTH, rate);
     }
 
-    public Integer getTotal() {
-        return total;
-    }
-
-    public void setTotal(Integer totalBytesRead) {
-        this.total = totalBytesRead;
-    }
-
-    public Integer getBytesPerSecond() {
-        return bytesPerSecond;
-    }
-
-    public void setBytesPerSecond(Integer bytesPerSecond) {
-        this.bytesPerSecond = bytesPerSecond;
-    }
-
-    public void downloadRateControl() {
-        do {
-            int before = getTotal();
-            try {
-                sleep(DEFAULT_CONTROL_TIME);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            setBytesPerSecond(getTotal() - before);
-        } while (threadDownload.getState() != Thread.State.TERMINATED);
-    }
-
-    public void download() {
+    @Override
+    public void run() {
         try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new URL(in).openStream());
              FileOutputStream fileOutputStream = new FileOutputStream(out)
         ) {
             byte[] dataBuffer = new byte[bufferLength];
             int bytesRead;
-            int total;
-            int pause;
+            int bytesReadTotal = 0;
+
+            long timeBefore = 0;
+            long timeAfter = 0;
+            long timeTotal = 0;
+            long bytesPerSecond = 0;
+            long bytesPerSecondCounter = 0;
+            long pause = DEFAULT_CONTROL_TIME;
+
             while ((bytesRead = bufferedInputStream.read(dataBuffer, 0, dataBuffer.length)) != -1) {
+                timeBefore = System.currentTimeMillis();
+                if (timeTotal >= DEFAULT_CONTROL_TIME) {
+                    pause = rate <= 0 ? 1 : DEFAULT_CONTROL_TIME * bufferLength / rate;
+                    bytesPerSecond = bytesPerSecondCounter;
+                    bytesPerSecondCounter = 0;
+                    timeTotal = 0;
+                }
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
-                total = getTotal();
-                setTotal(total + bytesRead);
-                pause = rate <= 0 ? 1 : DEFAULT_CONTROL_TIME * bufferLength / rate;
+                bytesReadTotal += bytesRead;
+                bytesPerSecondCounter += bytesRead;
                 System.out.print(
                         String.format(
-                                "\rload: %s; %s bsec; %s ms; state: %s",
-                                total,
-                                getBytesPerSecond(),
+                                "\rtotalBytesRead: %s; bytesPerSecond=%s; pause=%s; state: %s",
+                                bytesReadTotal,
+                                bytesPerSecond,
                                 pause,
-                                threadDownload.getState()
+                                Thread.currentThread().getState()
                         )
                 );
                 sleep(pause);
+                timeAfter = System.currentTimeMillis();
+                timeTotal = timeTotal + (timeAfter - timeBefore);
             }
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void start() {
-        threadDownload = new Thread(this::download);
-        threadDownload.start();
-        new Thread(this::downloadRateControl).start();
+    public void download() {
+        new Thread(this).start();
     }
 
     public static void main(String[] args) {
@@ -94,7 +77,7 @@ public class FileDownload {
                 arguments.getUrl(),
                 arguments.getOutput(),
                 arguments.getRate() * 1024
-        ).start();
+        ).download();
     }
 
 }
