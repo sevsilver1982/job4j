@@ -1,4 +1,4 @@
-package collection;
+package departments;
 
 import org.junit.jupiter.api.Test;
 

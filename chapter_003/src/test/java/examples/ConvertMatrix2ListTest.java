@@ -1,5 +1,6 @@
-package collection;
+package examples;
 
+import examples.ConvertMatrix2List;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package collection;
+package departments;
 
 import java.util.Comparator;
 

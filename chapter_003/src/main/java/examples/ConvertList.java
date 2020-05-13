@@ -1,4 +1,4 @@
-package collection;
+package examples;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ public class ConvertList {
 
     public List<Integer> convert(List<int[]> list) {
         List<Integer> result = new ArrayList<>();
-        for (int[] row: list) {
+        for (int[] row : list) {
             for (int cell : row) {
                 result.add(cell);
             }
