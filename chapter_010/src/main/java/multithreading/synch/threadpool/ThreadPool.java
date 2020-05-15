@@ -20,14 +20,6 @@ public class ThreadPool {
                 });
     }
 
-    public void add(Runnable job) {
-        tasks.offer(job);
-    }
-
-    public void shutdown() {
-        threadList.forEach(Thread::interrupt);
-    }
-
     private Thread apply(int i) {
         return new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
@@ -38,6 +30,29 @@ public class ThreadPool {
                 }
             }
         });
+    }
+
+    public void add(Runnable job) {
+        tasks.offer(job);
+    }
+
+    public void shutdown() {
+        boolean allThreadsIsInterrupted;
+        do {
+            threadList.forEach(thread -> {
+                if (!thread.isInterrupted()) {
+                    thread.interrupt();
+                }
+            });
+            allThreadsIsInterrupted = true;
+            for (int i = 0; i < threadList.size(); i++) {
+                if (threadList.get(i).getState() != Thread.State.TERMINATED) {
+                    allThreadsIsInterrupted = false;
+                    System.out.println(i);
+                    break;
+                }
+            }
+        } while (!allThreadsIsInterrupted);
     }
 
 }
