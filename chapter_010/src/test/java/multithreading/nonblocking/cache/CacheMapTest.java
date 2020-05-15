@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -51,6 +53,28 @@ class CacheMapTest {
         cacheMap.update(base);
         assertEquals(
                 2,
+                base.version
+        );
+    }
+
+    @Test
+    void updateWith100Threads() {
+        CacheMap cacheMap = new CacheMap();
+        Base base = new Base(1);
+        cacheMap.add(base);
+        List<Thread> threadList = IntStream.range(0, 100).mapToObj(
+                i -> new Thread(() -> cacheMap.update(base))).collect(Collectors.toList()
+        );
+        threadList.forEach(Thread::start);
+        threadList.forEach(thread -> {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        assertEquals(
+                100,
                 base.version
         );
     }

@@ -3,7 +3,6 @@ package multithreading.nonblocking.cache;
 import net.jcip.annotations.ThreadSafe;
 
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @ThreadSafe
 public class CacheMap implements Cache {
@@ -16,13 +15,12 @@ public class CacheMap implements Cache {
 
     @Override
     public void update(Base model) throws OptimisticException {
-        int oldVersion = concurrentHashMap.get(model.id).version;
         concurrentHashMap.computeIfPresent(model.id, (id, base) -> {
-            AtomicInteger version = new AtomicInteger(base.version);
-            int nextVersion = base.version++;
-            if (!version.compareAndSet(oldVersion, nextVersion)) {
+            Base currentObject = concurrentHashMap.get(model.id);
+            if (base.version != currentObject.version) {
                 throw new OptimisticException();
             }
+            base.version++;
             return base;
         });
     }
