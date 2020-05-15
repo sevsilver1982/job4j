@@ -2,7 +2,6 @@ package multithreading.nonblocking;
 
 import net.jcip.annotations.ThreadSafe;
 
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 @ThreadSafe
@@ -39,24 +38,6 @@ public class CASQueue<T> {
                 return ref.value;
             }
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        CASQueue<?> casQueue = (CASQueue<?>) o;
-        return Objects.equals(head, casQueue.head)
-                && Objects.equals(tail, casQueue.tail);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(head, tail);
     }
 
     private static final class Node<T> {

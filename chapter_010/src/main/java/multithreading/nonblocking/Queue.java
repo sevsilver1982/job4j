@@ -27,7 +27,6 @@ public class Queue<T> {
         return temp.value;
     }
 
-
     private static final class Node<T> {
         final T value;
         Node<T> next;
