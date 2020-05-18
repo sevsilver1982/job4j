@@ -10,6 +10,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Usage:
+ * http://localhost:9000/?msg=Hello
+ */
 public class EchoServer {
     private final SimpleLogger log = new SimpleLogger(System.out);
     private final int port;

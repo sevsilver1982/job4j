@@ -4,6 +4,7 @@ import inout.logger.SimpleLogger;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -41,16 +42,16 @@ public class SimpleChat {
     private Function<String, String> prepareResponse = request -> {
         String preparedResponse;
         if (chatMode == ChatMode.NORMAL) {
-            try {
-                preparedResponse = String.format("%s\n",
-                        new BufferedReader(new FileReader(answers)).lines().skip(
-                                (int) (Math.random() * new BufferedReader(new FileReader(answers)).lines().count())
-                        ).findFirst().get());
-                log.write(preparedResponse);
-                return preparedResponse;
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            preparedResponse = String.format("%s\n",
+                    new BufferedReader(new InputStreamReader(
+                            Objects.requireNonNull(SimpleChat.class.getClassLoader().getResourceAsStream(answers))
+                    )).lines().skip(
+                            (int) (Math.random() * new BufferedReader(new InputStreamReader(
+                                    Objects.requireNonNull(SimpleChat.class.getClassLoader().getResourceAsStream(answers))
+                            )).lines().count())
+                    ).findFirst().get());
+            log.write(preparedResponse);
+            return preparedResponse;
         }
         return "";
     };
@@ -96,7 +97,7 @@ public class SimpleChat {
         new SimpleChat(
                 System.in,
                 System.out,
-                "c:/soft/answers.txt",
+                "answers.txt",
                 new PrintStream(new File("c:/soft/chat.log"))
         ).init();
     }
