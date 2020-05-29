@@ -2,21 +2,24 @@ package multithreading.synch.threadpool;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.stream.IntStream;
-
 class ThreadPoolTest {
 
     @Test
-    void demo() throws InterruptedException {
-        ThreadPool threadPool = new ThreadPool();
-        IntStream.rangeClosed(1, 100).<Runnable>mapToObj(i ->
-                () -> System.out.println(String.format("task %s", i))
-        ).forEach(threadPool::add);
-        Thread.sleep(2000);
-        IntStream.rangeClosed(101, 200).<Runnable>mapToObj(i ->
-                () -> System.out.println(String.format("task %s", i))
-        ).forEach(threadPool::add);
-        Thread.sleep(2000);
+    void demo() {
+        ThreadPool threadPool = new ThreadPool(
+                Runtime.getRuntime().availableProcessors()
+        );
+        for (int i = 1; i <= 100; i++) {
+            int finalI = i;
+            threadPool.add(() -> {
+                System.out.println(String.format("task %s", finalI));
+                try {
+                    Thread.sleep(finalI * 100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
         threadPool.shutdown();
     }
 
