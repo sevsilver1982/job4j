@@ -23,10 +23,19 @@ public class SimpleBlockingQueue<T> {
 
     public synchronized T poll() throws InterruptedException {
         T result;
+        if ((result = queue.poll()) == null) {
+            this.wait();
+        }
+        this.notifyAll();
+        return result;
+    }
+
+    /*public synchronized T poll() throws InterruptedException {
+        T result;
         while ((result = queue.poll()) == null) {
             this.wait();
         }
         return result;
-    }
+    }*/
 
 }

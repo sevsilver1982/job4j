@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,7 +30,7 @@ class SimpleBlockingQueueTest {
                 queue.offer(value);
                 System.out.println(value);
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
@@ -63,6 +64,48 @@ class SimpleBlockingQueueTest {
         consumer.interrupt();
         consumer.join();
         assertEquals(Arrays.asList(0, 1, 2, 3, 4), buffer);
+    }
+
+    @Test
+    public void demo() throws InterruptedException {
+        final int threadsCount = 10;
+        final int tasksCount = 20;
+
+        ArrayList<Thread> threads = new ArrayList<>();
+        final CountDownLatch count = new CountDownLatch(threadsCount);
+        final SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>();
+
+        for (int i = 1; i <= threadsCount; i++) {
+            new Thread(() -> {
+                while (true) {
+                    try {
+                        if (queue.size() > 0) {
+                            System.out.println("processed task - " + queue.poll());
+                        }
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                //count.countDown();
+                //System.out.println("stop " + Thread.currentThread().getName());
+            }).start();
+        }
+        /*try {
+            System.out.println("begin wait");
+            countDownLatch.await();
+            System.out.println("end wait");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
+        System.out.println("add tasks...");
+        Thread.sleep(1000);
+        for (int i = 1; i <= tasksCount; i++) {
+            queue.offer(i);
+        }
+
+        count.await();
     }
 
 }

@@ -5,21 +5,22 @@ import org.junit.jupiter.api.Test;
 class ThreadPoolTest {
 
     @Test
-    void demo() {
-        ThreadPool threadPool = new ThreadPool(
-                Runtime.getRuntime().availableProcessors()
-        );
-        for (int i = 1; i <= 100; i++) {
-            int finalI = i;
-            threadPool.add(() -> {
-                System.out.println(String.format("task %s", finalI));
-                try {
-                    Thread.sleep(finalI * 100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+    void demo() throws InterruptedException {
+        final int threadsCount = 5; // Runtime.getRuntime().availableProcessors();
+        final int tasksCount = 10;
+
+        ThreadPool threadPool = new ThreadPool(threadsCount);
+        threadPool.init();
+
+        for (int i = 1; i <= tasksCount; i++) {
+            int taskNumber = i;
+            threadPool.submit(() -> {
+                System.out.println(String.format("process task %s ", taskNumber));
             });
         }
+
+        threadPool.start();
+
         threadPool.shutdown();
     }
 

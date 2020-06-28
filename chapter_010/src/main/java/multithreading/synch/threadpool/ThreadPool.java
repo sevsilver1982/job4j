@@ -2,43 +2,87 @@ package multithreading.synch.threadpool;
 
 import multithreading.synch.SimpleBlockingQueue;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-
 public class ThreadPool {
-    CountDownLatch countDownLatch;
-    private final List<Thread> threadList = new LinkedList<>();
+    private final SimpleBlockingQueue<Thread> threads = new SimpleBlockingQueue<>();
     private final SimpleBlockingQueue<Runnable> tasks = new SimpleBlockingQueue<>();
+    private final int threadCount;
+    final CountDownLatch count;
+    volatile boolean stop = false;
 
     public ThreadPool(int threadCount) {
-        countDownLatch = new CountDownLatch(threadCount);
-        for (int i = 1; i <= threadCount; i++) {
-            Thread thread = new Thread(() -> {
-                try {
-                    tasks.poll().run();
-                    countDownLatch.countDown();
-                } catch (InterruptedException e) {
-                    countDownLatch.countDown();
-                    Thread.currentThread().interrupt();
-                }
-            });
-            threadList.add(thread);
-            thread.start();
-        }
+        this.threadCount = threadCount;
+        this.count = new CountDownLatch(threadCount);
     }
 
-    public void add(Runnable job) {
+    public void submit(Runnable job) {
         tasks.offer(job);
     }
 
+    public void init() {
+        for (int i = 1; i <= threadCount; i++) {
+            threads.offer(newMainThread());
+        }
+    }
+
+    public void start() {
+        do {
+            try {
+                threads.poll().start();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (threads.size() < threadCount) {
+                threads.offer(newMainThread());
+            }
+            System.out.println(
+                    Thread.activeCount()
+            );
+        } while (true);
+    }
+
+    public Thread newMainThread() {
+        return new Thread(() -> {
+            //System.out.println(Thread.currentThread().getName());
+            try {
+                Runnable runnable;
+                if ((runnable = tasks.poll()) != null) {
+                    runnable.run();
+                }
+                Thread.currentThread().interrupt();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+    }
+
     public void shutdown() {
-        try {
-            countDownLatch.await();
+        System.out.println("123");
+        /*try {
+            count.await();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+        }*/
+    }
+
+    public static void main(String[] args) {
+        final int threadsCount = 5; // Runtime.getRuntime().availableProcessors();
+        final int tasksCount = 10;
+
+        ThreadPool threadPool = new ThreadPool(threadsCount);
+        threadPool.init();
+
+        for (int i = 1; i <= tasksCount; i++) {
+            int taskNumber = i;
+            threadPool.submit(() -> {
+                System.out.println(String.format("process task %s ", taskNumber));
+            });
         }
+
+        threadPool.start();
+
+        threadPool.shutdown();
     }
 
 }

@@ -35,7 +35,7 @@ public class EmailNotification {
         emailNotification.emailTo(new User("user3", "user3@mail.ru"));
         emailNotification.emailTo(new User("user4", "user4@mail.ru"));
         emailNotification.emailTo(new User("user5", "user5@mail.ru"));
-        emailNotification.close();
+        //emailNotification.close();
     }
 
 }
