@@ -46,8 +46,8 @@ public class ThreadPool {
         return new Thread(() -> {
             //System.out.println(Thread.currentThread().getName());
             try {
-                Runnable runnable;
-                if ((runnable = tasks.poll()) != null) {
+                Runnable runnable = tasks.poll();
+                if (runnable != null) {
                     runnable.run();
                 }
                 Thread.currentThread().interrupt();
