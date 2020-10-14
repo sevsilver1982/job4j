@@ -1,8 +1,7 @@
 package rabbit;
 
-import static rabbit.Constants.RABBIT_INTERVAL;
-
 public class RabbitScheduler {
+    public static final String RABBIT_INTERVAL = "rabbit.interval";
 
     public static void main(String[] args) {
         new SimpleScheduler().start(

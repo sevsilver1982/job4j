@@ -6,23 +6,19 @@ import tracker.items.Item;
 
 import java.io.OutputStream;
 
-public class FindItemById extends AbstractAction {
+public class AddItem extends AbstractAction {
 
-    public FindItemById() {
-        super("Find item by id");
+    public AddItem() {
+        super("Add new item");
     }
 
     @Override
     public boolean action(IInput input, AbstractTracker tracker) {
         try {
             OutputStream outputStream = tracker.getOutput();
-            String id = input.askString("Enter item id: ");
-            Item item = tracker.findById(id);
-            if (item.getId() != null) {
-                outputStream.write((item.toString() + "\n").getBytes());
-            } else {
-                outputStream.write("Item not found\n".getBytes());
-            }
+            Item item = new Item(input.askString("Enter name: "));
+            tracker.add(item);
+            outputStream.write((item.toString() + "\n").getBytes());
         } catch (Exception e) {
             e.printStackTrace();
             return false;

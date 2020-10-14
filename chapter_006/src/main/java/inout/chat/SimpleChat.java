@@ -44,10 +44,10 @@ public class SimpleChat {
         if (chatMode == ChatMode.NORMAL) {
             preparedResponse = String.format("%s\n",
                     new BufferedReader(new InputStreamReader(
-                            Objects.requireNonNull(SimpleChat.class.getClassLoader().getResourceAsStream(answers))
+                            Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream(answers))
                     )).lines().skip(
                             (int) (Math.random() * new BufferedReader(new InputStreamReader(
-                                    Objects.requireNonNull(SimpleChat.class.getClassLoader().getResourceAsStream(answers))
+                                    Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream(answers))
                             )).lines().count())
                     ).findFirst().get());
             log.write(preparedResponse);

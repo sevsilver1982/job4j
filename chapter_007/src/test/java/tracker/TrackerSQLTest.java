@@ -1,6 +1,5 @@
 package tracker;
 
-import grabber.JobScheduler;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import tracker.items.Item;
@@ -20,7 +19,7 @@ public class TrackerSQLTest {
     @BeforeAll
     static void beforeAll() throws IOException {
         properties = new Properties();
-        properties.load(JobScheduler.class.getResourceAsStream(APP_PROPERTIES));
+        properties.load(TrackerSQLTest.class.getClassLoader().getResourceAsStream(APP_PROPERTIES));
         Store store = new Store(properties);
         assertTrue(store.init(true));
     }

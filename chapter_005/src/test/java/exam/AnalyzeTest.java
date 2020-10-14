@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class AnalyzeTest {
 
     @Test
-    void diffEquals() {
+    void diffEqualsTest() {
         assertEquals(
                 new Analyze(
                         List.of(
@@ -32,7 +32,7 @@ class AnalyzeTest {
     }
 
     @Test
-    void diffAdded() {
+    void diffAddedTest() {
         assertEquals(
                 new Analyze(
                         List.of(),
@@ -49,7 +49,7 @@ class AnalyzeTest {
     }
 
     @Test
-    void diffChanged() {
+    void diffChangedTest() {
         assertEquals(
                 new Analyze(
                         List.of(
@@ -72,7 +72,7 @@ class AnalyzeTest {
     }
 
     @Test
-    void diffDeleted() {
+    void diffDeletedTest() {
         assertEquals(
                 new Analyze(
                         List.of(
@@ -89,7 +89,7 @@ class AnalyzeTest {
     }
 
     @Test
-    void diffAll() {
+    void diffAllTest() {
         assertEquals(
                 new Analyze(
                         List.of(

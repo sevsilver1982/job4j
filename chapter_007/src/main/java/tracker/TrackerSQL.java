@@ -127,28 +127,32 @@ public class TrackerSQL extends AbstractTracker implements AutoCloseable {
         return item;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Properties properties = new Properties();
-        properties.load(TrackerSQL.class.getClassLoader().getResourceAsStream(APP_PROPERTIES));
-        Store store = new Store(properties);
-        if (store.init(true)) {
-            TrackerSQL tracker = new TrackerSQL(store.getConnection());
-            tracker.setActionList(
-                    List.of(
-                            new NewItem(),
-                            new ShowAll(),
-                            new ReplaceItem(),
-                            new DeleteItem(),
-                            new FindItemById(),
-                            new FindItemByName(),
-                            new ExitProgram()
-                    )
-            );
-            new StartUI(
-                    new InputValidate(new InputConsole()),
-                    tracker,
-                    System.out::println
-            ).init();
+        try {
+            properties.load(TrackerSQL.class.getClassLoader().getResourceAsStream(APP_PROPERTIES));
+            Store store = new Store(properties);
+            if (store.init(true)) {
+                TrackerSQL tracker = new TrackerSQL(store.getConnection());
+                tracker.setOutput(System.out);
+                tracker.setActionList(
+                        List.of(
+                                new AddItem(),
+                                new ShowAll(),
+                                new ReplaceItem(),
+                                new DeleteItem(),
+                                new FindItemById(),
+                                new FindItemByName(),
+                                new Exit()
+                        )
+                );
+                new StartUI(
+                        new InputValidate(new InputConsole()),
+                        tracker
+                ).init();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

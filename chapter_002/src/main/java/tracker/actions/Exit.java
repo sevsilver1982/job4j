@@ -3,9 +3,9 @@ package tracker.actions;
 import tracker.AbstractTracker;
 import tracker.input.IInput;
 
-public class ExitProgram extends AbstractAction {
+public class Exit extends AbstractAction {
 
-    public ExitProgram() {
+    public Exit() {
         super("Exit program");
     }
 

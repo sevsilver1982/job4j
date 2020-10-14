@@ -7,19 +7,12 @@ import java.util.concurrent.atomic.AtomicReference;
 @ThreadSafe
 public class CASQueue<T> {
     private final AtomicReference<Node<T>> head = new AtomicReference<>();
-    private final AtomicReference<Node<T>> tail = new AtomicReference<>();
 
     public void add(T value) {
-        Node<T> temp = new Node<>(value);
-        Node<T> newTail;
+        final Node<T> tail = new Node<>(value);
         while (true) {
-            if (head.compareAndSet(null, temp)) {
-                tail.set(temp);
-                return;
-            }
-            newTail = tail.get();
-            newTail.next = temp;
-            if (tail.compareAndSet(newTail, temp)) {
+            tail.next = head.get();
+            if (head.compareAndSet(tail.next, tail)) {
                 return;
             }
         }

@@ -3,9 +3,8 @@ package rabbit;
 import java.io.IOException;
 import java.util.Properties;
 
-import static rabbit.Constants.RABBIT_PROPERTIES;
-
 public class Config {
+    public static final String RABBIT_PROPERTIES = "app.rabbit.properties";
     private static Config instance = new Config();
     private final Properties config;
 
@@ -13,7 +12,7 @@ public class Config {
         this.config = new Properties();
         try {
             this.config.load(
-                    Config.class.getClassLoader().getResourceAsStream(RABBIT_PROPERTIES)
+                    this.getClass().getClassLoader().getResourceAsStream(RABBIT_PROPERTIES)
             );
         } catch (IOException e) {
             throw new RuntimeException(e);

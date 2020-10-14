@@ -1,7 +1,7 @@
 package tracker.input;
 
 public class StubInput extends InputConsole {
-    private String[] answers;
+    private final String[] answers;
     private int position = 0;
 
     public StubInput(String[] answers) {
@@ -21,7 +21,7 @@ public class StubInput extends InputConsole {
     @Override
     public int askInt(String question, int max) {
         int select = askInt(question);
-        if (select < 0 || select >= max) {
+        if (select < 0 || select > max) {
             throw new IllegalStateException(String.format("Out of about %s > [0, %s]", select, max));
         }
         return select;
