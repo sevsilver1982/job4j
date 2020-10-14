@@ -24,7 +24,7 @@ public class InputConsole implements IInput {
     @Override
     public int askInt(String question, int max) {
         int select = askInt(question);
-        if (select < 0 || select >= max) {
+        if (select < 0 || select > max) {
             throw new IllegalStateException(String.format("Out of about [0..%s]", max));
         }
         return select;

@@ -41,11 +41,10 @@ public class ActionsStubTest {
         tracker.setActionList(
                 List.of(new Exit())
         );
-        StartUI ui = new StartUI(
+        new StartUI(
                 stubInput,
                 tracker
-        );
-        ui.init();
+        ).init();
         assertEquals(
                 "Menu:\n"
                         + "1. Exit program\n"

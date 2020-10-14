@@ -40,7 +40,7 @@ public class StartUI {
         do {
             this.showMenu(tracker);
             List<IAction> actions = tracker.getActionList();
-            int select = input.askInt("Select: ", actions.size() + 1);
+            int select = input.askInt("Select: ", actions.size());
             for (IAction action : actions) {
                 if (action.getId() == select) {
                     run = action.execute(input, tracker);
