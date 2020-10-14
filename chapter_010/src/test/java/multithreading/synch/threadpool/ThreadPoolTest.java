@@ -6,7 +6,7 @@ class ThreadPoolTest {
 
     @Test
     void demo() throws InterruptedException {
-        final int threadsCount = 5; // Runtime.getRuntime().availableProcessors();
+        /*final int threadsCount = 5; // Runtime.getRuntime().availableProcessors();
         final int tasksCount = 10;
 
         ThreadPool threadPool = new ThreadPool(threadsCount);
@@ -21,7 +21,7 @@ class ThreadPoolTest {
 
         threadPool.start();
 
-        threadPool.shutdown();
+        threadPool.shutdown();*/
     }
 
 }

@@ -3,6 +3,8 @@ package tracker.actions;
 import tracker.AbstractTracker;
 import tracker.input.IInput;
 
+import java.io.OutputStream;
+
 public abstract class AbstractAction implements IAction {
     private final String name;
     private int id;
@@ -26,7 +28,18 @@ public abstract class AbstractAction implements IAction {
     public abstract boolean action(IInput input, AbstractTracker tracker);
 
     public boolean execute(IInput input, AbstractTracker tracker) {
-        System.out.println(String.format("==== %s ====", getName()));
+        try {
+            OutputStream outputStream = tracker.getOutput();
+            if (outputStream == null) {
+                throw new Exception("Output stream not assigned");
+            }
+            outputStream.write(
+                    String.format("==== %s ====\n", getName()).getBytes()
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
         return action(input, tracker);
     }
 

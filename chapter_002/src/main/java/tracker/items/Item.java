@@ -36,6 +36,10 @@ public class Item {
         this.name = name;
     }
 
+    public boolean isEmpty() {
+        return this.id == null && this.name == null;
+    }
+
     @Override
     public String toString() {
         return String.format("id: %s; name: %s", this.getId(), this.getName());

@@ -1,7 +1,7 @@
 package tracker.input;
 
 public class StubInput extends InputConsole {
-    private String[] answers;
+    private final String[] answers;
     private int position = 0;
 
     public StubInput(String[] answers) {
