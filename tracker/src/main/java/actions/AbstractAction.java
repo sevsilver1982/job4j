@@ -4,8 +4,6 @@ import input.IInput;
 
 import java.io.OutputStream;
 
-import java.io.OutputStream;
-
 public abstract class AbstractAction implements IAction {
     private final String name;
     private int id;
