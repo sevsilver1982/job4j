@@ -23,7 +23,6 @@ public class ReplaceItem extends AbstractAction {
                 tracker.replace(
                         item.getId(),
                         new Item(
-                                item.getId(),
                                 input.askString("Enter new item name: ")
                         )
                 );

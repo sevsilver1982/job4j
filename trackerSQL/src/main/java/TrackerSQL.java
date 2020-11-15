@@ -49,9 +49,9 @@ public class TrackerSQL extends AbstractTracker implements AutoCloseable {
     public boolean replace(UUID id, Item item) {
         try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE items SET id = ?, name = ? WHERE id = ?")
         ) {
-            preparedStatement.setObject(1, item.getId());
+            preparedStatement.setString(1, item.getId().toString());
             preparedStatement.setString(2, item.getName());
-            preparedStatement.setObject(3, id);
+            preparedStatement.setString(3, id.toString());
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -61,7 +61,7 @@ public class TrackerSQL extends AbstractTracker implements AutoCloseable {
     @Override
     public boolean delete(UUID id) {
         try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM items WHERE id = ?")) {
-            preparedStatement.setObject(1, id);
+            preparedStatement.setString(1, id.toString());
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -77,7 +77,7 @@ public class TrackerSQL extends AbstractTracker implements AutoCloseable {
             while (resultSet.next()) {
                 items.add(
                         new Item(
-                                resultSet.getObject("id", UUID.class),
+                                UUID.fromString(resultSet.getString("id")),
                                 resultSet.getString("name")
                         )
                 );
@@ -97,7 +97,7 @@ public class TrackerSQL extends AbstractTracker implements AutoCloseable {
             while (resultSet.next()) {
                 items.add(
                         new Item(
-                                resultSet.getObject("id", UUID.class),
+                                UUID.fromString(resultSet.getString("id")),
                                 resultSet.getString("name")
                         )
                 );
@@ -113,11 +113,11 @@ public class TrackerSQL extends AbstractTracker implements AutoCloseable {
     public Item findById(UUID id) {
         Item item = new Item();
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM items WHERE id = ?")) {
-            preparedStatement.setObject(1, id);
+            preparedStatement.setString(1, id.toString());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 item = new Item(
-                        resultSet.getObject("id", UUID.class),
+                        UUID.fromString(resultSet.getString("id")),
                         resultSet.getString("name")
                 );
             }
