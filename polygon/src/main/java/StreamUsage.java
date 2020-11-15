@@ -7,7 +7,7 @@ public class StreamUsage {
     public static void main(String[] args) throws IOException {
 
         // 10 случайных чисел
-        new Random().ints(1, 10+1)
+        new Random().ints(1, 10 + 1)
                 .distinct()
                 .limit(10)
                 .sorted()
@@ -17,7 +17,7 @@ public class StreamUsage {
         IntStream
                 .iterate(1, n -> n + 1)
                 .takeWhile(n -> n <= 5)
-                .forEachOrdered (System.out::println);
+                .forEachOrdered(System.out::println);
 
 
         //Files.lines(Path.of(""))
