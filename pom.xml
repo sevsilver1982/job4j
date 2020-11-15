@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.job4j</groupId>
     <artifactId>job4j</artifactId>
+    <version>1.0</version>
     <packaging>pom</packaging>
-    <version>3.0</version>
     <modules>
         <module>chapter_001</module>
         <module>chapter_002</module>
@@ -17,10 +17,15 @@
         <module>chapter_007</module>
         <module>chapter_008</module>
         <module>chapter_010</module>
+        <module>tracker</module>
+        <module>trackerSQL</module>
+        <module>polygon</module>
     </modules>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -89,6 +94,7 @@
             </plugin>
         </plugins>
     </build>
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -114,4 +120,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
 </project>
